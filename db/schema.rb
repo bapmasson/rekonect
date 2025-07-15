@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_15_180705) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_15_180842) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_180705) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "user_badges", force: :cascade do |t|
+    t.date "obtained_at"
+    t.bigint "user_id", null: false
+    t.bigint "badge_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["badge_id"], name: "index_user_badges_on_badge_id"
+    t.index ["user_id"], name: "index_user_badges_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -71,4 +81,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_180705) do
   add_foreign_key "contacts", "users"
   add_foreign_key "messages", "contacts"
   add_foreign_key "messages", "users"
+  add_foreign_key "user_badges", "badges"
+  add_foreign_key "user_badges", "users"
 end
