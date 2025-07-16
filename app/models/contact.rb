@@ -1,4 +1,5 @@
 class Contact < ApplicationRecord
   belongs_to :user
-  belongs_to :relationships
+  belongs_to :relationship
+  has_many :messages
 end
