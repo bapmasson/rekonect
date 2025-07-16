@@ -1,10 +1,14 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
+  has_one_attached :avatar
+
   has_many :contacts
   has_many :messages
   has_many :user_badges
   has_many :badges, through: :user_badges
+
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   # Validation du nom et prénom de l'utilisateur
@@ -28,5 +32,4 @@ class User < ApplicationRecord
       errors.add(:birth_date, "doit correspondre à un utilisateur d'au moins 10 ans")
     end
   end
-
 end
