@@ -22,12 +22,12 @@ users = prenoms.each_with_index.map do |prenom, i|
     # chaque utilisateur a un email unique basé sur son prénom en minuscule sans accents
     email: "#{prenom.parameterize}@test.com",
     # mot de passe par défaut pour tous les utilisateurs
-    encrypted_password: "azerty",
+    password: "azerty",
     first_name: prenom,
     last_name: noms[i],
     username: usernames[i],
     # A partir de là on utilise Faker pour générer des données aléatoires
-    phone_number: Faker::PhoneNumber.cell_phone,
+    phone_number: Faker::PhoneNumber.cell_phone_in_e164,
     address: Faker::Address.full_address,
     birth_date: Faker::Date.birthday(min_age: 18, max_age: 65),
     # On part avec déjà de l'expérience car on est des boss
