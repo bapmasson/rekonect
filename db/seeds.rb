@@ -2,12 +2,12 @@ require 'faker'
 
 # On nettoie d'abord la base de données pour éviter les doublons
 puts "Nettoyage de la base de données..."
-User.delete_all
-Contact.delete_all
-Relationship.delete_all
-Message.delete_all
-UserBadge.delete_all
-Badge.delete_all
+Message.destroy_all
+Contact.destroy_all
+UserBadge.destroy_all
+User.destroy_all
+Relationship.destroy_all
+Badge.destroy_all
 puts "Base de données nettoyée."
 
 # Seed Users -- On va se créer chacun un compte utilisateur
@@ -17,7 +17,7 @@ usernames = %w[audricmarshall Ekenlat Laiokan u0nor bapmasson]
 
 puts "Création des utilisateurs..."
 
-users = prenoms.each_with_index.map do |prenom, i|
+prenoms.each_with_index.map do |prenom, i|
   User.create!(
     # chaque utilisateur a un email unique basé sur son prénom en minuscule sans accents
     email: "#{prenom.parameterize}@test.com",
@@ -29,7 +29,7 @@ users = prenoms.each_with_index.map do |prenom, i|
     # A partir de là on utilise Faker pour générer des données aléatoires
     phone_number: Faker::PhoneNumber.cell_phone_in_e164,
     address: Faker::Address.full_address,
-    birth_date: Faker::Date.birthday(min_age: 18, max_age: 65),
+    birth_date: Faker::Date.birthday(min_age: 18, max_age: 35),
     # On part avec déjà de l'expérience car on est des boss
     xp_level: rand(1..100)
   )
@@ -43,39 +43,40 @@ puts "#{User.count} utilisateurs créés avec succès."
 # On crée des types de relations (qu'on pourra modifier selon nos validations) avec des proximités différentes notées de 1 à 5
 # 1 étant le plus éloigné et 5 le plus proche
 relation_types = %w[Famille Ami Collègue Voisin Ami\ proche Parent\ proche]
-proximity_values = [4, 4, 3, 2, 5, 5]
+proximity_values = [8, 7, 5, 3, 9, 10]
 puts "Création des relations..."
 relation_types.each_with_index do |type, i|
   Relationship.create!(
-    type: type,
+    relation_type: type,
     proximity: proximity_values[i]
   )
-  puts "Relation #{type} (Proximité: #{proximity_values[i]}/5) créée avec succès."
+  puts "Relation #{type} (Proximité: #{proximity_values[i]}/10) créée avec succès."
 end
 puts "#{Relationship.count} relations créées avec succès."
 
 # Seed Contacts
 # On crée des contacts pour chaque utilisateur, en associant aléatoirement des relations (mais on va quand même leur mettre une relation Maman par défaut)
-
-contacts = users.flat_map do |user|
+users = User.all
+relationships = Relationship.all
+users.flat_map do |user|
   puts "Création des contacts pour l'utilisateur #{user.username}..."
 
+  # On crée une Maman pour tout le monde
   Contact.create!(
       name: "Maman",
-      last_interaction_at: Faker::Date.backward(days: 1),
       notes: "Que dire de plus, c'est ma maman !",
       user: user,
-      relationships: Relationship.find_by(type: 'Parent proche')
+      relationship: Relationship.find_by(relation_type: 'Parent proche')
     )
   puts "Contact Maman créé pour l'utilisateur #{user.username}."
 
+  # Et 5 contacts aléatoires
   5.times.map do
     Contact.create!(
       name: Faker::Name.name,
-      last_interaction_at: Faker::Date.backward(days: 30),
-      notes: Faker::Lorem.paragraph,
+      notes: Faker::Lorem.paragraph[0..500],
       user: user,
-      relationships: relationships.sample
+      relationship: relationships.sample
     )
   end
   puts "#{Contact.where(user: user).count} contacts créés avec succès pour l'utilisateur #{user.username}."
@@ -84,30 +85,64 @@ end
 puts "#{Contact.count} contacts créés avec succès."
 
 # Seed Messages
-# On crée des messages pour chaque contact, en alternant entre des messages reçus et envoyés. On met draft: false car on veut des messages "réels" (les drafts seront les messages suggérés par l'IA).
+# On crée des messages pour chaque contact, en leur créant un message qui a eu une réponse, et un message en attente de réponse. On ajoute éventuellement un message avec une suggestion IA mais on l'enlèvera quand on aura implanté l'IA dans le projet
+
+contacts = Contact.all
 puts "Création des conversations avec chaque contact..."
 contacts.each do |contact|
-  rand(1..4).times do
-    Message.create!(
-      content: Faker::Lorem.sentence(word_count: 10),
-      draft: false,
-      sent_at: Faker::Date.backward(days: 10),
-      received_message: [true, false].sample,
+  # Message complet : message du contact + suggestion IA + réponse utilisateur
+  message1 = Message.create!(
+    content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+    status: :draft,
+    user: contact.user,
+    contact: contact
+  )
+  message1.update!(
+    ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+    status: :suggested
+  )
+  message1.update!(
+    user_answer: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+    status: :sent,
+    sent_at: Faker::Date.backward(days: 3)
+  )
+
+  # Message sans réponse utilisateur
+  message2 = Message.create!(
+      content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+      status: :draft,
+      sent_at: Faker::Date.backward(days: 2),
       user: contact.user,
       contact: contact
     )
+
+
+
+  # Occasionnellement, message avec suggestion IA mais pas de réponse utilisateur
+  if rand < 0.5
+  message3 = Message.create!(
+    content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+    status: :draft,
+    user: contact.user,
+    contact: contact
+  )
+  message3.update!(
+    ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+    status: :suggested
+  )
   end
   puts "Conversation entre #{contact.user.username} et #{contact.name} créée avec succès."
 end
+
 
 puts "#{Message.count} messages créés avec succès."
 
 # Seed Badges
 # On crée des badges pour les utilisateurs, avec des titres et descriptions aléatoires. On va en créer 5 pour commencer.
 puts "Création des badges..."
-badges = 5.times.map do
+5.times.map do
   Badge.create!(
-    title: Faker::Games::WorldOfWarcraft.hero,
+    title: Faker::Superhero.name,
     description: Faker::Marketing.buzzwords,
     condition_description: "Complete X tasks or reach level Y"
   )
@@ -115,6 +150,7 @@ end
 puts "#{Badge.count} badges créés avec succès."
 
 # On va attribuer aléatoirement des badges à chaque utilisateur
+badges = Badge.all
 users.each do |user|
   badges.sample(2).each do |badge|
     UserBadge.create!(
