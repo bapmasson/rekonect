@@ -64,12 +64,14 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_16_200708) do
 
   create_table "messages", force: :cascade do |t|
     t.text "content"
+    t.string "type"
+    t.boolean "draft"
     t.date "sent_at"
+    t.boolean "received_message"
     t.bigint "user_id", null: false
     t.bigint "contact_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "status", default: 0, null: false
     t.index ["contact_id"], name: "index_messages_on_contact_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
