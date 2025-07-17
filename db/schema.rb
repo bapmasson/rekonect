@@ -63,10 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_17_090626) do
 
   create_table "messages", force: :cascade do |t|
     t.text "content"
-    t.string "type"
-    t.boolean "draft"
     t.date "sent_at"
-    t.boolean "received_message"
     t.bigint "user_id", null: false
     t.bigint "contact_id", null: false
     t.datetime "created_at", null: false
