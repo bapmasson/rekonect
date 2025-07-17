@@ -4,9 +4,9 @@ require 'faker'
 puts "Nettoyage de la base de données..."
 Message.destroy_all
 Contact.destroy_all
+Relationship.destroy_all
 UserBadge.destroy_all
 User.destroy_all
-Relationship.destroy_all
 Badge.destroy_all
 puts "Base de données nettoyée."
 
@@ -74,7 +74,7 @@ users.flat_map do |user|
   5.times.map do
     Contact.create!(
       name: Faker::Name.name,
-      notes: Faker::Lorem.paragraph[0..500],
+      notes: Faker::Lorem.paragraph_by_chars(number: 500),
       user: user,
       relationship: relationships.sample
     )
@@ -86,6 +86,7 @@ puts "#{Contact.count} contacts créés avec succès."
 
 # Seed Messages
 # On crée des messages pour chaque contact, en leur créant un message qui a eu une réponse, et un message en attente de réponse. On ajoute éventuellement un message avec une suggestion IA mais on l'enlèvera quand on aura implanté l'IA dans le projet
+THIRD_MESSAGE_PROBABILITY = 0.5
 
 contacts = Contact.all
 puts "Création des conversations avec chaque contact..."
@@ -111,15 +112,13 @@ contacts.each do |contact|
   message2 = Message.create!(
       content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
       status: :draft,
-      sent_at: Faker::Date.backward(days: 2),
       user: contact.user,
       contact: contact
     )
 
-
-
   # Occasionnellement, message avec suggestion IA mais pas de réponse utilisateur
-  if rand < 0.5
+
+  if rand < THIRD_MESSAGE_PROBABILITY
   message3 = Message.create!(
     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
     status: :draft,
