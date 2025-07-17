@@ -3,7 +3,7 @@ class Badge < ApplicationRecord
   has_many :users, through: :user_badges
 
   # titre est obligatoire, unique, max 20 caractères ( succès)
-  validates :title, presence: true, uniqueness: true, length: { maximum: 20 }
+  validates :title, presence: true, uniqueness: true, length: { maximum: 50 }
 
   # description obligatoire pour motiver l'user
   validates :description, presence: true, length: { maximum: 500 }
