@@ -22,7 +22,7 @@ class Message < ApplicationRecord
   # enum statut (workflow IA suggestion)
   # received == message reçu du contact, contenu stocké dans la colonne content
   # draft_by_ai == suggestion par IA faite et stockée dans la colonne ai_draft
-  # sent == réponse de l'utilisateur envoyée au contact
+  # sent == réponse de l'utilisateur envoyée au contact et stockée dans la colonne user_answer
   enum status: { received: 0, draft_by_ai: 1, sent: 2 }
 
   private
@@ -30,7 +30,7 @@ class Message < ApplicationRecord
   # On vérifie qu'au moins un champ soit rempli sinon erreur
   def content_or_ai_draft_or_user_answer_present
     if [content, ai_draft, user_answer].all?(&:blank?)
-      errors.add(:base, "Content, or AI Draft or User answer must be filled" )
+      errors.add(:base, "Please provide content, an AI draft, or a user answer." )
     end
   end
 end
