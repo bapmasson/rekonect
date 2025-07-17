@@ -24,6 +24,10 @@ class User < ApplicationRecord
   # Validation du numéro de téléphone de l'utilisateur
   validates :phone_number, presence: true, length: { minimum: 7, maximum: 15 }, format: { with: /\A\+?\d{7,15}\z/, message: "doit être un numéro de téléphone valide" }
 
+  # ajout de l'xp level, gamification non négatif
+
+  validates :xp_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+
   private
 
   # Valide que l'utilisateur a au moins 10 ans
