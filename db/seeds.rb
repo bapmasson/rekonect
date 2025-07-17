@@ -1,6 +1,7 @@
 require 'faker'
 
 # On nettoie d'abord la base de données pour éviter les doublons
+# NE PAS MODIFIER L'ORDRE DES LIGNES DE DESTRUCTION CAR LES DEPENDANCES ENTRE MODELES FONT PLANTER LA SEED SI CET ORDRE N'EST PAS BON
 puts "Nettoyage de la base de données..."
 Message.destroy_all
 Contact.destroy_all
@@ -94,13 +95,13 @@ contacts.each do |contact|
   # Message complet : message du contact + suggestion IA + réponse utilisateur
   message1 = Message.create!(
     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-    status: :draft,
+    status: :received,
     user: contact.user,
     contact: contact
   )
   message1.update!(
     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-    status: :suggested
+    status: :draft_by_ai
   )
   message1.update!(
     user_answer: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
@@ -111,7 +112,7 @@ contacts.each do |contact|
   # Message sans réponse utilisateur
   message2 = Message.create!(
       content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-      status: :draft,
+      status: :received,
       user: contact.user,
       contact: contact
     )
@@ -121,13 +122,13 @@ contacts.each do |contact|
   if rand < THIRD_MESSAGE_PROBABILITY
   message3 = Message.create!(
     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-    status: :draft,
+    status: :received,
     user: contact.user,
     contact: contact
   )
   message3.update!(
     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-    status: :suggested
+    status: :draft_by_ai
   )
   end
   puts "Conversation entre #{contact.user.username} et #{contact.name} créée avec succès."

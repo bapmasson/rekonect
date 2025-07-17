@@ -17,5 +17,8 @@ class Message < ApplicationRecord
   validates :contact, presence: true
 
   # enum statut (workflow IA suggestion)
-  enum status: { draft: 0, suggested: 1, sent: 2, archived: 3 }
+  # received == message reçu du contact, contenu stocké dans la colonne content
+  # draft_by_ai == suggestion par IA faite et stockée dans la colonne ai_draft
+  # sent == réponse de l'utilisateur envoyée au contact et stockée dans la colonne user_answer
+  enum status: { received: 0, draft_by_ai: 1, sent: 2 }
 end
