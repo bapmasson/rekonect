@@ -1,12 +1,16 @@
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  include Pundit::Authorization
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  include Pundit::Authorization
 
   # Pundit: allow-list approach
-  after_action :verify_authorized, except: :index, unless: :skip_pundit?
-  after_action :verify_policy_scoped, only: :index, unless: :skip_pundit?
+
+  # J'ai modifié les except: et only: pour ne pas avoir de bug de policy non définie car rails 7.1 vérifiait le contrôleur de Devise avant de lire l'exception.... ce qui amenait à l'écran rouge de policy non définie
+  after_action :verify_authorized, if: -> { action_name != 'index' && !skip_pundit? }
+
+  after_action :verify_policy_scoped, if: -> { action_name == 'index' && !skip_pundit? }
+
 
   # Redirect to the root path if the user is not authorized
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
