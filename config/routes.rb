@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'contacts/index'
+  get 'contacts/show'
+  get 'contacts/edit'
+  get 'contacts/new'
+  get 'contacts/destroy'
   devise_for :users
   root to: "pages#home"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
