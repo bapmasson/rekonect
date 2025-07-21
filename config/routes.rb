@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
   get 'contacts/new'
   get 'contacts/create'
+  get 'contacts/index'
+  get 'contacts/show'
+  get 'contacts/edit'
+  get 'contacts/new'
+  get 'contacts/create'
+  get 'contacts/update'
+  get 'contacts/destroy'
   devise_for :users
   root to: "pages#home"
   resources :messages
