@@ -1,0 +1,16 @@
+<h1>Messages en attente de réponse</h1>
+
+
+<ul>
+  <% @messages.each do |message| %>
+    <li>
+      <strong>De :</strong> <%= message.contact.name %><br>
+      <strong>Message :</strong> <%= message.content %><br>
+      <strong>Suggestion de réponse :</strong>
+      <div style="background: #f8f9fa; padding: 10px; border-radius: 5px;">
+        <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
+      </div>
+      <%= link_to "Répondre", new_message_path(contact_id: message.contact_id), class: "btn btn-primary btn-sm" %>
+    </li>
+  <% end %>
+</ul>

@@ -22,3 +22,20 @@
     </li>
   <% end %>
 </ul>
+
+<%= link_to "Messages à répondre", awaiting_answer_messages_path, class: "nav-link" %>
+
+<% awaiting_messages = current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]) %>
+<% if awaiting_messages.any? %>
+  <h3>Messages en attente de réponse :</h3>
+  <ul>
+    <% awaiting_messages.each do |message| %>
+      <li>
+        <strong>De :</strong> <%= message.contact.name %><br>
+        <strong>Message :</strong> <%= message.content %><br>
+        <strong>Suggestion :</strong> <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
+        <%= link_to "Répondre", new_message_path(contact_id: message.contact_id), class: "btn btn-primary btn-sm ms-2" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
