@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   get 'users/settings'
   devise_for :users
   root to: "pages#home"
-  resources :messages
+  get "messages/awaiting_answer", to: "messages#awaiting_answer", as: :awaiting_answer_messages
+  resources :messages do
+    member do
+      patch :dismiss_suggestion
+    end
+  end
   resources :contacts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

@@ -20,4 +20,8 @@ class MessagePolicy < ApplicationPolicy
   def create?
     true
   end
+
+  def awaiting_answer?
+    true
+  end
 end

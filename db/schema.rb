@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_21_220943) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_21_233115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_21_220943) do
     t.text "ai_draft"
     t.text "user_answer"
     t.integer "status", default: 0
+    t.boolean "dismissed"
     t.index ["contact_id"], name: "index_messages_on_contact_id"
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
