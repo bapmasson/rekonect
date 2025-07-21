@@ -12,4 +12,8 @@ class Contact < ApplicationRecord
   # valide les fks
   validates :user, presence: true
   validates :relationship, presence: true
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
