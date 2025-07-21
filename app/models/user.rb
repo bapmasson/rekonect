@@ -28,6 +28,26 @@ class User < ApplicationRecord
 
   validates :xp_level, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
+  def level
+    (xp_points / 100) + 1
+  end
+
+  def xp_for_next_level
+    100
+  end
+
+  def xp_progress
+    xp_points % 100
+  end
+
+  def xp_percent
+    (xp_progress.to_f / xp_for_next_level * 100).round
+  end
+
+  def xp_points
+    self[:xp_points] || 0
+  end
+
   private
 
   # Valide que l'utilisateur a au moins 10 ans

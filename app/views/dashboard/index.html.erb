@@ -1,6 +1,16 @@
 <h1>Mon Dashboard</h1>
 
-<p><strong>Niveau XP :</strong> <%= @user.xp_level %></p>
+<div style="display: flex; align-items: center; gap: 20px;">
+  <div style="width: 300px; background: #eee; border-radius: 10px; overflow: hidden;">
+    <div style="width: <%= @user.xp_percent %>%; background: #4caf50; height: 24px;"></div>
+  </div>
+  <span style="font-weight: bold;">
+    <%= @user.xp_progress %> / <%= @user.xp_for_next_level %> XP
+  </span>
+  <span style="font-weight: bold; font-size: 1.2em;">
+    Niveau : <%= @user.level %>
+  </span>
+</div>
 
 <h2>Mes badges :</h2>
 <ul>
