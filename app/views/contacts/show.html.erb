@@ -8,3 +8,5 @@
 <% if @contact.photo.attached? %>
   <%= image_tag @contact.photo, class: "img-thumbnail", width: 200 %>
 <% end %>
+
+<%= link_to "Modifier", edit_contact_path(@contact), class: "btn btn-secondary" %>

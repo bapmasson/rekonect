@@ -25,6 +25,21 @@ class ContactsController < ApplicationController
     authorize @contact
   end
 
+  def edit
+    @contact = Contact.find(params[:id])
+    authorize @contact
+  end
+
+  def update
+    @contact = Contact.find(params[:id])
+    authorize @contact
+    if @contact.update(contact_params)
+      redirect_to contact_path(@contact), notice: "Contact mis à jour avec succès."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def contact_params
