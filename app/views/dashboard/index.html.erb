@@ -1,0 +1,10 @@
+<h1>Mon Dashboard</h1>
+
+<p><strong>Niveau XP :</strong> <%= @user.xp_level %></p>
+
+<h2>Mes badges :</h2>
+<ul>
+  <% @badges.each do |badge| %>
+    <li><%= badge.title %></li>
+  <% end %>
+</ul>
