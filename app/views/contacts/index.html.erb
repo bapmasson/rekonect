@@ -1,0 +1,15 @@
+<h1>Mes contacts</h1>
+
+<ul>
+  <% @contacts.each do |contact| %>
+    <li style="display: flex; align-items: center; gap: 10px;">
+      <% if contact.photo.attached? %>
+        <%= image_tag contact.photo, class: "img-thumbnail", width: 50, height: 50 %>
+      <% end %>
+      <%= link_to contact.name, contact_path(contact) %>
+      <% if contact.relationship %>
+        (<%= contact.relationship.relation_type %>)
+      <% end %>
+    </li>
+  <% end %>
+</ul>
