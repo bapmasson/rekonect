@@ -1,0 +1,13 @@
+<h1>Envoyer un message</h1>
+
+<%= form_with(model: @message, local: true) do |form| %>
+  <div>
+    <%= form.label :contact_id, "Destinataire" %>
+    <%= form.collection_select :contact_id, Contact.all, :id, :name %>
+  </div>
+  <div>
+    <%= form.label :content, "Message" %>
+    <%= form.text_area :content %>
+  </div>
+  <%= form.submit "Envoyer" %>
+<% end %>
