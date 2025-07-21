@@ -1,0 +1,8 @@
+<h1>Paramètres du compte</h1>
+
+<p><strong>Email :</strong> <%= current_user.email %></p>
+<p><strong>Pseudo :</strong> <%= current_user.username %></p>
+<p><strong>Téléphone :</strong> <%= current_user.phone_number %></p>
+<p><strong>Date de naissance :</strong> <%= current_user.birth_date %></p>
+
+<%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-primary" %>
