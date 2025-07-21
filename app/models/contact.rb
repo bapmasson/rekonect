@@ -2,6 +2,7 @@ class Contact < ApplicationRecord
   belongs_to :user
   belongs_to :relationship
   has_many :messages
+  has_one_attached :photo
 
   # nom obligatoire
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }

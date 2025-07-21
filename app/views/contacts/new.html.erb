@@ -1,0 +1,21 @@
+<h1>Ajouter un contact</h1>
+
+<%= form_with(model: @contact, local: true) do |form| %>
+  <div>
+    <%= form.label :name, "Nom" %>
+    <%= form.text_field :name %>
+  </div>
+  <div>
+    <%= form.label :notes, "Notes" %>
+    <%= form.text_area :notes %>
+  </div>
+  <div>
+    <%= form.label :relationship_id, "Relation" %>
+    <%= form.collection_select :relationship_id, Relationship.all, :id, :relation_type %>
+  </div>
+  <div>
+    <%= form.label :photo, "Photo" %>
+    <%= form.file_field :photo %>
+  </div>
+  <%= form.submit "Ajouter" %>
+<% end %>

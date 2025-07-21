@@ -1,0 +1,10 @@
+<h1>Détail du contact</h1>
+
+<p><strong>Nom :</strong> <%= @contact.name %></p>
+<p><strong>Notes :</strong> <%= @contact.notes %></p>
+<% if @contact.relationship %>
+  <p><strong>Relation :</strong> <%= @contact.relationship.relation_type %></p>
+<% end %>
+<% if @contact.photo.attached? %>
+  <%= image_tag @contact.photo, class: "img-thumbnail", width: 200 %>
+<% end %>
