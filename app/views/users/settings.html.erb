@@ -6,3 +6,4 @@
 <p><strong>Date de naissance :</strong> <%= current_user.birth_date %></p>
 
 <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-primary" %>
+<%= button_to "Supprimer mon compte", registration_path(current_user), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible." }, class: "btn btn-danger" %>
