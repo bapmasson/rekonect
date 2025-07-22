@@ -15,6 +15,6 @@
     <div style="background: #f8f9fa; padding: 10px; border-radius: 5px;">
       <%= @awaiting_message.ai_draft.presence || "Aucune suggestion disponible." %>
     </div>
-    <%= link_to "Répondre", new_message_path(contact_id: @awaiting_message.contact_id), class: "btn btn-primary btn-sm" %>
+    <%= link_to "Répondre", edit_message_path(@awaiting_message), class: "btn btn-primary btn-sm" %>
   </div>
 <% end %>

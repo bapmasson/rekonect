@@ -5,7 +5,7 @@ class MessagePolicy < ApplicationPolicy
   # code, beware of possible changes to the ancestors:
   # https://gist.github.com/Burgestrand/4b4bc22f31c8a95c425fc0e30d7ef1f5
 
-  class Scope < ApplicationPolicy::Scope
+  class Scope < Scope
     # NOTE: Be explicit about which records you allow access to!
     # scope lié à la route "messages#index" qui ne sera pas utilisée mais qui permet de se logger sans bug pour le moment
     def resolve
@@ -22,6 +22,18 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def awaiting_answer?
+    true
+  end
+
+  def edit?
+    true
+  end
+
+  def update?
+    true
+  end
+
+  def dismiss_suggestion?
     true
   end
 end
