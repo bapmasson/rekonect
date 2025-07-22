@@ -31,12 +31,26 @@ class MessagesController < ApplicationController
     authorize @message
   end
 
+  def edit
+    @message = Message.find(params[:id])
+    authorize @message
+  end
+
   def dismiss_suggestion
     @message = current_user.messages.find(params[:id])
     authorize @message
-    # On marque le message comme "ignoré" (par exemple, ajoute un statut ou un champ dismissed)
     @message.update(dismissed: true)
-    redirect_to root_path
+    redirect_to messages_path # <-- redirige vers la liste des messages
+  end
+
+  def update
+    @message = Message.find(params[:id])
+    authorize @message
+    if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
+      redirect_to messages_path, notice: "Réponse envoyée avec succès."
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   private

@@ -1,0 +1,9 @@
+<h1>Modifier la réponse suggérée</h1>
+
+<%= form_with(model: @message, local: true) do |form| %>
+  <div>
+    <%= form.label :user_answer, "Votre réponse" %>
+    <%= form.text_area :user_answer, value: @message.ai_draft, rows: 5 %>
+  </div>
+  <%= form.submit "Envoyer la réponse", class: "btn btn-success" %>
+<% end %>
