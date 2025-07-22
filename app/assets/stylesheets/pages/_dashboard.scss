@@ -1,0 +1,50 @@
+.hero {
+  background-color: #bbd878;  // Fond rouge
+  color: #948d8d;           // Texte en blanc pour contraster avec le rouge
+  padding: 20px;          // Ajoute de l'espace à l'intérieur de la section
+  text-align: center;     // Centre le texte
+}
+body {
+  margin: 0;                  // Enlève les marges par défaut du body
+  height: 100vh;              // Utilise toute la hauteur de la fenêtre
+}
+
+nav {
+  display: flex;              // Utilise flexbox pour aligner les éléments horizontalement
+  justify-content: center;    // Centre les éléments horizontalement
+  align-items: center;        // Aligne les éléments verticalement au centre (sur la même ligne de base)
+  width: 100%;
+  margin-bottom: 50px;               // Utilise toute la largeur de l'écran
+}
+
+nav ul {
+  list-style: none;           // Enlève les puces de la liste
+  padding: 0;
+  margin: 0;
+  display: flex;              // Affiche les éléments de la liste horizontalement
+  gap: 15px;
+  margin-top: 30px;                 // Espace entre les boutons
+}
+
+nav ul li {
+  display: inline;            // Affiche chaque élément de la liste sur la même ligne
+}
+
+nav ul li a {
+  text-decoration: none;      // Enlève le soulignement par défaut des liens
+  padding: 10px 20px;         // Taille des boutons (horizontal, vertical)
+  background-color: #E28D93; // Couleur de fond du bouton (bleu)
+  color: white;               // Couleur du texte
+  border-radius: 50px;         // Bordure arrondie
+  font-weight: bold;          // Texte en gras
+  transition: background-color 0.3s ease;  // Transition lors du survol
+  text-align: center;
+}
+
+nav ul li a:hover {
+  background-color: #E28D50;  // Couleur du fond quand on survole
+}
+.navbar-brand img {
+  width: 200px;  // Ajuste cette valeur pour agrandir ou réduire la taille du logo
+  height: auto;  // Garder les proportions du logo
+}
