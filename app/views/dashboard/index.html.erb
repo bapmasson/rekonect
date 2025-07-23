@@ -20,7 +20,7 @@
 <% end %>
 
 <%# --- Et sinon ? --- %>
-<% quick_msgs = current_user.messages.where(status: :sent, dismissed: [false, nil]).limit(3).where.not(id: main_msg&.id) %>
+<% quick_msgs = @quick_messages %>
 <% if quick_msgs.any? %>
   <div class="card-mobile mb-2">
     <div class="fw-bold mb-2">Et sinon ?</div>
