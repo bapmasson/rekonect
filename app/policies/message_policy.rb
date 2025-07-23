@@ -40,4 +40,8 @@ class MessagePolicy < ApplicationPolicy
   def reply?
     true
   end
+
+  def rekonect?
+    true
+  end
 end
