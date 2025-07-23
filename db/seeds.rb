@@ -18,7 +18,7 @@ user = User.create!(
   email: "jonathan@test.com",
   password: "azerty",
   first_name: "Jonathan",
-  last_name: "Cuculelli",
+  last_name: "Cucculelli",
   username: "Laiokan",
   phone_number: "+33612345678",
   address: "123 Rue de la Demo, 69006 Lyon, France",
@@ -151,12 +151,12 @@ contacts.each do |contact|
       created_at: t1,
       updated_at: t1
     )
-    msg1.update_columns(
+    msg1.update!(
       user_answer: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
       status: :sent,
-      sent_at: t1 + 1.hour,
-      updated_at: t1 + 1.hour
+      sent_at: t1 + 1.hour
     )
+    msg1.update_column(:updated_at, t1 + 1.hour)
 
     t2 = 2.days.ago
     Message.create!(
@@ -178,12 +178,12 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update_columns(
+    msg.update!(
       user_answer: "Bien sûr, je ramène les maillots !",
       status: :sent,
-      sent_at: t + 1.hour,
-      updated_at: t + 1.hour
+      sent_at: t + 1.hour
     )
+    msg.update_column(:updated_at, t + 1.hour)
 
   when "Tonton Jean"
     t = rand(3..6).months.ago
@@ -195,12 +195,12 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update_columns(
+    msg.update!(
       user_answer: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
       status: :sent,
-      sent_at: t + 12.days,
-      updated_at: t + 12.days
+      sent_at: t + 12.days
     )
+    msg.update_column(:updated_at, t + 12.days)
 
   when "Sarah"
     t = rand(2..5).days.ago
@@ -212,12 +212,12 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update_columns(
+    msg.update!(
       user_answer: "J’ai vu ! J’ai failli m’y reconnaître haha",
       status: :sent,
-      sent_at: t + 1.day,
-      updated_at: t + 1.day
+      sent_at: t + 1.day
     )
+    msg.update_column(:updated_at, t + 1.day)
 
   when "Nour"
     t = rand(2..4).days.ago
@@ -229,12 +229,12 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update_columns(
+    msg.update!(
       user_answer: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
       status: :sent,
-      sent_at: t + 2.hours,
-      updated_at: t + 2.hours
+      sent_at: t + 2.hours
     )
+    msg.update_column(:updated_at, t + 2.hours)
 
     # Un message reçu sans réponse pour actualiser le dashboard quand on aura répondu à Maman dans la démo
     t2 = 1.day.ago
@@ -257,12 +257,12 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update_columns(
+    msg.update!(
       user_answer: "J’en ai un ! Je te le descends tout à l’heure.",
       status: :sent,
-      sent_at: t + 1.day,
-      updated_at: t + 1.day
+      sent_at: t + 1.day
     )
+    msg.update_column(:updated_at, t + 1.day)
   end
 
   puts "Conversation avec #{contact.name} enregistrée avec succès."
