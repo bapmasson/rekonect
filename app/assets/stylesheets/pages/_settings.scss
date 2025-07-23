@@ -1,0 +1,22 @@
+.settings-page {
+  background: $page-bg;
+  min-height: 100vh;
+  padding: 26px 10px 70px 10px;
+}
+.settings-title {
+  font-family: $headers-font;
+  font-size: 26px;
+  color: $pink;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+.settings-label {
+  font-size: 17px;
+  color: $gray-txt;
+  margin-bottom: 4px;
+}
+.settings-value {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: $pink;
+}

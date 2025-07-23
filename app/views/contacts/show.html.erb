@@ -1,12 +1,15 @@
-<h1>Détail du contact</h1>
-
-<p><strong>Nom :</strong> <%= @contact.name %></p>
-<p><strong>Notes :</strong> <%= @contact.notes %></p>
-<% if @contact.relationship %>
-  <p><strong>Relation :</strong> <%= @contact.relationship.relation_type %></p>
-<% end %>
-<% if @contact.photo.attached? %>
-  <%= image_tag @contact.photo, class: "img-thumbnail", width: 200 %>
-<% end %>
-
-<%= link_to "Modifier", edit_contact_path(@contact), class: "btn btn-secondary" %>
+<div class="card-mobile mb-2 text-center">
+  <% if @contact.photo.attached? %>
+    <%= image_tag @contact.photo.variant(resize_to_fill: [80, 80]), class: "avatar-mobile mb-2" %>
+  <% else %>
+    <%= image_tag "default-avatar.png", class: "avatar-mobile mb-2" %>
+  <% end %>
+  <div class="fw-bold mb-1">Nom : <%= @contact.name %></div>
+  <div>Notes : <%= @contact.notes %></div>
+  <% if @contact.relationship %>
+    <div>Relation : <%= @contact.relationship.relation_type %></div>
+  <% end %>
+  <%= link_to "Rekonect", new_message_path(contact_id: @contact.id), class: "btn btn-pink mt-2 w-100" %>
+  <%= link_to "Modifier", edit_contact_path(@contact), class: "btn btn-pink mt-2 w-100" %>
+</div>
+<%= render "shared/navbar_bottom" %>

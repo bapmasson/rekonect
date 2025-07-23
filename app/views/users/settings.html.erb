@@ -1,9 +1,27 @@
-<h1>Paramètres du compte</h1>
+<div class="dashboard-header">
+  <h1>Paramètres du compte</h1>
+</div>
 
-<p><strong>Email :</strong> <%= current_user.email %></p>
-<p><strong>Pseudo :</strong> <%= current_user.username %></p>
-<p><strong>Téléphone :</strong> <%= current_user.phone_number %></p>
-<p><strong>Date de naissance :</strong> <%= current_user.birth_date %></p>
-
-<%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-primary" %>
-<%= button_to "Supprimer mon compte", registration_path(current_user), method: :delete, data: { confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible." }, class: "btn btn-danger" %>
+<div class="card-mobile mb-4">
+  <div class="mb-3">
+    <strong>Email :</strong> <span class="settings-value"><%= current_user.email %></span>
+  </div>
+  <div class="mb-3">
+    <strong>Pseudo :</strong> <span class="settings-value"><%= current_user.username %></span>
+  </div>
+  <div class="mb-3">
+    <strong>Téléphone :</strong> <span class="settings-value"><%= current_user.phone_number %></span>
+  </div>
+  <div class="mb-3">
+    <strong>Date de naissance :</strong> <span class="settings-value"><%= current_user.birth_date %></span>
+  </div>
+  <div class="d-flex flex-column gap-3 mt-4">
+    <%= link_to "Modifier mon mot de passe", edit_user_registration_path, class: "btn btn-pink w-100" %>
+    <%= button_to "Supprimer mon compte", registration_path(current_user),
+          method: :delete,
+          form: { data: { turbo: false } },
+          data: { confirm: "Es-tu sûr de vouloir supprimer ton compte ? Cette action est irréversible." },
+          class: "btn btn-danger w-100" %>
+  </div>
+</div>
+<%= render 'shared/navbar_bottom' %>

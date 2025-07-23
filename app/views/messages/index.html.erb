@@ -1,22 +1,26 @@
-<h1>Mes messages</h1>
+<h1 class="dashboard-header">Mes messages</h1>
 
 <% awaiting_messages = @messages.select { |m| m.status == "draft_by_ai" && (m.dismissed == false || m.dismissed.nil?) } %>
 <% if awaiting_messages.any? %>
-  <h2>Messages en attente de réponse :</h2>
-  <ul>
+  <div class="messages-list">
     <% awaiting_messages.each do |message| %>
       <% next if message.nil? || message.id.nil? %>
-      <li>
-        <strong>De :</strong> <%= message.contact.name %><br>
-        <strong>Message :</strong> <%= message.content %><br>
-        <strong>Suggestion :</strong> <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
-        <%= link_to "Répondre", edit_message_path(message), class: "btn btn-primary btn-sm ms-2" %>
-        <%= button_to dismiss_suggestion_message_path(message), method: :patch, class: "btn btn-link btn-sm p-0", title: "Ignorer cette suggestion" do %>
+      <div class="card-mobile position-relative mb-3">
+        <%= button_to dismiss_suggestion_message_path(message), method: :patch, class: "btn-close-alert", title: "Ignorer cette suggestion" do %>
           <i class="bi bi-x-lg"></i>
         <% end %>
-      </li>
+        <div class="message-author"><strong>De :</strong> <%= message.contact.name %></div>
+        <div class="message-content"><strong>Message :</strong> <%= message.content %></div>
+        <div class="suggestion">
+          <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
+        </div>
+        <%= link_to "Rekonect", edit_message_path(message), class: "btn btn-pink mt-2 w-100" %>
+      </div>
     <% end %>
-  </ul>
+  </div>
+<% else %>
+  <div class="alert-mobile mt-4">Aucun message en attente de réponse.</div>
 <% end %>
+<%= render "shared/navbar_bottom" %>
 
 <!-- ...le reste de ta liste de messages... -->

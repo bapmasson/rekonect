@@ -1,0 +1,18 @@
+.card-mobile {
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px $card-shadow;
+  padding: 22px 18px;
+  margin: 18px 0;
+  position: relative;
+}
+.card-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: $pink;
+  margin-bottom: 10px;
+}
+.card-content {
+  font-size: 16px;
+  color: $gray-txt;
+}

@@ -1,45 +1,58 @@
-<h1>Mon Dashboard</h1>
-
-<div style="display: flex; align-items: center; gap: 20px;">
-  <div style="width: 300px; background: #eee; border-radius: 10px; overflow: hidden;">
-    <div style="width: <%= @user.xp_percent %>%; background: #4caf50; height: 24px;"></div>
+<div class="dashboard-header">
+  <h1>Bon retour <%= @user.username %></h1>
+  <p class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</p>
+  <div class="xp-bar mb-2">
+    <div class="xp-bar-fill" style="width: <%= @user.xp_percent %>%"></div>
   </div>
-  <span style="font-weight: bold;">
-    <%= @user.xp_progress %> / <%= @user.xp_for_next_level %> XP
-  </span>
-  <span style="font-weight: bold; font-size: 1.2em;">
-    Niveau : <%= @user.level %>
-  </span>
+  <div class="fw-bold mb-1">
+    <%= @user.xp_progress %> / <%= @user.xp_for_next_level %> XP (Niveau : <%= @user.level %>)
+  </div>
 </div>
 
-<h2>Mes badges :</h2>
-<ul>
-  <% @badges.each do |badge| %>
-    <li>
-      <strong><%= badge.title %></strong>
-      <br>
-      <em>Condition : <%= badge.condition_description %></em>
-    </li>
-  <% end %>
-</ul>
-
-<%= link_to "Messages à répondre", awaiting_answer_messages_path, class: "nav-link" %>
-
-<% awaiting_messages = current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]) %>
-<% if awaiting_messages.any? %>
-  <h3>Messages en attente de réponse :</h3>
-  <ul>
-    <% awaiting_messages.each do |message| %>
-      <% next if message.nil? || message.id.nil? %>
-      <li>
-        <strong>De :</strong> <%= message.contact.name %><br>
-        <strong>Message :</strong> <%= message.content %><br>
-        <strong>Suggestion :</strong> <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
-        <%= link_to "Répondre", edit_message_path(message), class: "btn btn-primary btn-sm ms-2" %>
-        <%= button_to dismiss_suggestion_message_path(message), method: :patch, class: "btn btn-link btn-sm p-0", title: "Ignorer cette suggestion" do %>
-          <i class="bi bi-x-lg"></i>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
+<% main_msg = @main_message || current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]).last %>
+<% if main_msg %>
+  <div class="card-mobile mb-2">
+    <div class="message-author"><strong>De :</strong> <%= main_msg.contact.name %></div>
+    <div class="message-content"><strong>Message :</strong> <%= main_msg.content %></div>
+    <div class="suggestion">
+      <%= main_msg.ai_draft.presence || "Aucune suggestion disponible." %>
+    </div>
+    <%= link_to "Rekonect", edit_message_path(main_msg), class: "btn btn-pink mt-2" %>
+  </div>
 <% end %>
+
+<%# --- Et sinon ? --- %>
+<% quick_msgs = current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]).limit(3).where.not(id: main_msg&.id) %>
+<% if quick_msgs.any? %>
+  <div class="card-mobile mb-2">
+    <div class="fw-bold mb-2">Et sinon ?</div>
+    <div class="d-flex gap-2">
+      <% quick_msgs.each do |msg| %>
+        <div class="text-center">
+          <% if msg.contact.photo.attached? %>
+            <%= image_tag msg.contact.photo.variant(resize_to_fill: [48, 48]), class: "avatar-mobile mb-1" %>
+          <% else %>
+            <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
+          <% end %>
+          <div style="font-size: 13px;"><%= msg.contact.name %><br><span class="text-muted" style="font-size: 11px;"><%= time_ago_in_words(msg.created_at) %> </span></div>
+          <%= link_to "Rekonect", edit_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%# --- Badges et feedback XP --- %>
+<h2 class="mb-2">Mes badges :</h2>
+<div class="badges-list mb-2">
+  <% @badges.each do |badge| %>
+    <div class="card-mobile mb-2">
+      <div class="fw-bold"><%= badge.title %></div>
+      <div class="text-muted small"><em>Condition : <%= badge.condition_description %></em></div>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "Voir tous mes messages", messages_path, class: "btn btn-pink mb-3 w-100" %>
+
+<%= render "shared/navbar_bottom" %>

@@ -1,6 +1,24 @@
-.alert {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 1000;
+.alert-mobile {
+  background: $pink;
+  color: $white;
+  border-radius: 16px;
+  padding: 14px;
+  font-size: 16px;
+  margin: 20px 0;
+  text-align: center;
+  box-shadow: 0 2px 8px $card-shadow;
+  position: relative;
+}
+
+.btn-close-alert {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: $gray-txt;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  padding: 2px 5px;
+  cursor: pointer;
+  z-index: 2;
 }

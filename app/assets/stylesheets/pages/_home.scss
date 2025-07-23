@@ -1,1 +1,17 @@
 // Specific CSS for your home-page
+.hero {
+  background: $page-bg;
+  color: $gray-txt;
+  padding: 32px 12px 24px 12px;
+  text-align: center;
+}
+.hero h1 {
+  font-family: $headers-font;
+  font-size: 27px;
+  color: $pink;
+  margin-bottom: 18px;
+  font-weight: 800;
+}
+.hero p {
+  font-size: 18px;
+}
