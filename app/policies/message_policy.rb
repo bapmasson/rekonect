@@ -36,4 +36,8 @@ class MessagePolicy < ApplicationPolicy
   def dismiss_suggestion?
     true
   end
+
+  def reply?
+    true
+  end
 end

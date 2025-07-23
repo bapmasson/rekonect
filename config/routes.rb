@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :messages do
     member do
       patch :dismiss_suggestion
+      get :reply
     end
   end
   get 'contacts/circles', to: 'contacts#circles', as: :contact_circles

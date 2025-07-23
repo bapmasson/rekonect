@@ -9,20 +9,18 @@
   </div>
 </div>
 
-<% main_msg = @main_message || current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]).last %>
+<% main_msg = @main_message || current_user.messages.where(status: :received, dismissed: [false, nil]).last %>
 <% if main_msg %>
   <div class="card-mobile mb-2">
     <div class="message-author"><strong>De :</strong> <%= main_msg.contact.name %></div>
+    <div style="font-size: 13px;"><p><%= time_ago_in_words(main_msg.created_at) %> ago</p></div>
     <div class="message-content"><strong>Message :</strong> <%= main_msg.content %></div>
-    <div class="suggestion">
-      <%= main_msg.ai_draft.presence || "Aucune suggestion disponible." %>
-    </div>
-    <%= link_to "Rekonect", edit_message_path(main_msg), class: "btn btn-pink mt-2" %>
+    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink mt-2" %>
   </div>
 <% end %>
 
 <%# --- Et sinon ? --- %>
-<% quick_msgs = current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]).limit(3).where.not(id: main_msg&.id) %>
+<% quick_msgs = current_user.messages.where(status: :sent, dismissed: [false, nil]).limit(3).where.not(id: main_msg&.id) %>
 <% if quick_msgs.any? %>
   <div class="card-mobile mb-2">
     <div class="fw-bold mb-2">Et sinon ?</div>
@@ -34,7 +32,7 @@
           <% else %>
             <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
           <% end %>
-          <div style="font-size: 13px;"><%= msg.contact.name %><br><span class="text-muted" style="font-size: 11px;"><%= time_ago_in_words(msg.created_at) %> </span></div>
+          <div style="font-size: 13px;"><%= msg.contact.name %><br><span class="text-muted" style="font-size: 11px;"><%= time_ago_in_words(msg.sent_at) %> </span></div>
           <%= link_to "Rekonect", edit_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
         </div>
       <% end %>
