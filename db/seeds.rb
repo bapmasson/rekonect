@@ -23,7 +23,8 @@ user = User.create!(
   phone_number: "+33612345678",
   address: "123 Rue de la Demo, 69006 Lyon, France",
   birth_date: Faker::Date.birthday(min_age: 25, max_age: 35),
-  xp_level: 94
+  xp_level: 94,
+  xp_points: 3499
 )
 puts "Utilisateur créé : #{user.username} (#{user.first_name} #{user.last_name})"
 
