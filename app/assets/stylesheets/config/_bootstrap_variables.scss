@@ -8,21 +8,18 @@
 $font-family-sans-serif: $body-font;
 $headings-font-family:   $headers-font;
 $body-bg:                $light-gray;
-$font-size-base:         1rem;
 
 // Colors
-$body-color: $gray;
-$primary:    $blue;
-$success:    $green;
-$info:       $yellow;
-$danger:     $red;
-$warning:    $orange;
+$primary: $pink;
+$success: $badge-yellow;
+$info: $gray-txt;
+$danger: #FF6C6C;
+$warning: $pink-hover;
 
 // Buttons & inputs' radius
-$border-radius-sm:            .0625rem;
-$border-radius:               .125rem;
-$border-radius-lg:            .25rem;
-$border-radius-xl:            .5rem;
-$border-radius-xxl:           1rem;
 
 // Override other variables below!
+
+$border-radius: 20px;
+$border-radius-lg: 32px;
+$border-radius-sm: 12px;
