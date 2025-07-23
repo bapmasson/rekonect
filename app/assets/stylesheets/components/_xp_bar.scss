@@ -1,0 +1,14 @@
+.xp-bar {
+  background: $gray-bg;
+  border-radius: 12px;
+  height: 18px;
+  overflow: hidden;
+  width: 100%;
+  margin: 16px 0 24px;
+}
+.xp-bar-fill {
+  background: linear-gradient(90deg, $pink 70%, $pink-hover 100%);
+  height: 100%;
+  border-radius: 12px 0 0 12px;
+  transition: width 0.5s;
+}

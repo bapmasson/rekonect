@@ -1,20 +1,22 @@
 <div class="hero">
-  <h1>Rekonect t’aide à répondre aux bons messages, au bon moment </h1>
+  <h1>Rekonect t’aide à répondre aux bons messages, au bon moment</h1>
   <p>Fini le stress digital ! On t’aide à retrouver ton rythme de réponse.</p>
 </div>
 
 <% if @awaiting_message %>
-  <div class="alert alert-info position-relative">
-    <%= button_to dismiss_suggestion_message_path(@awaiting_message), method: :patch, class: "btn btn-link btn-sm p-0 position-absolute", style: "top: 8px; right: 8px; color: #000;", title: "Ignorer cette suggestion" do %>
+  <div class="alert-mobile position-relative">
+    <%= button_to dismiss_suggestion_message_path(@awaiting_message), method: :patch, class: "btn-close-alert", title: "Ignorer cette suggestion" do %>
       <i class="bi bi-x-lg"></i>
     <% end %>
     <strong>Message en attente de réponse :</strong><br>
     <strong>De :</strong> <%= @awaiting_message.contact.name %><br>
     <strong>Message :</strong> <%= @awaiting_message.content %><br>
-    <strong>Suggestion de réponse :</strong>
-    <div style="background: #f8f9fa; padding: 10px; border-radius: 5px;">
+    <strong>Suggestion :</strong>
+    <div class="suggestion">
       <%= @awaiting_message.ai_draft.presence || "Aucune suggestion disponible." %>
     </div>
-    <%= link_to "Répondre", edit_message_path(@awaiting_message), class: "btn btn-primary btn-sm" %>
+    <%= link_to "Rekonect", edit_message_path(@awaiting_message), class: "btn btn-pink" %>
   </div>
 <% end %>
+
+<%= render "shared/navbar_bottom" %>

@@ -1,0 +1,21 @@
+.contacts-list {
+  padding: 10px 0 90px 0;
+}
+.contact-card {
+  @extend .card-mobile;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+.contact-info {
+  flex: 1;
+}
+.contact-name {
+  font-weight: 700;
+  font-size: 18px;
+  color: $pink;
+}
+.contact-notes {
+  color: $gray-txt;
+  font-size: 15px;
+}

@@ -1,13 +1,25 @@
-<h1>Envoyer un message</h1>
+<div class="dashboard-header">
+  <h1><%= action_name == 'new' ? 'Envoyer un message' : 'Modifier la réponse suggérée' %></h1>
+</div>
 
-<%= form_with(model: @message, local: true) do |form| %>
-  <div>
-    <%= form.label :contact_id, "Destinataire" %>
-    <%= form.collection_select :contact_id, Contact.all, :id, :name %>
-  </div>
-  <div>
-    <%= form.label :content, "Message" %>
-    <%= form.text_area :content %>
-  </div>
-  <%= form.submit "Envoyer" %>
-<% end %>
+<div class="card-mobile mb-4">
+  <%= form_with(model: @message, local: true) do |form| %>
+    <% if action_name == 'new' %>
+      <div class="mb-3">
+        <%= form.label :contact_id, "Destinataire" %>
+        <%= form.collection_select :contact_id, Contact.all, :id, :name, {}, { class: "input-mobile" } %>
+      </div>
+      <div class="mb-3">
+        <%= form.label :content, "Message" %>
+        <%= form.text_area :content, class: "input-mobile" %>
+      </div>
+    <% else %>
+      <div class="mb-3">
+        <%= form.label :user_answer, "Votre réponse" %>
+        <%= form.text_area :user_answer, value: @message.ai_draft, rows: 5, class: "input-mobile" %>
+      </div>
+    <% end %>
+    <%= form.submit (action_name == 'new' ? "Envoyer" : "Envoyer la réponse"), class: "btn btn-pink w-100" %>
+  <% end %>
+</div>
+<%= render 'shared/navbar_bottom' %>

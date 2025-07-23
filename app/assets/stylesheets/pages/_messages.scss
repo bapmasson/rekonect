@@ -1,0 +1,19 @@
+.messages-list {
+  padding: 10px 0 90px 0; // pour pas que la navbar recouvre les cards
+}
+.suggestion {
+  background: $gray-bg;
+  border-radius: 13px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  color: $gray-txt;
+}
+.message-author {
+  font-weight: 700;
+  color: $pink;
+  font-size: 17px;
+}
+.message-content {
+  color: $gray-txt;
+  font-size: 16px;
+}

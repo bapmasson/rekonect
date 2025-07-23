@@ -1,0 +1,27 @@
+<div class="navbar-bottom">
+  <div class="nav-item <%= 'active' if request.path == request.referer || root_path %>">
+    <%= link_to (request.referer || root_path) do %>
+      <i class="bi bi-arrow-counterclockwise"></i>
+    <% end %>
+  </div>
+  <div class="nav-item <%= 'active' if controller_name == 'users' && action_name == 'settings' %>">
+    <%= link_to settings_path do %>
+      <i class="bi bi-gear"></i>
+    <% end %>
+  </div>
+  <div class="nav-item <%= 'active' if controller_name == 'contacts' && action_name == 'circles' %>">
+    <%= link_to contact_circles_path do %>
+      <i class="bi bi-heart"></i>
+    <% end %>
+  </div>
+  <div class="nav-item <%= 'active' if controller_name == 'contacts' && action_name == 'index' %>">
+    <%= link_to contacts_path do %>
+      <i class="bi bi-person"></i>
+    <% end %>
+  </div>
+  <div class="nav-item">
+    <%= link_to destroy_user_session_path, data: {turbo_method: :delete} do %>
+      <i class="bi bi-box-arrow-right"></i>
+    <% end %>
+  </div>
+</div>

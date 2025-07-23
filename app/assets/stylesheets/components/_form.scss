@@ -1,0 +1,19 @@
+.input-mobile, .form-control {
+  border-radius: 18px;
+  border: 1px solid #ddd;
+  padding: 14px 18px;
+  font-size: 18px;
+  background: $white;
+  margin-bottom: 14px;
+  width: 100%;
+  box-shadow: none;
+}
+.input-mobile:focus, .form-control:focus {
+  border-color: $pink;
+  outline: none;
+}
+label {
+  font-size: 16px;
+  margin-bottom: 4px;
+  color: $gray-txt;
+}

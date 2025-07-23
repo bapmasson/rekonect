@@ -1,15 +1,25 @@
-<h1>Mes contacts</h1>
+<h1 class="dashboard-header">Mes contacts</h1>
 
-<ul>
+<div class="d-flex justify-content-end mb-3">
+  <%= link_to "+ Ajouter un contact", new_contact_path, class: "btn btn-pink" %>
+</div>
+
+<div class="contacts-list">
   <% @contacts.each do |contact| %>
-    <li style="display: flex; align-items: center; gap: 10px;">
+    <div class="contact-card mb-2">
       <% if contact.photo.attached? %>
-        <%= image_tag contact.photo, class: "img-thumbnail", width: 50, height: 50 %>
+        <%= image_tag contact.photo.variant(resize_to_fill: [64, 64]), class: "avatar-mobile" %>
+      <% else %>
+        <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
       <% end %>
-      <%= link_to contact.name, contact_path(contact) %>
-      <% if contact.relationship %>
-        (<%= contact.relationship.relation_type %>)
-      <% end %>
-    </li>
+      <div class="contact-info">
+        <div class="contact-name"><%= link_to contact.name, contact_path(contact) %></div>
+        <% if contact.relationship %>
+          <div class="contact-notes">Relation : <%= contact.relationship.relation_type %></div>
+        <% end %>
+      </div>
+      <%= link_to "Rekonect", new_message_path(contact_id: contact.id), class: "btn btn-pink w-100 mt-2" %>
+    </div>
   <% end %>
-</ul>
+</div>
+<%= render "shared/navbar_bottom" %>
