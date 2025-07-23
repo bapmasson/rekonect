@@ -33,7 +33,7 @@
             <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
           <% end %>
           <div style="font-size: 13px;"><%= msg.contact.name %><br><span class="text-muted" style="font-size: 11px;"><%= time_ago_in_words(msg.sent_at) %> </span></div>
-          <%= link_to "Rekonect", edit_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
+          <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
         </div>
       <% end %>
     </div>
