@@ -8,6 +8,7 @@ Rails.application.routes.draw do
       patch :dismiss_suggestion
     end
   end
+  get 'contacts/circles', to: 'contacts#circles', as: :contact_circles
   resources :contacts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
