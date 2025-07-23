@@ -1,6 +1,30 @@
-<div class="hero">
-  <h1>Rekonect t’aide à répondre aux bons messages, au bon moment</h1>
-  <p>Fini le stress digital ! On t’aide à retrouver ton rythme de réponse.</p>
+<div class="logout-hero">
+  <div class="logout-hero-icon">
+    <i class="bi bi-emoji-tear"></i>
+  </div>
+  <div class="logout-hero-title">
+    Oh, tu nous quittes déjà&nbsp;?
+  </div>
+  <div class="logout-hero-desc">
+    Beaucoup de personnes comptent sur toi et attendent ta réponse.
+    <br>
+    <i class="bi bi-envelope-slash logout-hero-message"></i>
+  </div>
+</div>
+
+<div class="logout-card card-mobile text-center">
+  <i class="bi bi-heartbreak logout-card-heart"></i>
+  <div class="logout-card-title">Reviens-nous vite&nbsp;!</div>
+  <div class="logout-card-desc">On garde ta place bien au chaud 🫶</div>
+</div>
+
+<div class="logout-btns">
+  <%= link_to raw('<i class="bi bi-arrow-return-left me-2"></i>Retourner à mon dashboard'), dashboard_path, class: "btn btn-pink logout-btn-main" %>
+  <%= button_to raw('<i class="bi bi-box-arrow-right me-2"></i>Oui, je me déconnecte vraiment'), destroy_user_session_path, method: :delete, class: "btn btn-secondary w-100", form: { "data-turbo" => "false" } %>
+  <div class="logout-guilt">
+    <i class="bi bi-emoji-frown me-1"></i>
+    Promis, tu reviens bientôt&nbsp;?
+  </div>
 </div>
 
 <% if @awaiting_message %>

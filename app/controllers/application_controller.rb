@@ -19,6 +19,11 @@ class ApplicationController < ActionController::Base
     redirect_to(root_path)
   end
 
+  def after_sign_out_path_for(resource_or_scope)
+    flash[:notice] = "À bientôt, reviens vite donner des nouvelles !"
+    new_user_session_path
+  end
+
   private
 
   def skip_pundit?
