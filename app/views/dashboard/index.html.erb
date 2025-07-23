@@ -15,7 +15,7 @@
     <div class="message-author"><strong>De :</strong> <%= main_msg.contact.name %></div>
     <div style="font-size: 13px;"><p><%= time_ago_in_words(main_msg.created_at) %> ago</p></div>
     <div class="message-content"><strong>Message :</strong> <%= main_msg.content %></div>
-    <%= link_to "Rekonect", edit_message_path(main_msg), class: "btn btn-pink mt-2" %>
+    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink mt-2" %>
   </div>
 <% end %>
 

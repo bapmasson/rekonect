@@ -1,0 +1,20 @@
+<div class="dashboard-header">
+  <h1>Prends donc un peu de temps pour <%= @message.contact.name %></h1>
+  <p class="dashboard-welcome">Voici un résumé de vos derniers échanges</p>
+</div>
+
+<div class="card-mobile mb-2">
+    <div class="message-content"><%= @summary %></div>
+</div>
+
+ <div class="card-mobile mb-2">
+    <div class="message-author"><strong>Dernier message non répondu :</strong> <%= time_ago_in_words(@message.created_at) %> ago</div>
+    <div class="message-content"><%= @message.content %></div>
+  </div>
+
+  <div class="card-mobile mb-2">
+    <div class="message-author"><strong>Suggestion de réponse</strong></div>
+    <div class="message-content"> <%= @message.ai_draft %></div>
+    <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink mt-2" %>
+  </div>
+    <%# <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink mt-2" %> %>

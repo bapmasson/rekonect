@@ -11,6 +11,14 @@ class MessagesController < ApplicationController
     authorize @message
   end
 
+  def reply
+    @message = Message.find(params[:id])
+    authorize @message
+    last_messages = current_user.messages.where(contact_id: @message.contact_id).order(updated_at: :desc).last(3)
+    @summary = message_summary(last_messages)
+    ai_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
+  end
+
   def create
     @message = current_user.messages.build(message_params)
     authorize @message
@@ -47,7 +55,7 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     authorize @message
     if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
-      redirect_to messages_path, notice: "Réponse envoyée avec succès."
+      redirect_to dashboard_path, notice: "Réponse envoyée avec succès."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -57,5 +65,49 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:content, :contact_id)
+  end
+
+  def message_summary(messages)
+    cache_key = "message_summary_#{messages.map(&:id).join('_')}"
+    summary = Rails.cache.read(cache_key)
+    return summary if summary.present?
+
+    # Utilise l'API OpenAI pour générer un résumé des derniers messages
+    client = OpenAI::Client.new
+    chatgpt_response = client.chat(
+      parameters: {
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a helpful assistant that summarizes conversations." },
+          { role: "user", content: "Make a very short recap (80 words max) in French of each interaction between the contact and the user. Speak directly to the user : #{messages.map { |m| "message du contact: #{m.content}#{m.user_answer.present? ? ", réponse utilisateur: #{m.user_answer}" : ""}" }.join(", ")}" }
+        ]
+      }
+    )
+    summary = chatgpt_response["choices"][0]["message"]["content"] if chatgpt_response && chatgpt_response["choices"].any?
+    summary ||= "Unable to generate summary at this time."
+    Rails.cache.write(cache_key, summary, expires_in: 12.hours)
+    summary
+  rescue StandardError => e
+    Rails.logger.error("OpenAI API error: #{e.message}")
+    "Unable to generate summary at this time."
+  end
+
+  def ai_suggestion(message, summary)
+    # Utilise l'API OpenAI pour générer une suggestion de réponse
+    client = OpenAI::Client.new
+    chatgpt_response = client.chat(
+      parameters: {
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You are a helpful assistant that generates message replies." },
+          { role: "user", content: "This is the background of the conversation: #{summary}. This is the last message you received : #{message.content}. Generate in French a warmful reply of 50 words max to this last message without repeating the summary as it is meant only for you and not for being in the reply." }
+        ]
+      }
+    )
+    ai_suggestion = chatgpt_response["choices"][0]["message"]["content"] if chatgpt_response && chatgpt_response["choices"].any?
+    message.update!(ai_draft: ai_suggestion, status: :draft_by_ai) if ai_suggestion.present?
+    rescue StandardError => e
+      Rails.logger.error("OpenAI API error: #{e.message}")
+      "Unable to generate suggestion at this time."
   end
 end
