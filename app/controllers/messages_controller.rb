@@ -17,6 +17,15 @@ class MessagesController < ApplicationController
   def reply
     @message = Message.find(params[:id])
     authorize @message
+
+    # je recupere les 3 derniers msg avec ce contact, du plus récent au plus ancien
+     @history_messages = current_user.messages
+    .where(contact_id: @message.contact_id)
+    .where.not(id: @message.id)
+    .order(created_at: :desc)
+    .limit(3)
+    .where(status: :sent)
+
     last_messages = current_user.messages.where(contact_id: @message.contact_id).order(updated_at: :desc).last(3)
     @summary = message_summary(last_messages)
     ai_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
@@ -69,10 +78,23 @@ class MessagesController < ApplicationController
   def update
     @message = Message.find(params[:id])
     authorize @message
+
     if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
-      redirect_to dashboard_path, notice: "Réponse envoyée avec succès."
+      redirect_to dashboard_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def send_message
+    @message = Message.find(params[:id])
+    authorize @message
+
+    # copie la suggestion de l'IA dans uiser_answer
+    if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
+      redirect_to dashboard_path, notice: "Réponse envoyée avec succès."
+    else
+      redirect_to reply_message_path(@message), alert: "Erreur lors de l’envoi de la réponse."
     end
   end
 

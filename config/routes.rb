@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       patch :dismiss_suggestion
       get :reply
       get :rekonect
+      post :send_message
     end
   end
   get 'contacts/circles', to: 'contacts#circles', as: :contact_circles

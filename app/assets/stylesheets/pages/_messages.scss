@@ -17,3 +17,129 @@
   color: $gray-txt;
   font-size: 16px;
 }
+
+// header arrondi
+.reply-header {
+  background: $pink-header;
+  border-radius: 30px;
+  padding: 18px 22px 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto 18px auto;
+  max-width: 440px;
+}
+
+.reply-title {
+  font-family: $headers-font;
+  font-size: 1.46rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0;
+  line-height: 1.15;
+}
+
+.reply-avatar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15px;
+}
+.reply-contact-name {
+  font-size: 1.11rem;
+  font-weight: 700;
+  color: $gray-txt;
+  margin-top: 2px;
+  text-align: center;
+}
+
+// Card pink
+.msg-bubble-pink {
+  background: $pink-header;
+  border-radius: 28px;
+  box-shadow: 0 4px 18px $card-shadow;
+  padding: 18px 14px 14px 14px;
+  max-width: 450px;
+  margin: 0 auto 24px auto;
+}
+
+.reply-block-title {
+  text-align: center;
+  font-size: 1.09rem;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.msg-inner-bubble {
+  background: $white;
+  border-radius: 19px;
+  box-shadow: 0 2px 8px $card-shadow;
+  padding: 18px 16px 14px 18px;
+  margin: 12px auto 14px auto;
+  max-width: 98%;
+  min-width: 70px;
+  font-size: 1.06rem;
+}
+
+.message-content {
+  color: #222;
+  font-size: 1.03rem;
+  font-weight: 700;
+}
+
+.message-date {
+  color: $gray-txt;
+  font-size: 0.96rem;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+// Boutons envoyer et éditer
+.reply-btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin: 18px 0 0 0;
+
+  > * {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 170px;
+    display: flex !important;
+  }
+}
+
+.reply-btn {
+  width: 100% !important;
+  min-width: 120px;
+  max-width: 170px;
+  font-size: 1.19rem !important;
+  border-radius: 18px !important;
+  margin: 0;
+  box-shadow: 0 4px 16px $card-shadow;
+  font-weight: 700;
+  padding: 12px 0 !important;
+  transition: transform 0.13s;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  display: flex !important;
+}
+
+// Responsive
+@media (max-width: 480px) {
+  .reply-header, .msg-bubble-pink {
+    max-width: 98vw;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .msg-inner-bubble {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .reply-btn {
+    width: 48%;
+    font-size: 1rem !important;
+  }
+}
