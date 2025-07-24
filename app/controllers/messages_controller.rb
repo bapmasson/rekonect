@@ -66,6 +66,13 @@ class MessagesController < ApplicationController
   def edit
     @message = Message.find(params[:id])
     authorize @message
+
+    @history_messages = current_user.messages
+    .where(contact_id: @message.contact_id)
+    .where.not(id: @message.id)
+    .order(created_at: :desc)
+    .limit(3)
+    .where(status: :sent)
   end
 
   def dismiss_suggestion
