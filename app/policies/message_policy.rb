@@ -44,4 +44,8 @@ class MessagePolicy < ApplicationPolicy
   def rekonect?
     true
   end
+
+  def send_message?
+  true
+  end
 end
