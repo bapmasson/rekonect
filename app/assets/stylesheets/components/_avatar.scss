@@ -1,4 +1,5 @@
 .avatar-mobile {
+  background: $white;
   width: 64px;
   height: 64px;
   border-radius: 50%;
@@ -6,4 +7,5 @@
   border: 3px solid $white;
   box-shadow: 0 0 6px $card-shadow;
   background: $gray-bg;
+  margin-top: 18px !important;
 }

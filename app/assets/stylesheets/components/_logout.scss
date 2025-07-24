@@ -1,0 +1,117 @@
+.logout-card-title,
+.logout-hero-title {
+  font-size: 18px; margin-bottom: 3px;
+}
+.logout-card-desc,
+.logout-hero-desc {
+   font-size: 13.5px; margin-bottom: 5px;
+}
+
+.logout-hero {
+  background: $green-light;
+  padding: 18px 8px 12px 8px;
+  text-align: center;
+  border-radius: 0 0 36px 36px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.05);
+  margin-bottom: 18px;
+}
+.logout-hero-icon {
+  font-size: 2.6rem;
+  color: $pink;
+  margin-bottom: 8px;
+}
+.logout-hero-title {
+  font-family: $headers-font;
+  color: $pink;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.logout-hero-desc {
+  font-size: 17px;
+  color: $gray-txt;
+  margin-bottom: 10px;
+  .logout-hero-message {
+    font-size: 1.5rem;
+    color: $pink;
+    vertical-align: middle;
+    margin-left: 6px;
+  }
+}
+
+.logout-card {
+  background: $white;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(226,141,147,0.13);
+  padding: 18px 8px 12px 8px;
+  margin: 0 0 14px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.logout-card-heart {
+  color: $pink;
+  font-size: 2.2rem;
+  margin-bottom: 7px;
+}
+.logout-card-title {
+  font-family: $headers-font;
+  color: $pink;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.logout-card-desc {
+  color: $gray-txt;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.logout-btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 12px;
+  margin-top: 10px !important;
+  gap: 8px !important;
+}
+
+.logout-btn-main {
+  @extend .btn-pink;
+  font-size: 17px;
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(226,141,147,0.11);
+  font-weight: 700;
+  padding: 13px 0;
+}
+
+.logout-btn-secondary {
+  background: #697075;
+  color: $white;
+  border-radius: 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: 0 2px 9px rgba(105,112,117,0.07);
+}
+.logout-btn-secondary:hover,
+.logout-btn-secondary:focus {
+  background: #464a4d;
+  color: $white;
+}
+
+.logout-guilt {
+  color: $gray-txt;
+  font-size: 15px;
+  margin-top: 6px;
+  font-weight: 400;
+  i {
+    font-size: 1.17rem;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+}
