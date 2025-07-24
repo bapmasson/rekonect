@@ -127,6 +127,24 @@
   display: flex !important;
 }
 
+// bouton envoyer pour la view edit
+
+.btn-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.msg-bubble-pink .msg-inner-bubble form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.msg-bubble-pink .msg-inner-bubble form .reply-btn {
+  width: auto !important;
+  min-width: 120px;
+  margin-top: 18px;
+}
 // Responsive
 @media (max-width: 480px) {
   .reply-header, .msg-bubble-pink {
