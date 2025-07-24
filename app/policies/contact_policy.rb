@@ -9,7 +9,7 @@ class ContactPolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     def resolve
       # On retourne seulement les contacts de l'utilisateur courant
-      scope
+      scope.where(user: user)
     end
   end
 

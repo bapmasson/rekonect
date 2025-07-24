@@ -19,3 +19,126 @@
   color: $gray-txt;
   font-size: 15px;
 }
+
+// circle
+
+.contacts-circles-page {
+  background: $page-bg;
+  min-height: 100vh;
+  padding: 30px 0 88px 0;
+}
+
+.circles-header-card {
+  background: $pink-header;
+  border-radius: 36px;
+  box-shadow: 0 4px 18px $card-shadow;
+  width: 94vw;
+  max-width: 500px;
+  margin: 0 auto 25px auto;
+  padding: 20px 8px 10px 8px;
+  text-align: center;
+
+  h1 {
+    color: #222;
+    font-family: $headers-font;
+    font-weight: 800;
+    font-size: 2rem;
+    margin: 0;
+  }
+}
+
+.contact-circle-card {
+  background: $white;
+  border-radius: 30px;
+  box-shadow: 0 4px 16px $card-shadow;
+  margin: 25px auto 0 auto;
+  max-width: 430px;
+  width: 93vw;
+  padding: 12px 14px 8px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact-circle-main {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 4px;
+
+  .avatar-mobile {
+    width: 64px;
+    height: 64px;
+    margin-right: 5px;
+  }
+  .contact-circle-name {
+    font-family: $headers-font;
+    font-size: 1.32rem;
+    font-weight: 800;
+    color: #222;
+  }
+}
+
+.contact-circle-fields {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: 5px;
+  margin-bottom: 7px;
+  width: 100%;
+
+  .circle-label {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $gray-txt;
+    margin-right: 6px;
+  }
+
+  .circle-select {
+    font-size: 1.04rem;
+    border-radius: 20px;
+    padding: 7px 13px;
+    border: 2.1px solid $pink-header;
+    margin-right: 8px;
+    background: #fff0f7;
+    font-family: $body-font;
+    font-weight: 700;
+    color: #333;
+    min-width: 120px;
+    box-shadow: 0 2px 10px $card-shadow;
+    outline: none;
+
+    &:focus {
+      border-color: $pink;
+      background: #fff4f7;
+    }
+  }
+}
+
+.circle-submit-container {
+  text-align: right;
+  max-width: 440px;
+  margin: 28px auto 0 auto;
+  padding-right: 7px;
+
+  .circles-btn-submit {
+    font-size: 1.34rem !important;
+    font-weight: 800 !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 18px $card-shadow;
+    background: linear-gradient(90deg, $pink 0%, $pink-dark 100%);
+    padding: 10px 28px !important;
+    margin: 0 !important;
+    width: unset;
+  }
+}
+
+@media (max-width: 450px) {
+  .circles-header-card,
+  .contact-circle-card {
+    width: 99vw;
+    max-width: 99vw;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+}
