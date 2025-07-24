@@ -54,6 +54,8 @@ gem "sassc-rails"
 gem "faker"
 gem "ruby-openai"
 gem "solid_cache"
+gem 'cloudinary', '~> 1.24'
+gem 'activestorage-cloudinary-service'
 
 group :development, :test do
   gem "dotenv-rails"
