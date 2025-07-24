@@ -15,10 +15,15 @@
 .navbar-bottom .nav-item {
   flex: 1;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .navbar-bottom i, .navbar-bottom .avatar-mobile {
   font-size: 27px;
   color: $pink;
+  min-width: 27px;
+  min-height: 27px;
 }
 .navbar-bottom .active {
   color: $pink-hover;

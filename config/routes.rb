@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
   get 'users/settings'
   devise_for :users
-  root to: "pages#home"
+  get "/goodbye", to: "pages#home", as: :goodbye
+  root to: "dashboard#index"
   get "messages/awaiting_answer", to: "messages#awaiting_answer", as: :awaiting_answer_messages
   resources :messages do
+    collection do
+      get :success
+    end
     member do
       patch :dismiss_suggestion
       get :reply
       get :rekonect
+      post :send_message
     end
   end
   get 'contacts/circles', to: 'contacts#circles', as: :contact_circles

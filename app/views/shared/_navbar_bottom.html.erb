@@ -9,18 +9,19 @@
       <i class="bi bi-gear"></i>
     <% end %>
   </div>
-  <div class="nav-item <%= 'active' if controller_name == 'contacts' && action_name == 'circles' %>">
+  <% is_contacts_circles = controller_name == 'contacts' && action_name.in?(%w[circles update]) %>
+  <div class="nav-item <%= 'active' if is_contacts_circles %>">
     <%= link_to contact_circles_path do %>
       <i class="bi bi-heart"></i>
     <% end %>
   </div>
-  <div class="nav-item <%= 'active' if controller_name == 'contacts' && action_name == 'index' %>">
-    <%= link_to contacts_path do %>
+  <div class="nav-item <%= 'active' if controller_name == 'dashboard' %>">
+    <%= link_to dashboard_path do %>
       <i class="bi bi-person"></i>
     <% end %>
   </div>
   <div class="nav-item">
-    <%= link_to root_path do %>
+    <%= link_to goodbye_path do %>
       <i class="bi bi-box-arrow-right"></i>
     <% end %>
   </div>

@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
+  skip_after_action :verify_authorized, only: [:circles]
 
   def index
     @contacts = policy_scope(current_user.contacts)
@@ -38,6 +39,10 @@ class ContactsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def circles
+    @contacts = policy_scope(Contact)
   end
 
   private
