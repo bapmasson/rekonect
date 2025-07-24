@@ -3,10 +3,10 @@
     <i class="bi bi-emoji-tear"></i>
   </div>
   <div class="logout-hero-title">
-    Oh, tu nous quittes déjà&nbsp;?
+    Oh, déjà sur le départ ?
   </div>
   <div class="logout-hero-desc">
-    Beaucoup de personnes comptent sur toi et attendent ta réponse.
+    Quelques personnes aimeraient bien avoir de tes nouvelles !
     <br>
     <i class="bi bi-envelope-slash logout-hero-message"></i>
   </div>
@@ -14,33 +14,50 @@
 
 <div class="logout-card card-mobile text-center">
   <i class="bi bi-heartbreak logout-card-heart"></i>
-  <div class="logout-card-title">Reviens-nous vite&nbsp;!</div>
+  <div class="logout-card-title"> À très vite ! </div>
   <div class="logout-card-desc">On garde ta place bien au chaud 🫶</div>
 </div>
 
-<div class="logout-btns">
-  <%= link_to raw('<i class="bi bi-arrow-return-left me-2"></i>Retourner à mon dashboard'), dashboard_path, class: "btn btn-pink logout-btn-main" %>
-  <%= button_to raw('<i class="bi bi-box-arrow-right me-2"></i>Oui, je me déconnecte vraiment'), destroy_user_session_path, method: :delete, class: "btn btn-secondary w-100", form: { "data-turbo" => "false" } %>
-  <div class="logout-guilt">
-    <i class="bi bi-emoji-frown me-1"></i>
-    Promis, tu reviens bientôt&nbsp;?
-  </div>
-</div>
-
-<% if @awaiting_message %>
-  <div class="alert-mobile position-relative">
-    <%= button_to dismiss_suggestion_message_path(@awaiting_message), method: :patch, class: "btn-close-alert", title: "Ignorer cette suggestion" do %>
-      <i class="bi bi-x-lg"></i>
-    <% end %>
-    <strong>Message en attente de réponse :</strong><br>
-    <strong>De :</strong> <%= @awaiting_message.contact.name %><br>
-    <strong>Message :</strong> <%= @awaiting_message.content %><br>
-    <strong>Suggestion :</strong>
-    <div class="suggestion">
-      <%= @awaiting_message.ai_draft.presence || "Aucune suggestion disponible." %>
-    </div>
-    <%= link_to "Rekonect", edit_message_path(@awaiting_message), class: "btn btn-pink" %>
+<% if @main_message %>
+  <div class="alert-mobile card-mobile-logout mb-2 position-relative">
+    <div class="fw-bold mb-1">Juste avant de partir :</div>
+    <div><strong><%= @main_message.contact.name %></strong> attend une petite réponse !</div>
+    <div class="message-content"><%= @main_message.content %></div>
+    <%= link_to "Rekonect", reply_message_path(@main_message), class: "btn btn-pink mt-2" %>
   </div>
 <% end %>
+
+<div class="logout-btns">
+  <%= link_to raw('<i class="bi bi-house-heart me-2"></i>Retourner à mon dashboard'), dashboard_path, class: "btn btn-pink logout-btn-main" %>
+</div>
+
+<% if @quick_messages.any? %>
+  <div class="card-mobile card-mobile-logout mb-2">
+    <div class="fw-bold mb-2">Tu peux aussi prendre soin de ces liens :</div>
+    <div class="d-flex gap-2 justify-content-center">
+      <% @quick_messages.first(2).each do |msg| %>
+        <div class="text-center">
+          <% if msg.contact.photo.attached? %>
+            <%= image_tag msg.contact.photo.variant(resize_to_fill: [48, 48]), class: "avatar-mobile mb-1" %>
+          <% else %>
+            <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
+          <% end %>
+          <div><%= msg.contact.name %></div>
+          <div class="text-muted small"><%= time_ago_in_words(msg.created_at) %> sans réponse</div>
+          <%= link_to "Rekonect", reply_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
+        </div>
+      <% end %>
+    </div>
+    <div class="logout-guilt mt-2">Plus tu te reconnectes, plus tu gagnes d’XP et tu gardes tes liens 💌</div>
+  </div>
+<% end %>
+
+<div class="logout-btns">
+  <%= button_to raw('👋 Je file pour cette fois !'), destroy_user_session_path, method: :delete, class: "btn btn-secondary w-100", form: { "data-turbo" => "false" } %>
+  <div class="logout-guilt">
+    <i class="bi bi-emoji-frown me-1"></i>
+    Promis, tu reviens bientôt ?
+  </div>
+</div>
 
 <%= render "shared/navbar_bottom" %>

@@ -1,18 +1,67 @@
 .btn-pink {
   background: $pink;
   color: $white;
-  border-radius: 20px;
+  border-radius: 14px !important;
   border: none;
   font-weight: 700;
   box-shadow: 0 4px 8px $card-shadow;
-  padding: 16px 0;
+  padding: 8px 0 !important; //
   width: 100%;
-  margin: 12px 0;
-  font-size: 18px;
+  margin: 7px 0 !important;
+  margin-top: 18px !important;
+  font-size: 15px !important;
   transition: background 0.2s;
   letter-spacing: 0.5px;
 }
+
 .btn-pink:hover, .btn-pink:focus {
   background: $pink-hover;
   color: $white;
+}
+
+.btn-pink.btn-sm {
+  font-size: 13px !important;
+  padding: 4px 0 !important;
+}
+
+.btn-pink.logout-btn-main {
+  font-size: 17px !important;
+  box-shadow: 0 6px 20px $card-shadow;
+  background: linear-gradient(90deg, $pink 0%, $pink-dark 100%);
+  transition: transform 0.11s;
+  transform: translateY(0);
+}
+.btn-pink.logout-btn-main:active {
+  transform: translateY(2px) scale(0.98);
+}
+
+.btn-secondary {
+  background: #b0bec5;
+  color: #37474f;
+  border-radius: 14px !important;
+  border: none;
+  font-size: 15px !important;
+  font-weight: 600;
+  padding: 8px 0 !important;
+  margin-top: 0;
+  margin-bottom: 0;
+  box-shadow: 0 2px 8px $card-shadow;
+  transition: background 0.18s;
+  letter-spacing: 0.1px;
+}
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: #e0e4ea;
+  color: $pink-dark;
+}
+
+.btn-pink.logout-btn-main:focus,
+.btn-pink.logout-btn-main:hover {
+  box-shadow: 0 6px 26px $card-shadow, 0 0 0 2px $pink-dark;
+  outline: none;
+}
+.btn-secondary:focus,
+.btn-secondary:hover {
+  box-shadow: 0 4px 12px $card-shadow, 0 0 0 2px $pink;
+  outline: none;
 }

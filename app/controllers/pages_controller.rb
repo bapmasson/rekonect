@@ -3,7 +3,12 @@ class PagesController < ApplicationController
 
   def home
     if user_signed_in?
-      @awaiting_message = current_user.messages.where(status: :draft_by_ai, dismissed: [false, nil]).first
+      @main_message = main_message
+      @quick_messages = quick_messages
+      @quick_messages ||= []
+      else
+      @main_message = nil
+      @quick_messages = []
     end
   end
 end

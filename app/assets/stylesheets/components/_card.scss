@@ -2,8 +2,8 @@
   background: $white;
   border-radius: 20px;
   box-shadow: 0 2px 8px $card-shadow;
-  padding: 22px 18px;
-  margin: 18px 0;
+  padding: 10px 8px !important;
+  margin: 8px 0 !important;
   position: relative;
 }
 .card-header {
@@ -15,4 +15,14 @@
 .card-content {
   font-size: 16px;
   color: $gray-txt;
+}
+
+.card-mobile-logout {
+  background: #fff0f3 !important;
+  color: $pink-dark !important;
+  border: 1.5px solid $pink !important;
+  padding: 11px 7px !important;
+  margin-bottom: 9px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 2px 10px $card-shadow;
 }
