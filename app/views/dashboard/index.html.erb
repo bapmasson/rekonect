@@ -1,39 +1,60 @@
 <div class="dashboard-header">
+  <div class="dashboard-title-card">
   <h1>Bon retour <%= @user.username %></h1>
-  <p class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</p>
-  <div class="xp-bar mb-2">
+  <div class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</div>
+  </div>
+  <div class="xp-bar-container">
+  <div class="xp-bar-logo">
+    <%= image_tag "xp.png", class: "xp-bar-icon" %>
+    <div class="xp-level">
+      <span class="xp-level-label">NIVEAU</span>
+      <span class="xp-level-number"><%= @user.level %></span>
+    </div>
+  </div>
+  <div class="xp-bar">
     <div class="xp-bar-fill" style="width: <%= @user.xp_percent %>%"></div>
+    <span class="xp-bar-progress"><%= @user.xp_progress %>/<%= @user.xp_for_next_level %> XP</span>
   </div>
-  <div class="fw-bold mb-1">
-    <%= @user.xp_progress %> / <%= @user.xp_for_next_level %> XP (Niveau : <%= @user.level %>)
-  </div>
+</div>
+
 </div>
 
 <% main_msg = @main_message || current_user.messages.where(status: :received, dismissed: [false, nil]).last %>
 <% if main_msg %>
-  <div class="card-mobile mb-2">
-    <div class="message-author"><strong>De :</strong> <%= main_msg.contact.name %></div>
-    <div style="font-size: 13px;"><p><%= time_ago_in_words(main_msg.created_at) %> ago</p></div>
-    <div class="message-content"><strong>Message :</strong> <%= main_msg.content %></div>
-    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink mt-2" %>
+  <div class="main-message-card">
+    <div class="main-message-title">
+      Hey! Voici un message de ta <%= main_msg.contact.name %> attendant un retour de ta part
+    </div>
+    <div class="main-message-bubble">
+      <div class="message-content">
+        <%= main_msg.content %>
+      </div>
+      <div class="message-date">
+        Il y a <%= time_ago_in_words(main_msg.created_at) %>
+      </div>
+    </div>
+    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink main-message-btn" %>
   </div>
 <% end %>
 
 <%# --- Et sinon ? --- %>
 <% quick_msgs = @quick_messages %>
 <% if quick_msgs.any? %>
-  <div class="card-mobile mb-2">
-    <div class="fw-bold mb-2">Et sinon ?</div>
-    <div class="d-flex gap-2">
+  <div class="quick-contacts-card">
+    <div class="quick-contacts-title">Et sinon ?</div>
+    <div class="quick-contacts-list">
       <% quick_msgs.each do |msg| %>
-        <div class="text-center">
+        <div class="quick-contact">
+          <div class="contact-content">
           <% if msg.contact.photo.attached? %>
-            <%= image_tag msg.contact.photo.variant(resize_to_fill: [48, 48]), class: "avatar-mobile mb-1" %>
+            <%= image_tag msg.contact.photo.variant(resize_to_fill: [80, 80]), class: "avatar-mobile mb-1" %>
           <% else %>
             <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
           <% end %>
-          <div style="font-size: 13px;"><%= msg.contact.name %><br><span class="text-muted" style="font-size: 11px;"><%= time_ago_in_words(msg.sent_at) %> </span></div>
-          <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>
+          <div class="contact-name"><%= msg.contact.name %></div>
+          <div class="contact-date"><%= time_ago_in_words(msg.sent_at) %></div>
+          </div>
+          <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm" %>
         </div>
       <% end %>
     </div>
