@@ -145,7 +145,137 @@
   min-width: 120px;
   margin-top: 18px;
 }
+
+// validation xp view
+
+.validation-header {
+  text-align: center;
+  background: $pink-header;
+  border-radius: 28px;
+  margin: 20px auto 0 auto;
+  padding: 22px 18px 11px 18px;
+  box-shadow: 0 4px 18px $card-shadow;
+  max-width: 450px;
+}
+.validation-title {
+  font-size: 1.39rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 2px;
+  font-family: $headers-font;
+}
+.validation-subtitle {
+  font-size: 1.05rem;
+  color: $gray-txt;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.xp-badge-container {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 8px 0;
+}
+
+.xp-star {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.xp-badge {
+  background: rgba(226, 141, 147, 0.11);
+  border-radius: 50%;
+  width: 96px; height: 96px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.xp-text {
+  color: $pink;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 2px;
+  letter-spacing: 1.1px;
+  font-family: $headers-font;
+}
+.xp-gain-title {
+  margin: 17px 0 19px 0;
+  text-align: center;
+}
+.gain-xp {
+  font-family: $headers-font;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #222;
+  background: #fff;
+  border-radius: 14px;
+  padding: 9px 20px;
+  box-shadow: 0 3px 12px $card-shadow;
+  display: inline-block;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.contacts-xp-list {
+  margin: 0 auto 24px auto;
+  padding: 18px 12px 8px 12px;
+  background: $pink-header;
+  border-radius: 34px;
+  box-shadow: 0 4px 18px $card-shadow;
+  max-width: 470px;
+}
+
+.contact-suggestion {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px $card-shadow;
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  margin: 15px 0;
+  min-height: 64px;
+}
+.contact-avatar {
+  flex: 0 0 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-contact-xp {
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px #E28D9344;
+  border: 3px solid $pink-header;
+}
+.contact-xp-info {
+  margin-left: 16px;
+  font-size: 1.05rem;
+  color: #191919;
+  font-weight: 700;
+  font-family: $body-font;
+}
+.contact-xp-detail {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.97rem;
+  color: $gray-txt;
+  font-weight: 500;
+  font-family: $body-font;
+}
+
+
 // Responsive
+
+@media (max-width: 500px) {
+  .validation-header, .contacts-xp-list { max-width: 98vw; }
+  .gain-xp { font-size: 1.08rem; padding: 6px 8px;}
+  .xp-badge { width: 68px; height: 68px;}
+  .avatar-contact-xp { width: 44px; height: 44px;}
+}
+
 @media (max-width: 480px) {
   .reply-header, .msg-bubble-pink {
     max-width: 98vw;
