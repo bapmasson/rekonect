@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root to: "dashboard#index"
   get "messages/awaiting_answer", to: "messages#awaiting_answer", as: :awaiting_answer_messages
   resources :messages do
+    collection do
+      get :success
+    end
     member do
       patch :dismiss_suggestion
       get :reply

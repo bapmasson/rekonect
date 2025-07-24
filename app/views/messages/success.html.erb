@@ -1,0 +1,60 @@
+<div class="validation-header msg-bubble-pink">
+  <div class="validation-title">🎉 Message envoyé, bien joué !</div>
+  <div class="validation-subtitle">Tu te reconnectes, continues !</div>
+</div>
+
+<div class="xp-badge-container">
+  <div class="xp-badge">
+    <%= image_tag "xp.png", alt: "XP", class: "xp-star" %>
+    <div class="xp-text">XP</div>
+  </div>
+</div>
+
+<div class="xp-gain-title">
+  <span class="gain-xp">TU AS GAGNÉ <b>20 XP</b> ✅ 🤩!</span>
+</div>
+
+<div class="msg-bubble-pink contacts-xp-list">
+  <div class="contact-suggestion">
+    <div class="contact-avatar">
+      <%= image_tag "papa.png", alt: "Papa", class: "avatar-contact-xp" %>
+    </div>
+    <div class="contact-xp-info">
+      <b>Papa</b><br>
+      <span class="contact-xp-detail">💬 Réponds à Papa et gagnes 10 XP ! 💎</span>
+    </div>
+  </div>
+
+  <div class="contact-suggestion">
+    <div class="contact-avatar">
+      <%= image_tag "alex.png", alt: "Alex", class: "avatar-contact-xp" %>
+    </div>
+    <div class="contact-xp-info">
+      <b>Alex</b><br>
+      <span class="contact-xp-detail">Ton dernier échange avec Alex remonte à il y a 12 jours.<br>
+      Renoues le lien et gagnes +20 XP 🔗</span>
+    </div>
+  </div>
+
+  <div class="contact-suggestion">
+    <div class="contact-avatar">
+      <%= image_tag "marc.png", alt: "Marc", class: "avatar-contact-xp" %>
+    </div>
+    <div class="contact-xp-info">
+      <b>Marc</b><br>
+      <span class="contact-xp-detail">🔥 Réponds lui dans l'heure et gagnes un bonus de réactivité de +5 XP</span>
+    </div>
+  </div>
+
+  <div class="contact-suggestion">
+    <div class="contact-avatar">
+      <%= image_tag "louise.png", alt: "Louise", class: "avatar-contact-xp" %>
+    </div>
+    <div class="contact-xp-info">
+      <b>Louise</b><br>
+      <span class="contact-xp-detail">Brises la glace avec Louise et débloques le badge “Premier Pas” 🥇</span>
+    </div>
+  </div>
+</div>
+
+<%= render 'shared/navbar_bottom' %>

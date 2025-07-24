@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  skip_after_action :verify_authorized, only: [:success]
 
   # cette route ne sera pas utilisée (on utilisera pages#dashboard) mais je l'ai mise pour pouvoir se logger!
   def index
@@ -87,7 +88,7 @@ class MessagesController < ApplicationController
     authorize @message
 
     if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
-      redirect_to dashboard_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
+      redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       render :edit, status: :unprocessable_entity
     end
@@ -99,10 +100,14 @@ class MessagesController < ApplicationController
 
     # copie la suggestion de l'IA dans uiser_answer
     if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
-      redirect_to dashboard_path, notice: "Réponse envoyée avec succès."
+      redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       redirect_to reply_message_path(@message), alert: "Erreur lors de l’envoi de la réponse."
     end
+  end
+
+  def success
+  # statique car trop compliqué à rendre dynamiquement pour la demoday ce soir
   end
 
   private
