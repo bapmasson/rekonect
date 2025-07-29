@@ -20,14 +20,16 @@
 
 // header arrondi
 .reply-header {
+  width: 100%;
+  max-width: 98vw;
   background: $pink-header;
-  border-radius: 30px;
   padding: 18px 22px 14px 22px;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: 0 auto 18px auto;
-  max-width: 440px;
 }
 
 .reply-title {
@@ -55,9 +57,10 @@
 
 // Card pink
 .msg-bubble-pink {
+  border: 2px solid #B5A5E8;
   background: $pink-header;
   border-radius: 28px;
-  box-shadow: 0 4px 18px $card-shadow;
+  box-shadow: 0 10px 18px $card-shadow;
   padding: 18px 14px 14px 14px;
   max-width: 450px;
   margin: 0 auto 24px auto;

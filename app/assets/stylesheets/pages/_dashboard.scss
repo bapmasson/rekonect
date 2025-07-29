@@ -16,12 +16,11 @@ body {
 
 // header arrrondi
 .dashboard-title-card {
-  width: 353px;
+  width: 100%;
   max-width: 98vw;
-  margin: 22px auto 26px auto;
-  background: $pink-header;
-  border-radius: 50px;
-  box-shadow: 0 4px 18px $shadow-dark;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
   padding: 22px 22px 15px 22px;
   text-align: center;
   display: flex;
@@ -52,7 +51,7 @@ body {
   gap: 14px;
   width: 353px;
   max-width: 98vw;
-  margin: 0 auto 20px auto;
+  margin: 0px auto 20px auto;
 }
 
 .xp-bar-logo {
@@ -119,7 +118,8 @@ body {
 .main-message-card {
   background: $pink-header;
   border-radius: 35px;
-  box-shadow: 0 4px 18px $shadow-dark;
+  border: 2px solid #B5A5E8;
+  box-shadow: 0 px 18px $shadow-dark;
   width: 353px;
   max-width: 98vw;
   margin: 32px auto 24px auto;
@@ -192,6 +192,7 @@ body {
 .quick-contacts-card {
   width: 353px;
   max-width: 98vw;
+  border: 3px solid #B5A5E8;
   background: $pink-header;
   border-radius: 35px;
   box-shadow: 0 4px 18px $shadow-dark;
@@ -222,6 +223,7 @@ body {
 .quick-contact {
   background: #fff;
   border-radius: 15px;
+   border: 2px solid #B5A5E8;
   box-shadow: 0 8px 22px $shadow-dark;
   flex: 1 1 0;
   align-self: stretch;
@@ -297,6 +299,17 @@ body {
     }
   }
  }
+}
+
+.badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  .card-mobile {
+  border: 2px solid #B5A5E8;
+  }
 }
 
 // Responsive
