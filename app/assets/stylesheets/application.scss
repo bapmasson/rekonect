@@ -10,6 +10,9 @@
 // Your CSS partials
 @import "components/index";
 @import "pages/index";
+@import "pages/conversation";
+@import "components/contact";
+@import "pages/chat";
 
 body, .main-container, .logout-page {
   padding-bottom: 80px;

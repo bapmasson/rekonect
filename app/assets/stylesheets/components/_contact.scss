@@ -1,0 +1,43 @@
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0 90px 0;
+}
+
+.contact-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 8px 14px;
+  min-height: 40px;
+  text-decoration: none;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.contact-avatar {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: cover;
+  background: #f6f6f6;
+}
+
+.contact-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $pink;
+  margin-left: 2px;
+}

@@ -20,6 +20,11 @@
       <i class="bi bi-person"></i>
     <% end %>
   </div>
+  <div class="nav-item <%= 'active' if controller_name == 'messages' %>">
+    <%= link_to messages_path do %>
+      <i class="bi bi-chat-dots"></i>
+    <% end %>
+  </div>
   <div class="nav-item">
     <%= link_to goodbye_path do %>
       <i class="bi bi-box-arrow-right"></i>

@@ -1,0 +1,41 @@
+.sms-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  background: none; // Ajout de ligne pour être sûr
+  box-shadow: none; // Ajout de ligne pour être sûr
+  border: none;     // Ajout de ligne pour être sûr
+}
+
+.sms-row.sms-me {
+  align-items: flex-end;
+}
+
+.sms-bubble {
+  background: #f1f1f1;
+  border-radius: 15px;
+  padding: 8px 16px;
+  max-width: 70%;
+  color: #333;
+  // box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.sms-row.sms-me .sms-bubble {
+  background: #ff69b4; // Rose pour l'expéditeur
+  color: #fff;
+  text-align: right;
+}
+
+.sms-row.sms-other .sms-bubble {
+  background: #e0e0e0; // Gris pour le destinataire
+  color: #333;
+  text-align: left;
+}
+
+.sms-meta {
+  font-size: 0.8em;
+  color: #888;
+  margin-top: 2px;
+  text-align: right;
+}

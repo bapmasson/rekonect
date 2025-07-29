@@ -14,7 +14,10 @@
         <div class="suggestion">
           <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
         </div>
-        <%= link_to "Rekonect", edit_message_path(message), class: "btn btn-pink mt-2 w-100" %>
+        <div class="message-actions">
+          <%= link_to "Rekonect", rekonect_message_path(message), class: "btn btn-rekonect" %>
+          <%= link_to "Conversation", conversation_by_name_path(contact_name: message.contact.name.parameterize), class: "btn btn-conversation" %>
+        </div>
       </div>
     <% end %>
   </div>
@@ -23,4 +26,18 @@
 <% end %>
 <%= render "shared/navbar_bottom" %>
 
-<!-- ...le reste de ta liste de messages... -->
+<h2>Mes contacts</h2>
+<div class="contacts-list">
+  <% @contacts.each do |contact| %>
+    <%= link_to conversation_by_name_path(contact_name: contact.name.parameterize), class: "contact-card" do %>
+      <div class="contact-avatar">
+        <% if contact.photo.attached? %>
+          <%= image_tag contact.photo, class: "avatar-img" %>
+        <% else %>
+          <%= image_tag "default-avatar.png", class: "avatar-img" %>
+        <% end %>
+      </div>
+      <div class="contact-name"><%= contact.name %></div>
+    <% end %>
+  <% end %>
+</div>

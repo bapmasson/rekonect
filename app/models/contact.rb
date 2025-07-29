@@ -1,6 +1,7 @@
 class Contact < ApplicationRecord
   belongs_to :user
   belongs_to :relationship
+  belongs_to :contact_user, class_name: "User", optional: true
   has_many :messages
   has_one_attached :photo
 
