@@ -1,3 +1,61 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin-left: 500px;
+  margin-right: 500px;
+}
+
+h1 {
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.contact-card {
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px $card-shadow;
+  padding: 20px;
+  margin: 16px auto;
+  max-width: 400px;
+  width: 100%;
+}
+
+.card-mobile {
+  background: $pink-header;
+  border-radius: 35px;
+  border: 2px solid #B5A5E8;
+  box-shadow: 0 px 18px $shadow-dark;
+  width: 100%;
+  max-width: 100%;
+  margin: 32px auto 24px auto;
+  padding: 28px 18px 26px 18px;
+  text-align: center;
+}
+
 .messages-list {
   padding: 10px 0 90px 0; // pour pas que la navbar recouvre les cards
 }
@@ -6,7 +64,8 @@
   border-radius: 13px;
   padding: 10px 12px;
   margin-bottom: 8px;
-  color: $gray-txt;
+  color: #191919;
+  box-shadow: 0 8px 22px $shadow-dark;
 }
 .message-author {
   font-weight: 700;
@@ -291,33 +350,38 @@
 // Message actions buttons
 .message-actions {
   display: flex;
-  gap: 16px;
-  width: 100%;
-  margin-top: 12px;
+  width: 277px;
+  max-width: 90vw;
+  height: 38px;
+  margin: 0 auto;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
 }
 
 .btn-rekonect,
 .btn-conversation {
-  flex: 1 1 0;
-  width: 100%;
-  background-color: $pink;
-  color: $white;
-  border: none;
-  border-radius: 24px;
-  font-family: $body-font;
-  font-size: 1.25rem;
+  width: 277px;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink-btn;
+  color: #fff;
   font-weight: 700;
-  padding: 14px 0;
-  text-align: center;
-  box-shadow: 0 4px 16px $card-shadow;
-  transition: background 0.2s;
-  cursor: pointer;
-  letter-spacing: 0.01em;
-  margin: 0;
-  min-width: 0;
+  font-size: 1.00rem;
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 4px 6px $shadow-dark;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+  &:hover {
+    background: $pink-btn-hover;
+  }
 }
 
 .btn-rekonect:hover,
