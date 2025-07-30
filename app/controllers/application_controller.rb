@@ -78,7 +78,7 @@ end
 
     # On s'assure de ne garder qu'un seul message par contact (le plus récent envoyé)
     # on enlève les doublons de content car la seed génère plusieurs messages avec le même contenu et le même contact
-    unique_messages = sent_messages.uniq { |msg| msg.contact_id && msg.content }
+    unique_messages = sent_messages.uniq { |msg| [msg.contact_id, msg.content] }
 
     # Trie les messages par ancienneté croissante puis par proximité décroissante.
     # On prend les 3 premiers messages après le tri.
