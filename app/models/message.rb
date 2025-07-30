@@ -9,7 +9,6 @@ class Message < ApplicationRecord
   # Allow blank est en true car aucun champ n'est obligatoire mais il faudra un des trois pour que le message soit créé
   validates :content, length: { minimum: 1, maximum: 2000 }, allow_blank: true
   validates :ai_draft, length: { minimum: 1, maximum: 2000 }, allow_blank: true
-  validates :user_answer, length: { minimum: 1, maximum: 2000 }, allow_blank: true
 
   # Validation perso pour être sûrs qu'au moins un champ entre content, ai_draft et user_answer soit rempli pour
   # pouvoir créer un message
@@ -22,17 +21,16 @@ class Message < ApplicationRecord
   validates :receiver, presence: true
 
   # enum statut (workflow IA suggestion)
-  # received == message reçu du contact, contenu stocké dans la colonne content
+  # sent == message envoyé par un contact ou apr l'utilisateur
   # draft_by_ai == suggestion par IA faite et stockée dans la colonne ai_draft
-  # sent == réponse de l'utilisateur envoyée au contact et stockée dans la colonne user_answer
-  enum status: { received: 0, draft_by_ai: 1, sent: 2 }
+  enum status: { sent: 0, draft_by_ai: 1 }
 
   private
 
   # On vérifie qu'au moins un champ soit rempli sinon erreur
   def content_or_ai_draft_or_user_answer_present
-    if [content, ai_draft, user_answer].all?(&:blank?)
-      errors.add(:base, "Please provide content, an AI draft, or a user answer." )
+    if [content, ai_draft].all?(&:blank?)
+      errors.add(:base, "Please provide content, an AI draft" )
     end
   end
 end
