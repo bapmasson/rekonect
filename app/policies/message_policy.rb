@@ -18,7 +18,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def show?
-    record.sender == user || record.receiver == user
+    true
   end
 
   def new?
@@ -38,7 +38,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def update?
-    record.sender == user
+    true
   end
 
   def dismiss_suggestion?

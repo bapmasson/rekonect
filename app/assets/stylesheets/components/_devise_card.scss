@@ -1,0 +1,60 @@
+
+
+.devise-card {
+  border-radius: 1.5rem;
+  background: #fff;
+  transition: box-shadow 0.18s;
+  box-shadow: 0 2px 28px 0 rgba(226, 141, 147, 0.14);
+
+  h2 {
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $pink;
+  }
+
+  .btn-primary {
+    border-radius: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    background: linear-gradient(90deg, #e28d93 0%, #fad0c4 100%);
+    border: none;
+    box-shadow: 0 4px 16px rgba(226,141,147,0.13);
+    transition: background 0.16s, transform 0.13s;
+  }
+
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background: linear-gradient(90deg, #d1767e 0%, #fad0c4 100%);
+    transform: scale(1.025);
+  }
+}
+
+.devise-card .form-inputs .form-control {
+  border-radius: 0.9rem;
+  min-height: 2.5rem;
+  font-size: 1rem;
+  border: 1.5px solid #e28d9322;
+  background: #faf7fa;
+  transition: border-color 0.13s;
+}
+.devise-card .form-inputs .form-control:focus {
+  border-color: $pink;
+  box-shadow: 0 0 0 2px #fad0c455;
+}
+
+.devise-card .form-actions .btn {
+  font-size: 1.1rem;
+}
+
+.devise-card .form-inputs label.fw-bold {
+  color: $pink;
+  font-weight: 600 !important;
+}
+
+.devise-card .form-error {
+  color: #e74c3c;
+  margin-bottom: 1rem;
+  text-align: center;
+}

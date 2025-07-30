@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_29_185608) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_30_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -87,8 +87,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_185608) do
     t.bigint "conversation_id"
     t.bigint "sender_id"
     t.bigint "receiver_id"
+    t.bigint "user_id"
     t.index ["contact_id"], name: "index_messages_on_contact_id"
     t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -149,6 +151,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_29_185608) do
   add_foreign_key "conversations", "users", column: "user2_id"
   add_foreign_key "messages", "contacts"
   add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "user_badges", "badges"
   add_foreign_key "user_badges", "users"
 end

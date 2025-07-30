@@ -1,20 +1,46 @@
-<h2>Log in</h2>
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+      <div class="text-center mb-3">
+        <%= image_tag "logo.png", alt: "Logo Rekonect", width: 80, class: "mb-2", style: "filter: drop-shadow(0 2px 10px #fad0c4);" %>
+      </div>
 
-<%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="form-inputs">
-    <%= f.input :email,
-                required: false,
-                autofocus: true,
-                input_html: { autocomplete: "email" } %>
-    <%= f.input :password,
-                required: false,
-                input_html: { autocomplete: "current-password" } %>
-    <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
+      <div class="devise-card card shadow-lg p-4">
+        <h2 class="text-center mb-3">Connexion à Rekonect</h2>
+        <p class="text-center mb-4 text-muted" style="font-size: 1.08rem;">
+          Heureux de te revoir 👋<br>
+          Garde le lien avec tes proches, même juste un message !
+        </p>
+
+        <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
+          <div class="form-inputs">
+            <%= f.input :email,
+                        label: "Adresse e-mail",
+                        required: false,
+                        autofocus: true,
+                        input_html: { autocomplete: "email", class: "fw-bold" } %>
+            <%= f.input :password,
+                        label: "Mot de passe",
+                        required: false,
+                        input_html: { autocomplete: "current-password", class: "fw-bold" } %>
+            <%= f.input :remember_me, as: :boolean, label: "Rester connecté" if devise_mapping.rememberable? %>
+          </div>
+
+          <% if resource.errors.any? %>
+            <div class="form-error mt-3">
+              <%= resource.errors.full_messages.join(", ") %>
+            </div>
+          <% end %>
+
+          <div class="form-actions mt-4 text-center">
+            <%= f.button :submit, "Se connecter", class: "btn btn-primary w-100 shadow-sm" %>
+          </div>
+        <% end %>
+
+        <div class="mt-4 text-center" style="font-size: 0.98rem;">
+          <%= render "devise/shared/links" %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
