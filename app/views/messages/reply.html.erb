@@ -20,20 +20,6 @@
   </div>
 </div>
 
-<div class="msg-bubble-pink mb-3">
-  <div class="reply-block-title">Suggestion de réponse :</div>
-  <div class="card-mobile msg-inner-bubble mb-0">
-    <div class="message-content"><%= @message.ai_draft %></div>
-  </div>
-  <div class="reply-btn-row">
-    <%= form_with url: send_message_message_path(@message), method: :post, local: true do |form| %>
-    <%= form.hidden_field :user_answer, value: @message.ai_draft %>
-    <%= form.submit "Envoyer", class: "btn btn-pink reply-btn" %>
-     <% end %>
-    <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
-  </div>
-</div>
-
 <% if @history_messages.present? %>
   <div class="msg-bubble-pink mb-2">
     <div class="reply-block-title">
@@ -48,3 +34,17 @@
     <% end %>
   </div>
 <% end %>
+
+<div class="msg-bubble-pink mb-3">
+  <div class="reply-block-title">Suggestion de réponse :</div>
+  <div class="card-mobile msg-inner-bubble mb-0">
+    <div class="message-content"><%= @message.ai_draft %></div>
+  </div>
+  <div class="reply-btn-row">
+    <%= form_with url: send_message_message_path(@message), method: :post, local: true do |form| %>
+    <%= form.hidden_field :user_answer, value: @message.ai_draft %>
+    <%= form.submit "Envoyer", class: "btn btn-pink reply-btn" %>
+     <% end %>
+    <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
+  </div>
+</div>
