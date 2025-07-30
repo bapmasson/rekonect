@@ -171,8 +171,8 @@ contact_users.values.each do |contact_user|
   Message.create!(
     content: "Salut Jonathan, c'est #{contact_user.first_name} !",
     status: :received,
-    sender_id: contact_user.id,
-    receiver_id: user.id,
+    sender: contact_user,
+    receiver: user,
     contact: contact,
     conversation_id: conversation.id,
     created_at: 1.day.ago,
@@ -197,8 +197,8 @@ all_users.combination(2).each do |user_a, user_b|
   Message.create!(
     content: "Salut #{user_b.first_name}, c'est #{user_a.first_name} !",
     status: :sent,
-    sender_id: user_a.id,
-    receiver_id: user_b.id,
+    sender: user_a,
+    receiver: user_b,
     contact: contact_a,
     conversation_id: conversation_a.id,
     created_at: 1.day.ago,
@@ -218,8 +218,8 @@ all_users.combination(2).each do |user_a, user_b|
   Message.create!(
     content: "Salut #{user_a.first_name}, c'est #{user_b.first_name} !",
     status: :sent,
-    sender_id: user_b.id,
-    receiver_id: user_a.id,
+    sender: user_b,
+    receiver: user_a,
     contact: contact_b,
     conversation_id: conversation_b.id,
     created_at: 1.day.ago,
@@ -236,22 +236,19 @@ puts "Création des messages..."
 contacts = Contact.all
 contacts.each do |contact|
   contact_user = contact.contact_user
-
-  # Trouve ou crée la conversation entre l'utilisateur principal et le contact cible
   conversation = Conversation.find_or_create_by!(
     contact_id: contact.id,
     user1_id: user.id,
     user2_id: contact_user.id
   )
-
   case contact.name
   when "Maman"
     t1 = 6.days.ago
     msg1 = Message.create!(
       content: "Tu as bien reçu les résultats du médecin ? J'espère que ce n'est pas trop grave. Comment tu te sens ?",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t1,
@@ -260,32 +257,29 @@ contacts.each do |contact|
     msg1.update!(
       user_answer: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t1 + 1.hour,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg1.update_column(:updated_at, t1 + 1.hour)
-
     t2 = 2.days.ago
     Message.create!(
       content: "Coucou fils! Alors guéri ? Tu passes dimanche à la maison ? Je fais ton plat préféré 😘",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t2,
       updated_at: t2
     )
-
   when "Léo"
     t = rand(3..7).days.ago
     msg = Message.create!(
       content: "Tu viens au foot ce soir ? L’équipe est presque complète.",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -294,20 +288,18 @@ contacts.each do |contact|
     msg.update!(
       user_answer: "Bien sûr, je ramène les maillots !",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t + 1.hour,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.hour)
-
   when "Tonton Jean"
     t = rand(3..6).months.ago
     msg = Message.create!(
       content: "Tu connais la différence entre un steak et un slip ? Y’en a pas, c’est dans les deux qu’on met la viande !",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -316,20 +308,18 @@ contacts.each do |contact|
     msg.update!(
       user_answer: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t + 12.days,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 12.days)
-
   when "Sarah"
     t = rand(2..5).days.ago
     msg = Message.create!(
       content: "Tellement Vrai a sorti un épisode sur les gens qui parlent à leurs plantes 😭",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -338,20 +328,18 @@ contacts.each do |contact|
     msg.update!(
       user_answer: "J’ai vu ! J’ai failli m’y reconnaître haha",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t + 1.day,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.day)
-
   when "Nour"
     t = rand(2..4).days.ago
     msg = Message.create!(
       content: "Ton Figma il est vraiment stylé ! J'ai fait une PR pour le projet, tu peux la regarder ?",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -360,32 +348,29 @@ contacts.each do |contact|
     msg.update!(
       user_answer: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t + 2.hours,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 2.hours)
-
     t2 = 1.day.ago
     Message.create!(
       content: "T'as mis à jour le design du dashboard ? J'ai pas trouvé la dernière version.",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t2,
       updated_at: t2
     )
-
   when "Karim"
     t = rand(2..6).weeks.ago
     msg = Message.create!(
       content: "Dis donc, t’aurais pas un tournevis plat à me prêter ?",
       status: :received,
-      sender_id: contact_user.id,
-      receiver_id: user.id,
+      sender: contact_user,
+      receiver: user,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -394,71 +379,16 @@ contacts.each do |contact|
     msg.update!(
       user_answer: "J’en ai un ! Je te le descends tout à l’heure.",
       status: :sent,
-      sender_id: user.id,
-      receiver_id: contact_user.id,
-      sent_at: t + 1.day,
+      sender: user,
+      receiver: contact_user,
       conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.day)
   end
-
   puts "Conversation avec #{contact.name} enregistrée avec succès."
 end
-
 puts "#{Message.count} messages créés avec succès."
 
-
-# Seed Messages
-# On crée des messages pour chaque contact, en leur créant un message qui a eu une réponse, et un message en attente de réponse. On ajoute éventuellement un message avec une suggestion IA mais on l'enlèvera quand on aura implanté l'IA dans le projet
-# THIRD_MESSAGE_PROBABILITY = 0.5
-
-# contacts = Contact.all
-# puts "Création des conversations avec chaque contact..."
-# contacts.each do |contact|
-#   # Message complet : message du contact + suggestion IA + réponse utilisateur
-#   message1 = Message.create!(
-#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :received,
-#     user: contact.user,
-#     contact: contact
-#   )
-#   message1.update!(
-#     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :draft_by_ai
-#   )
-#   message1.update!(
-#     user_answer: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :sent,
-#     sent_at: Faker::Date.backward(days: 3)
-#   )
-
-#   # Message sans réponse utilisateur
-#   message2 = Message.create!(
-#       content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#       status: :received,
-#       user: contact.user,
-#       contact: contact
-#     )
-
-#   # Occasionnellement, message avec suggestion IA mais pas de réponse utilisateur
-
-#   if rand < THIRD_MESSAGE_PROBABILITY
-#   message3 = Message.create!(
-#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :received,
-#     user: contact.user,
-#     contact: contact
-#   )
-#   message3.update!(
-#     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :draft_by_ai
-#   )
-#   end
-#   puts "Conversation entre #{contact.user.username} et #{contact.name} créée avec succès."
-# end
-
-
-# puts "#{Message.count} messages créés avec succès."
 
 # Seed Badges
 # On crée des badges pour les utilisateurs, avec des titres et descriptions aléatoires. On va en créer 5 pour commencer.

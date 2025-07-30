@@ -3,14 +3,7 @@
   <hr>
   <div class="sms-chat">
     <% @messages.each do |message| %>
-      <div class="sms-row <%= message.sender_id == current_user.id ? 'sms-me' : 'sms-other' %>">
-        <div class="sms-bubble">
-          <span class="sms-content"><%= message.content %></span>
-        </div>
-        <div class="sms-meta">
-          <%= l(message.created_at, format: :short) %>
-        </div>
-      </div>
+      <%= render partial: "messages/message", locals: { message: message } %>
     <% end %>
   </div>
   <div class="chat-form-row">

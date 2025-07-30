@@ -43,6 +43,9 @@
     <% @history_messages.each do |m| %>
       <div class="card-mobile msg-inner-bubble mb-1">
         <div class="message-content"><%= m.content %></div>
+        <% if m.user_answer.present? %>
+          <div class="message-content reply-user-answer">↪ <%= m.user_answer %></div>
+        <% end %>
         <div class="message-date text-end">Il y a <%= time_ago_in_words(m.created_at) %></div>
       </div>
     <% end %>
