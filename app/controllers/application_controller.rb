@@ -36,39 +36,57 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name address phone_number username birth_date])
   end
 
-  # Retourne le message reçu le plus prioritaire selon l'ancienneté et la proximité.
-  def main_message
-    received_messages = Message.where(receiver_id: current_user.id, status: :sent, dismissed: [false, nil])
-
-    # La priorité est calculée comme le produit du temps écoulé (en heures) depuis la réception du message et de la proximité du contact.
-    # Le message avec le score le plus élevé est retourné.
-    prioritized_message = received_messages
-      .includes(:contact)
-      .map { |msg|
-        proximity = msg.contact.relationship.proximity || 1
-        hours_since_received = ((Time.current - msg.created_at) / 1.hour).to_f
-        priority_score = hours_since_received * proximity
-        [msg, priority_score]
-      }
-      .max_by { |_, score| score }
-      &.first
-
-    prioritized_message
+  # Récupère les derniers messages envoyés ou reçus par l'utilisateur courant, groupés par contact.
+  def last_messages_by_contact
+    Message
+    .where("sender_id = :user_id OR receiver_id = :user_id", user_id: current_user.id)
+    .includes(:contact, contact: :relationship) # on inclut tout ici, ça servira plus tard
+    .group_by(&:contact_id)
+    .transform_values { |msgs| msgs.max_by(&:created_at) }
   end
 
-  def quick_messages
-    sent_messages = Message.where(sender_id: current_user.id, status: :sent).includes(:contact)
+  # Retourne le message reçu le plus prioritaire selon l'ancienneté et la proximité.
+  def main_message
 
-    # Pour chaque contact, ne garder que le dernier message envoyé
-    latest_by_contact = sent_messages.group_by { |msg| msg.contact_id }.map { |_, msgs| msgs.max_by(&:created_at) }
+  # Derniers messages reçus non ignorés par l'utilisateur courant.
+  received_messages = last_messages_by_contact.values.select do |msg|
+    msg.receiver_id == current_user.id &&
+    msg.status == "sent" &&
+    (msg.dismissed == false || msg.dismissed.nil?)
+  end
+
+  # Sélectionne le message reçu ayant la priorité la plus élevée, calculée selon la proximité de la relation du contact et l'ancienneté du message.
+  prioritized_message = received_messages
+    .map { |msg|
+      proximity = msg.contact.relationship.proximity || 1
+      hours_since_received = ((Time.current - msg.created_at) / 1.hour).to_f
+      priority_score = hours_since_received * proximity
+      [msg, priority_score]
+    }
+    .max_by { |_, score| score }
+    &.first
+
+  prioritized_message
+end
+
+
+  def quick_messages
+    # On récupère les derniers messages envoyés par contact
+    sent_messages = last_messages_by_contact.values.select do |msg|
+      msg.sender_id == current_user.id && msg.status == "sent"
+    end
+
+    # On s'assure de ne garder qu'un seul message par contact (le plus récent envoyé)
+    # on enlève les doublons de content car la seed génère plusieurs messages avec le même contenu et le même contact
+    unique_messages = sent_messages.uniq { |msg| [msg.contact_id, msg.content] }
 
     # Trie les messages par ancienneté croissante puis par proximité décroissante.
     # On prend les 3 premiers messages après le tri.
     # La proximité est inversée pour que les contacts les plus proches soient prioritaires.
-    prioritized = latest_by_contact
+    prioritized = unique_messages
       .sort_by { |msg| [msg.created_at, -(msg.contact.relationship.proximity || 1)] }
       .first(3)
 
     prioritized
-end
+  end
 end
