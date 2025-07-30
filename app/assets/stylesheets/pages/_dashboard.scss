@@ -46,6 +46,10 @@ body {
 // section barre xp
 
 .xp-bar-container {
+  border: 2px solid white;
+  border-radius: 35px;
+  padding: 16px;
+  background-color: #f5fbe8;
   display: flex;
   align-items: flex-start;
   gap: 14px;
