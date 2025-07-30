@@ -9,7 +9,7 @@
 
  <div class="card-mobile mb-2">
     <div class="message-author"><strong>Dernier message de ta part :</strong> <%= time_ago_in_words(@message.created_at) %> ago</div>
-    <div class="message-content"><%= @message.user_answer %></div>
+    <div class="message-content"><%= @message.content %></div>
   </div>
 
   <div class="card-mobile mb-2">

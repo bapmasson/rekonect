@@ -53,8 +53,8 @@
   <div class="card-mobile msg-inner-bubble mb-0">
     <%= form_with(model: @message, local: true) do |form| %>
       <div class="mb-3">
-        <%= form.label :user_answer, "Votre réponse" %>
-        <%= form.text_area :user_answer, value: @message.user_answer.presence || @message.ai_draft, rows: 5, class: "input-mobile" %>
+        <%= form.label :content, "Votre réponse" %>
+        <%= form.text_area :content, value: @message.content.presence || @message.ai_draft, rows: 5, class: "input-mobile" %>
       </div>
       <%= form.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
     <% end %>
