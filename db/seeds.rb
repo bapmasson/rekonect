@@ -173,6 +173,7 @@ contact_users.values.each do |contact_user|
     status: :received,
     sender_id: contact_user.id,
     receiver_id: user.id,
+    user_id: contact_user.id,
     contact: contact,
     conversation_id: conversation.id,
     created_at: 1.day.ago,
@@ -199,6 +200,7 @@ all_users.combination(2).each do |user_a, user_b|
     status: :sent,
     sender_id: user_a.id,
     receiver_id: user_b.id,
+    user_id: user_a.id,
     contact: contact_a,
     conversation_id: conversation_a.id,
     created_at: 1.day.ago,
@@ -220,6 +222,7 @@ all_users.combination(2).each do |user_a, user_b|
     status: :sent,
     sender_id: user_b.id,
     receiver_id: user_a.id,
+    user_id: user_b.id,
     contact: contact_b,
     conversation_id: conversation_b.id,
     created_at: 1.day.ago,
@@ -252,6 +255,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t1,
@@ -262,6 +266,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t1 + 1.hour,
       conversation_id: conversation.id
     )
@@ -273,6 +278,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t2,
@@ -286,6 +292,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -296,6 +303,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t + 1.hour,
       conversation_id: conversation.id
     )
@@ -308,6 +316,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -318,6 +327,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t + 12.days,
       conversation_id: conversation.id
     )
@@ -330,6 +340,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -340,6 +351,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t + 1.day,
       conversation_id: conversation.id
     )
@@ -352,6 +364,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -362,6 +375,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t + 2.hours,
       conversation_id: conversation.id
     )
@@ -373,6 +387,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t2,
@@ -386,6 +401,7 @@ contacts.each do |contact|
       status: :received,
       sender_id: contact_user.id,
       receiver_id: user.id,
+      user_id: contact_user.id,
       contact: contact,
       conversation_id: conversation.id,
       created_at: t,
@@ -396,6 +412,7 @@ contacts.each do |contact|
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      user_id: user.id,
       sent_at: t + 1.day,
       conversation_id: conversation.id
     )
