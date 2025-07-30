@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   # Retourne le message reçu le plus prioritaire selon l'ancienneté et la proximité.
   def main_message
-    received_messages = current_user.messages.where(status: :received, dismissed: [false, nil])
+    received_messages = Message.where(receiver_id: current_user.id, status: :received, dismissed: [false, nil])
 
     # La priorité est calculée comme le produit du temps écoulé (en heures) depuis la réception du message et de la proximité du contact.
     # Le message avec le score le plus élevé est retourné.
@@ -57,7 +57,7 @@ class ApplicationController < ActionController::Base
   end
 
   def quick_messages
-    sent_messages = current_user.messages.where(status: :sent).includes(:contact)
+    sent_messages = Message.where(sender_id: current_user.id, status: :sent).includes(:contact)
 
     # Pour chaque contact, ne garder que le dernier message envoyé
     latest_by_contact = sent_messages.group_by { |msg| msg.contact_id }.map { |_, msgs| msgs.max_by(&:created_at) }

@@ -1,6 +1,8 @@
 class Message < ApplicationRecord
-  belongs_to :user
   belongs_to :contact
+  belongs_to :conversation
+  belongs_to :sender, class_name: "User"
+  belongs_to :receiver, class_name: "User"
 
   # contenu taille min 1, max 2000
   # conditions similaires pour la suggestion IA et la réponse utilisateur
@@ -16,8 +18,8 @@ class Message < ApplicationRecord
   # Date d’envoi optionnelle, pas dans le futur, peut être blanc
   validates :sent_at, allow_blank: true, comparison: { less_than_or_equal_to: Date.today }
 
-  validates :user, presence: true
-  validates :contact, presence: true
+  validates :sender, presence: true
+  validates :receiver, presence: true
 
   # enum statut (workflow IA suggestion)
   # received == message reçu du contact, contenu stocké dans la colonne content

@@ -1,0 +1,24 @@
+<h2>
+  Conversation avec
+  <%= @conversation.contact&.name || "Contact inconnu" %>
+</h2>
+
+<div class="conversation-page">
+  <div id="chat-messages" class="sms-chat">
+    <% @messages.each do |message| %>
+      <div class="sms-bubble <%= message.sender_id == current_user.id ? 'sms-me' : 'sms-other' %>">
+        <span class="sms-author">
+          <%= message.sender_id == current_user.id ? "Moi" : message.sender.first_name %>
+        </span>
+        <span class="sms-content"><%= message.content %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form_with model: Message.new, url: messages_path, data: { turbo_stream: true }, local: false, html: { class: "chat-form" } do |f| %>
+    <%= f.hidden_field :conversation_id, value: @conversation.id %>
+    <%= f.hidden_field :contact_id, value: @conversation.contact_id %>
+    <%= f.text_field :content, id: "chat-input", placeholder: "Votre message..." %>
+    <%= f.submit "Envoyer", class: "btn btn-primary" %>
+  <% end %>
+</div>

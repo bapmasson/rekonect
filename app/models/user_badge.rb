@@ -1,7 +1,6 @@
 class UserBadge < ApplicationRecord
   belongs_to :user
   belongs_to :badge
-
   # valider la presence pour la foreinkey
 
   validates :user, presence: true

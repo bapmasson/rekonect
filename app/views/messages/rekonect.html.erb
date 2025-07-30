@@ -15,5 +15,5 @@
   <div class="card-mobile mb-2">
     <div class="message-author"><strong>Suggestion de relance</strong></div>
     <div class="message-content"> <%= @new_message.ai_draft %></div>
-    <%= link_to "Editer", edit_message_path(@new_message), class: "btn btn-pink mt-2" %>
+    <%= link_to "Éditer", edit_message_path(@message), class: "btn btn-edit" if @message&.id.present? %>
   </div>

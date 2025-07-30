@@ -269,6 +269,42 @@
   font-family: $body-font;
 }
 
+// Message actions buttons
+.message-actions {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.btn-rekonect,
+.btn-conversation {
+  flex: 1 1 0;
+  width: 100%;
+  background-color: $pink;
+  color: $white;
+  border: none;
+  border-radius: 24px;
+  font-family: $body-font;
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 14px 0;
+  text-align: center;
+  box-shadow: 0 4px 16px $card-shadow;
+  transition: background 0.2s;
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  margin: 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-rekonect:hover,
+.btn-conversation:hover {
+  background-color: $pink-hover;
+}
 
 // Responsive
 

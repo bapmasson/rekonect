@@ -4,6 +4,7 @@ require 'faker'
 # NE PAS MODIFIER L'ORDRE DES LIGNES DE DESTRUCTION CAR LES DEPENDANCES ENTRE MODELES FONT PLANTER LA SEED SI CET ORDRE N'EST PAS BON
 puts "Nettoyage de la base de données..."
 Message.destroy_all
+Conversation.destroy_all
 Contact.destroy_all
 Relationship.destroy_all
 UserBadge.destroy_all
@@ -90,72 +91,179 @@ contact_data = [
   { name: "Nour", notes: "Mon binôme sur le frontend du projet.", relation: "Collègue" },
   { name: "Karim", notes: "Habite juste en dessous, adore discuter.", relation: "Voisin" }
 ]
-contact_data.each do |data|
-  Contact.create!(
-    name: data[:name],
-    notes: data[:notes],
-    user: user,
-    relationship: Relationship.find_by(relation_type: data[:relation])
+
+
+# 2. Création des contacts comme users
+contact_infos = [
+  { name: "Maman", notes: "C’est ma maman ❤️", relation: "Parent proche", email: "maman@test.com" },
+  { name: "Léo", notes: "Ami d’enfance, on se perd pas de vue !", relation: "Ami proche", email: "leo@test.com" },
+  { name: "Tonton Jean", notes: "Toujours présent aux repas familiaux, spécialiste des blagues beaufs.", relation: "Famille", email: "tonton.jean@test.com" },
+  { name: "Sarah", notes: "Amie de la fac, fan de séries et de Tellement Vrai.", relation: "Ami", email: "sarah@test.com" },
+  { name: "Nour", notes: "Mon binôme sur le frontend du projet.", relation: "Collègue", email: "nour@test.com" },
+  { name: "Karim", notes: "Habite juste en dessous, adore discuter.", relation: "Voisin", email: "karim@test.com" }
+]
+
+contact_users = {}
+
+contact_infos.each_with_index do |info, idx|
+  contact_user = User.create!(
+    email: "#{info[:email].split('@').first}-contact-#{idx}@test.com", # email unique
+    password: "azerty",
+    first_name: info[:name].split.first,
+    last_name: info[:name].split.last || info[:name],
+    username: "#{info[:name].parameterize}-contact-#{idx}"[0, 20], # username unique
+    phone_number: Faker::PhoneNumber.cell_phone_in_e164,
+    address: Faker::Address.full_address,
+    birth_date: Faker::Date.birthday(min_age: 18, max_age: 65),
+    xp_level: rand(1..10),
+    xp_points: rand(0..1000)
   )
-  puts "Contact #{data[:name]} créé avec succès."
+  contact_users[info[:name]] = contact_user
 end
-puts "#{Contact.count} contacts créés."
 
-# Seed Contacts
-# On crée des contacts pour chaque utilisateur, en associant aléatoirement des relations (mais on va quand même leur mettre une relation Maman par défaut)
-# users = User.all
-# relationships = Relationship.all
-# users.flat_map do |user|
-#   puts "Création des contacts pour l'utilisateur #{user.username}..."
+# 3. Création des contacts pour le compte principal
+contacts = []
+contact_infos.each do |info|
+  contact = Contact.create!(
+    name: info[:name],
+    notes: info[:notes],
+    user: user, # utilisateur principal
+    contact_user: contact_users[info[:name]],
+    relationship: Relationship.find_by(relation_type: info[:relation])
+  )
+  contacts << contact
+end
 
-#   # On crée une Maman pour tout le monde
-#   Contact.create!(
-#       name: "Maman",
-#       notes: "Que dire de plus, c'est ma maman !",
-#       user: user,
-#       relationship: Relationship.find_by(relation_type: 'Parent proche')
-#     )
-#   puts "Contact Maman créé pour l'utilisateur #{user.username}."
+# 4. Chaque contact devient aussi contact des autres contacts
+contact_users.values.each do |contact_user|
+  contact_infos.each do |info|
+    next if contact_user.email == info[:email]
+    Contact.create!(
+      name: info[:name],
+      notes: info[:notes],
+      user: contact_user,
+      contact_user: contact_users[info[:name]],
+      relationship: Relationship.find_by(relation_type: info[:relation])
+    )
+  end
+end
 
-#   # Et 5 contacts aléatoires
-#   5.times.map do
-#     Contact.create!(
-#       name: Faker::Name.name,
-#       notes: Faker::Lorem.paragraph_by_chars(number: 500),
-#       user: user,
-#       relationship: relationships.sample
-#     )
-#   end
-#   puts "#{Contact.where(user: user).count} contacts créés avec succès pour l'utilisateur #{user.username}."
-# end
+# Ajoute Jonathan comme contact pour chaque contact user
+contact_users.values.each do |contact_user|
+  Contact.create!(
+    name: user.first_name,
+    notes: "Utilisateur principal",
+    user: contact_user,
+    contact_user: user,
+    relationship: Relationship.find_by(relation_type: "Ami proche")
+  )
+end
 
-# puts "#{Contact.count} contacts créés avec succès."
+# Crée la conversation et un message du point de vue de chaque contact user vers Jonathan
+contact_users.values.each do |contact_user|
+  contact = Contact.find_by(user: contact_user, contact_user: user)
+  next unless contact
+  conversation = Conversation.find_or_create_by!(
+    contact_id: contact.id,
+    user1_id: contact_user.id,
+    user2_id: user.id
+  )
+  Message.create!(
+    content: "Salut Jonathan, c'est #{contact_user.first_name} !",
+    status: :received,
+    sender_id: contact_user.id,
+    receiver_id: user.id,
+    contact: contact,
+    conversation_id: conversation.id,
+    created_at: 1.day.ago,
+    updated_at: 1.day.ago
+  )
+end
 
-# ----------------------------SEED MESSAGES DEMO--------------------------------
+# Crée toutes les conversations et messages entre tous les users
+all_users = [user] + contact_users.values
+
+all_users.combination(2).each do |user_a, user_b|
+  # Contact de user_a vers user_b
+  contact_a = Contact.find_or_create_by!(
+    user: user_a,
+    contact_user: user_b
+  )
+  conversation_a = Conversation.find_or_create_by!(
+    contact_id: contact_a.id,
+    user1_id: user_a.id,
+    user2_id: user_b.id
+  )
+  Message.create!(
+    content: "Salut #{user_b.first_name}, c'est #{user_a.first_name} !",
+    status: :sent,
+    sender_id: user_a.id,
+    receiver_id: user_b.id,
+    contact: contact_a,
+    conversation_id: conversation_a.id,
+    created_at: 1.day.ago,
+    updated_at: 1.day.ago
+  )
+
+  # Contact de user_b vers user_a
+  contact_b = Contact.find_or_create_by!(
+    user: user_b,
+    contact_user: user_a
+  )
+  conversation_b = Conversation.find_or_create_by!(
+    contact_id: contact_b.id,
+    user1_id: user_b.id,
+    user2_id: user_a.id
+  )
+  Message.create!(
+    content: "Salut #{user_a.first_name}, c'est #{user_b.first_name} !",
+    status: :sent,
+    sender_id: user_b.id,
+    receiver_id: user_a.id,
+    contact: contact_b,
+    conversation_id: conversation_b.id,
+    created_at: 1.day.ago,
+    updated_at: 1.day.ago
+  )
+end
+
+# Seed Messages
 # On crée des messages pour chaque contact, en essayant de simuler des conversations réalistes et avoir des messages
 # avec des réponses de l'utilisateur et des messages en attente de réponse.
 # On modifie manuellement le created_at et le updated_at pour générer un historique crédible
 
 puts "Création des messages..."
-
 contacts = Contact.all
 contacts.each do |contact|
+  contact_user = contact.contact_user
+
+  # Trouve ou crée la conversation entre l'utilisateur principal et le contact cible
+  conversation = Conversation.find_or_create_by!(
+    contact_id: contact.id,
+    user1_id: user.id,
+    user2_id: contact_user.id
+  )
+
   case contact.name
   when "Maman"
-    # Conversation en plusieurs étapes, dernier message reçu sans réponse
     t1 = 6.days.ago
     msg1 = Message.create!(
       content: "Tu as bien reçu les résultats du médecin ? J'espère que ce n'est pas trop grave. Comment tu te sens ?",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t1,
       updated_at: t1
     )
     msg1.update!(
       user_answer: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
       status: :sent,
-      sent_at: t1 + 1.hour
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t1 + 1.hour,
+      conversation_id: conversation.id
     )
     msg1.update_column(:updated_at, t1 + 1.hour)
 
@@ -163,8 +271,10 @@ contacts.each do |contact|
     Message.create!(
       content: "Coucou fils! Alors guéri ? Tu passes dimanche à la maison ? Je fais ton plat préféré 😘",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t2,
       updated_at: t2
     )
@@ -174,15 +284,20 @@ contacts.each do |contact|
     msg = Message.create!(
       content: "Tu viens au foot ce soir ? L’équipe est presque complète.",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t,
       updated_at: t
     )
     msg.update!(
       user_answer: "Bien sûr, je ramène les maillots !",
       status: :sent,
-      sent_at: t + 1.hour
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t + 1.hour,
+      conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.hour)
 
@@ -191,15 +306,20 @@ contacts.each do |contact|
     msg = Message.create!(
       content: "Tu connais la différence entre un steak et un slip ? Y’en a pas, c’est dans les deux qu’on met la viande !",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t,
       updated_at: t
     )
     msg.update!(
       user_answer: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
       status: :sent,
-      sent_at: t + 12.days
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t + 12.days,
+      conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 12.days)
 
@@ -208,15 +328,20 @@ contacts.each do |contact|
     msg = Message.create!(
       content: "Tellement Vrai a sorti un épisode sur les gens qui parlent à leurs plantes 😭",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t,
       updated_at: t
     )
     msg.update!(
       user_answer: "J’ai vu ! J’ai failli m’y reconnaître haha",
       status: :sent,
-      sent_at: t + 1.day
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t + 1.day,
+      conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.day)
 
@@ -225,25 +350,31 @@ contacts.each do |contact|
     msg = Message.create!(
       content: "Ton Figma il est vraiment stylé ! J'ai fait une PR pour le projet, tu peux la regarder ?",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t,
       updated_at: t
     )
     msg.update!(
       user_answer: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
       status: :sent,
-      sent_at: t + 2.hours
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t + 2.hours,
+      conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 2.hours)
 
-    # Un message reçu sans réponse pour actualiser le dashboard quand on aura répondu à Maman dans la démo
     t2 = 1.day.ago
     Message.create!(
       content: "T'as mis à jour le design du dashboard ? J'ai pas trouvé la dernière version.",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t2,
       updated_at: t2
     )
@@ -253,15 +384,20 @@ contacts.each do |contact|
     msg = Message.create!(
       content: "Dis donc, t’aurais pas un tournevis plat à me prêter ?",
       status: :received,
-      user: user,
+      sender_id: contact_user.id,
+      receiver_id: user.id,
       contact: contact,
+      conversation_id: conversation.id,
       created_at: t,
       updated_at: t
     )
     msg.update!(
       user_answer: "J’en ai un ! Je te le descends tout à l’heure.",
       status: :sent,
-      sent_at: t + 1.day
+      sender_id: user.id,
+      receiver_id: contact_user.id,
+      sent_at: t + 1.day,
+      conversation_id: conversation.id
     )
     msg.update_column(:updated_at, t + 1.day)
   end

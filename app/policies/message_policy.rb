@@ -9,8 +9,16 @@ class MessagePolicy < ApplicationPolicy
     # NOTE: Be explicit about which records you allow access to!
     # scope lié à la route "messages#index" qui ne sera pas utilisée mais qui permet de se logger sans bug pour le moment
     def resolve
-      scope.where(user: user)
+      scope.where("sender_id = ? OR receiver_id = ?", user.id, user.id)
     end
+  end
+
+  def index?
+    true
+  end
+
+  def show?
+    record.sender == user || record.receiver == user
   end
 
   def new?
@@ -30,7 +38,7 @@ class MessagePolicy < ApplicationPolicy
   end
 
   def update?
-    true
+    record.sender == user
   end
 
   def dismiss_suggestion?
@@ -47,5 +55,9 @@ class MessagePolicy < ApplicationPolicy
 
   def send_message?
   true
+  end
+
+  def destroy?
+    record.sender == user
   end
 end

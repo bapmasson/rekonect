@@ -1,0 +1,72 @@
+.chat-container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 32px 28px;
+}
+
+.sms-chat {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 14px;
+  padding: 24px 0;
+}
+
+.sms-meta {
+  font-size: 0.95em;
+  color: #888;
+  margin-bottom: 4px;
+  text-align: center;
+}
+
+.sms-bubble {
+  max-width: 60%;
+  padding: 14px 18px;
+  border-radius: 18px;
+  font-size: 1.08rem;
+  margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  word-break: break-word;
+  position: relative;
+}
+
+.sms-me {
+  margin-left: auto;
+  // background: none;
+  color: $white;
+  text-align: right;
+}
+
+.sms-other {
+  margin-right: auto;
+  // background: none;
+  color: #222;
+  text-align: left;
+}
+
+.chat-form-row {
+  display: flex;
+  width: 100%;
+  border-top: 1px solid #eee;
+  padding-top: 16px;
+}
+
+.chat-form {
+  display: flex;
+  width: 100%;
+}
+
+.chat-input {
+  flex: 1;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  margin-right: 8px;
+  resize: none;
+  width: 100%;
+  box-sizing: border-box;
+}

@@ -2,9 +2,13 @@ class MessagesController < ApplicationController
   before_action :authenticate_user!
   skip_after_action :verify_authorized, only: [:success]
 
-  # cette route ne sera pas utilisée (on utilisera pages#dashboard) mais je l'ai mise pour pouvoir se logger!
   def index
-      @messages = policy_scope(Message)
+    @messages = policy_scope(Message)
+    authorize @messages
+    @contacts = current_user.contacts
+    @sent_messages = current_user.sent_messages
+    @received_messages = current_user.received_messages
+    @conversations = Conversation.where("user1_id = ? OR user2_id = ?", current_user.id, current_user.id)
   end
 
   def new
@@ -12,50 +16,60 @@ class MessagesController < ApplicationController
     authorize @message
   end
 
-  # Route pour répondre à un message en attente de réponse
-  # Elle permet de générer une suggestion de réponse via l'API OpenAI et d'afficher un résumé des derniers échanges
-  # entre l'utilisateur et le contact du message.
   def reply
     @message = Message.find(params[:id])
     authorize @message
 
-    # je recupere les 3 derniers msg avec ce contact, du plus récent au plus ancien
-     @history_messages = current_user.messages
-    .where(contact_id: @message.contact_id)
-    .where.not(id: @message.id)
-    .order(created_at: :desc)
-    .limit(3)
-    .where(status: :sent)
+    @history_messages = Message.where(contact_id: @message.contact_id)
+      .where.not(id: @message.id)
+      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+      .order(created_at: :desc)
+      .limit(3)
+      .where(status: :sent)
 
-    last_messages = current_user.messages.where(contact_id: @message.contact_id).order(updated_at: :desc).last(3)
+    last_messages = Message.where(contact_id: @message.contact_id)
+      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+      .order(updated_at: :desc)
+      .last(3)
     @summary = message_summary(last_messages)
     ai_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
   end
 
-  # Route pour "rekonecter" un contact, c'est-à-dire relancer la conversation avec une suggestion de réponse
-  # Elle génère une suggestion de réponse basée sur les derniers messages échangés avec le contact.
-  # Elle affiche également un résumé des derniers échanges pour aider l'utilisateur à se remémorer le contexte.
   def rekonect
     @message = Message.find(params[:id])
     authorize @message
-    last_messages = current_user.messages.where(contact_id: @message.contact_id).order(updated_at: :desc).last(3)
+    last_messages = Message.where(contact_id: @message.contact_id)
+      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+      .order(updated_at: :desc)
+      .last(3)
     @summary = message_summary(last_messages)
-    @new_message = Message.new(contact: @message.contact, user: current_user)
+    @new_message = Message.new(contact: @message.contact, sender: current_user)
     rekonect_suggestion(@new_message, @summary)
   end
 
   def create
-    @message = current_user.messages.build(message_params)
+    @conversation = Conversation.find(params[:message][:conversation_id])
+    @message = Message.new(
+      conversation: @conversation,
+      sender: current_user,
+      receiver: @conversation.user1_id == current_user.id ? @conversation.user2 : @conversation.user1,
+      content: params[:message][:content],
+      contact_id: @conversation.contact_id
+    )
     authorize @message
     if @message.save
-      redirect_to messages_path, notice: "Message envoyé avec succès."
+      ChatChannel.broadcast_to(
+        @conversation,
+        render_to_string(partial: "messages/message", locals: { message: @message })
+      )
+      redirect_to conversation_by_name_path(contact_name: @conversation.contact.name.parameterize), notice: "Message envoyé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def awaiting_answer
-    @messages = current_user.messages.where(status: :draft_by_ai)
+    @messages = Message.where(sender_id: current_user.id, status: :draft_by_ai)
     authorize @messages
   end
 
@@ -68,19 +82,19 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     authorize @message
 
-    @history_messages = current_user.messages
-    .where(contact_id: @message.contact_id)
-    .where.not(id: @message.id)
-    .order(created_at: :desc)
-    .limit(3)
-    .where(status: :sent)
+    @history_messages = Message.where(contact_id: @message.contact_id)
+      .where.not(id: @message.id)
+      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+      .order(created_at: :desc)
+      .limit(3)
+      .where(status: :sent)
   end
 
   def dismiss_suggestion
-    @message = current_user.messages.find(params[:id])
+    @message = Message.where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id).find(params[:id])
     authorize @message
     @message.update(dismissed: true)
-    redirect_to messages_path # <-- redirige vers la liste des messages
+    redirect_to messages_path
   end
 
   def update
@@ -98,7 +112,6 @@ class MessagesController < ApplicationController
     @message = Message.find(params[:id])
     authorize @message
 
-    # copie la suggestion de l'IA dans uiser_answer
     if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
@@ -107,7 +120,6 @@ class MessagesController < ApplicationController
   end
 
   def success
-  # statique car trop compliqué à rendre dynamiquement pour la demoday ce soir
   end
 
   private
@@ -121,7 +133,6 @@ class MessagesController < ApplicationController
     summary = Rails.cache.read(cache_key)
     return summary if summary.present?
 
-    # Utilise l'API OpenAI pour générer un résumé des derniers messages
     client = OpenAI::Client.new
     chatgpt_response = client.chat(
       parameters: {
@@ -132,7 +143,7 @@ class MessagesController < ApplicationController
             role: "user",
             content:
               "Make a very short recap (80 words max) in French of each interaction between " \
-              "#{messages.first&.contact&.name} and the user #{messages.first&.user&.first_name}. " \
+              "#{messages.first&.contact&.name} and the user #{messages.first&.sender&.first_name}. " \
               "Speak directly to the user : " \
               "#{messages.map { |m| "message de #{m.contact.name}: #{m.content}#{m.user_answer.present? ? ", réponse utilisateur: #{m.user_answer}" : ""}" }.join(", ")}"
           }
@@ -149,7 +160,6 @@ class MessagesController < ApplicationController
   end
 
   def ai_suggestion(message, summary)
-    # Utilise l'API OpenAI pour générer une suggestion de réponse
     client = OpenAI::Client.new
     chatgpt_response = client.chat(
       parameters: {
@@ -168,7 +178,6 @@ class MessagesController < ApplicationController
   end
 
   def rekonect_suggestion(message, summary)
-    # Utilise l'API OpenAI pour générer une suggestion de relance
     client = OpenAI::Client.new
     chatgpt_response = client.chat(
       parameters: {

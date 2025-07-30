@@ -1,0 +1,7 @@
+<div class="chat-bubble <%= message.sender == current_user ? 'chat-me' : 'chat-other' %>">
+  <div class="chat-meta">
+    <strong><%= message.sender.first_name %></strong>
+    <em><%= l(message.created_at, format: :short) %></em>
+  </div>
+  <div class="chat-content"><%= message.content %></div>
+</div>
