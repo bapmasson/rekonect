@@ -168,17 +168,17 @@ contact_users.values.each do |contact_user|
     user1_id: contact_user.id,
     user2_id: user.id
   )
-  Message.create!(
-    content: "Salut Jonathan, c'est #{contact_user.first_name} !",
-    status: :received,
-    sender_id: contact_user.id,
-    receiver_id: user.id,
-    user_id: contact_user.id,
-    contact: contact,
-    conversation_id: conversation.id,
-    created_at: 1.day.ago,
-    updated_at: 1.day.ago
-  )
+  # Message.create!(
+  #   content: "Salut Jonathan, c'est #{contact_user.first_name} !",
+  #   status: :sent,
+  #   sender_id: contact_user.id,
+  #   receiver_id: user.id,
+  #   user_id: contact_user.id,
+  #   contact: contact,
+  #   conversation_id: conversation.id,
+  #   created_at: 1.day.ago,
+  #   updated_at: 1.day.ago
+  # )
 end
 
 # Crée toutes les conversations et messages entre tous les users
@@ -195,17 +195,17 @@ all_users.combination(2).each do |user_a, user_b|
     user1_id: user_a.id,
     user2_id: user_b.id
   )
-  Message.create!(
-    content: "Salut #{user_b.first_name}, c'est #{user_a.first_name} !",
-    status: :sent,
-    sender_id: user_a.id,
-    receiver_id: user_b.id,
-    user_id: user_a.id,
-    contact: contact_a,
-    conversation_id: conversation_a.id,
-    created_at: 1.day.ago,
-    updated_at: 1.day.ago
-  )
+  # Message.create!(
+  #   content: "Salut #{user_b.first_name}, c'est #{user_a.first_name} !",
+  #   status: :sent,
+  #   sender_id: user_a.id,
+  #   receiver_id: user_b.id,
+  #   user_id: user_a.id,
+  #   contact: contact_a,
+  #   conversation_id: conversation_a.id,
+  #   created_at: 1.year.ago,
+  #   updated_at: 1.year.ago
+  # )
 
   # Contact de user_b vers user_a
   contact_b = Contact.find_or_create_by!(
@@ -217,17 +217,17 @@ all_users.combination(2).each do |user_a, user_b|
     user1_id: user_b.id,
     user2_id: user_a.id
   )
-  Message.create!(
-    content: "Salut #{user_a.first_name}, c'est #{user_b.first_name} !",
-    status: :sent,
-    sender_id: user_b.id,
-    receiver_id: user_a.id,
-    user_id: user_b.id,
-    contact: contact_b,
-    conversation_id: conversation_b.id,
-    created_at: 1.day.ago,
-    updated_at: 1.day.ago
-  )
+  # Message.create!(
+  #   content: "Salut #{user_a.first_name}, c'est #{user_b.first_name} !",
+  #   status: :sent,
+  #   sender_id: user_b.id,
+  #   receiver_id: user_a.id,
+  #   user_id: user_b.id,
+  #   contact: contact_b,
+  #   conversation_id: conversation_b.id,
+  #   created_at: 1.year.ago,
+  #   updated_at: 1.year.ago
+  # )
 end
 
 # Seed Messages
@@ -252,7 +252,7 @@ contacts.each do |contact|
     t1 = 6.days.ago
     msg1 = Message.create!(
       content: "Tu as bien reçu les résultats du médecin ? J'espère que ce n'est pas trop grave. Comment tu te sens ?",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -261,21 +261,24 @@ contacts.each do |contact|
       created_at: t1,
       updated_at: t1
     )
-    msg1.update!(
-      user_answer: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
+
+    msg2 = Message.create!(
+      content: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
       status: :sent,
+      contact: contact,
       sender_id: user.id,
       receiver_id: contact_user.id,
       user_id: user.id,
       sent_at: t1 + 1.hour,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t1 + 1.hour,
+      updated_at: t1 + 1.hour
     )
-    msg1.update_column(:updated_at, t1 + 1.hour)
 
     t2 = 2.days.ago
     Message.create!(
       content: "Coucou fils! Alors guéri ? Tu passes dimanche à la maison ? Je fais ton plat préféré 😘",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -289,7 +292,7 @@ contacts.each do |contact|
     t = rand(3..7).days.ago
     msg = Message.create!(
       content: "Tu viens au foot ce soir ? L’équipe est presque complète.",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -298,22 +301,25 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update!(
-      user_answer: "Bien sûr, je ramène les maillots !",
+    msg2 = Message.create!(
+      content: "Bien sûr, je ramène les maillots !",
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      contact: contact,
       user_id: user.id,
       sent_at: t + 1.hour,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t + 1.hour,
+      updated_at: t + 1.hour
     )
-    msg.update_column(:updated_at, t + 1.hour)
+
 
   when "Tonton Jean"
     t = rand(3..6).months.ago
     msg = Message.create!(
       content: "Tu connais la différence entre un steak et un slip ? Y’en a pas, c’est dans les deux qu’on met la viande !",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -322,22 +328,24 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update!(
-      user_answer: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
+    msg2 = Message.create!(
+      content: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
       status: :sent,
+      contact: contact,
       sender_id: user.id,
       receiver_id: contact_user.id,
       user_id: user.id,
       sent_at: t + 12.days,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t + 12.days,
+      updated_at: t + 12.days
     )
-    msg.update_column(:updated_at, t + 12.days)
 
   when "Sarah"
     t = rand(2..5).days.ago
     msg = Message.create!(
       content: "Tellement Vrai a sorti un épisode sur les gens qui parlent à leurs plantes 😭",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -346,22 +354,24 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update!(
-      user_answer: "J’ai vu ! J’ai failli m’y reconnaître haha",
+    msg2 = Message.create!(
+      content: "J’ai vu ! J’ai failli m’y reconnaître haha",
       status: :sent,
       sender_id: user.id,
+      contact: contact,
       receiver_id: contact_user.id,
       user_id: user.id,
       sent_at: t + 1.day,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t + 1.day,
+      updated_at: t + 1.day
     )
-    msg.update_column(:updated_at, t + 1.day)
 
   when "Nour"
     t = rand(2..4).days.ago
     msg = Message.create!(
       content: "Ton Figma il est vraiment stylé ! J'ai fait une PR pour le projet, tu peux la regarder ?",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -370,21 +380,23 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update!(
-      user_answer: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
+    msg2 = Message.create!(
+      content: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
       status: :sent,
       sender_id: user.id,
+      contact: contact,
       receiver_id: contact_user.id,
       user_id: user.id,
       sent_at: t + 2.hours,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t + 2.hours,
+      updated_at: t + 2.hours
     )
-    msg.update_column(:updated_at, t + 2.hours)
 
     t2 = 1.day.ago
     Message.create!(
       content: "T'as mis à jour le design du dashboard ? J'ai pas trouvé la dernière version.",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -398,7 +410,7 @@ contacts.each do |contact|
     t = rand(2..6).weeks.ago
     msg = Message.create!(
       content: "Dis donc, t’aurais pas un tournevis plat à me prêter ?",
-      status: :received,
+      status: :sent,
       sender_id: contact_user.id,
       receiver_id: user.id,
       user_id: contact_user.id,
@@ -407,14 +419,17 @@ contacts.each do |contact|
       created_at: t,
       updated_at: t
     )
-    msg.update!(
-      user_answer: "J’en ai un ! Je te le descends tout à l’heure.",
+    msg2 = Message.create!(
+      content: "J’en ai un ! Je te le descends tout à l’heure.",
       status: :sent,
       sender_id: user.id,
       receiver_id: contact_user.id,
+      contact: contact,
       user_id: user.id,
       sent_at: t + 1.day,
-      conversation_id: conversation.id
+      conversation_id: conversation.id,
+      created_at: t + 1.day,
+      updated_at: t + 1.day
     )
     msg.update_column(:updated_at, t + 1.day)
   end
@@ -435,7 +450,7 @@ puts "#{Message.count} messages créés avec succès."
 #   # Message complet : message du contact + suggestion IA + réponse utilisateur
 #   message1 = Message.create!(
 #     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :received,
+#     status: :sent,
 #     user: contact.user,
 #     contact: contact
 #   )
@@ -444,7 +459,7 @@ puts "#{Message.count} messages créés avec succès."
 #     status: :draft_by_ai
 #   )
 #   message1.update!(
-#     user_answer: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
+#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
 #     status: :sent,
 #     sent_at: Faker::Date.backward(days: 3)
 #   )
@@ -452,7 +467,7 @@ puts "#{Message.count} messages créés avec succès."
 #   # Message sans réponse utilisateur
 #   message2 = Message.create!(
 #       content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#       status: :received,
+#       status: :sent,
 #       user: contact.user,
 #       contact: contact
 #     )
