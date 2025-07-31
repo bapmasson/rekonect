@@ -1,7 +1,7 @@
 <div class="navbar-bottom">
   <div class="nav-item <%= 'active' if request.path == request.referer || root_path %>">
     <%= link_to (request.referer || root_path) do %>
-      <i class="bi bi-arrow-counterclockwise"></i>
+      <i class="bi bi-arrow-left"></i>
     <% end %>
   </div>
   <div class="nav-item <%= 'active' if controller_name == 'users' && action_name == 'settings' %>">
@@ -17,7 +17,7 @@
   </div>
   <div class="nav-item <%= 'active' if controller_name == 'dashboard' %>">
     <%= link_to dashboard_path do %>
-      <i class="bi bi-person"></i>
+      <i class="bi bi-house"></i>
     <% end %>
   </div>
   <div class="nav-item <%= 'active' if controller_name == 'messages' %>">

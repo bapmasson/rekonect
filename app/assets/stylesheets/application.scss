@@ -14,6 +14,25 @@
 @import "components/contact";
 @import "pages/chat";
 
-body, .main-container, .logout-page {
+body {
   padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+.main-container, .logout-page {
+  padding-bottom: 80px;
+}
+
+h2 {
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
