@@ -27,7 +27,7 @@ user = User.create!(
   xp_level: 94,
   xp_points: 3499
 )
-puts "Utilisateur créé : #{user.username} (#{user.first_name} #{user.last_name})"
+puts "Utilisateur créé : #{user.username} (#{user.first_name} #{user.last_name}"
 
 # # Seed Users -- On va se créer chacun un compte utilisateur
 # prenoms = %w[Audric Barthélémy Jonathan Nour Baptiste]
@@ -131,7 +131,16 @@ contact_infos.each do |info|
     contact_user: contact_users[info[:name]],
     relationship: Relationship.find_by(relation_type: info[:relation])
   )
+    if info[:photo_name].present?
+    contact.photo.attach(io: File.open(Rails.root.join("app/assets/images/#{info[:photo_name]}")), filename: info[:photo_name], content_type: 'image/png')
+    puts "Image attachée pour #{contact.name} : #{info[:photo_name]}"
+  else
+    # Si aucune photo spécifique n'est définie, tu peux choisir d'attacher une image par défaut ici
+    contact.photo.attach(io: File.open(Rails.root.join("app/assets/images/default-avatar.png")), filename: 'default-avatar.png', content_type: 'image/png')
+    puts "Image par défaut attachée pour #{contact.name}"
+  end
   contacts << contact
+  puts "Contact créé : #{contact.name}, Image associée : #{contact.photo.attached? ? contact.photo.filename.to_s : 'Aucune'}"
 end
 
 # 4. Chaque contact devient aussi contact des autres contacts

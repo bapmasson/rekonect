@@ -57,4 +57,14 @@ class User < ApplicationRecord
       errors.add(:birth_date, "doit correspondre à un utilisateur d'au moins 10 ans")
     end
   end
+
+    # Exemple de mise à jour d'un contact avec un nom de photo
+  def photo_path
+    # Renvoie le chemin de l'image dans app/assets/images, ou l'avatar par défaut
+    if photo_name.present?
+      Rails.application.assets.find_asset(photo_name).try(:pathname).to_s
+    else
+      Rails.application.assets.find_asset('default-avatar.png').try(:pathname).to_s
+    end
+  end
 end

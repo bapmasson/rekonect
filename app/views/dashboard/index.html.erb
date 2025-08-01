@@ -53,11 +53,14 @@
       <% quick_msgs.each do |msg| %>
         <div class="quick-contact">
           <div class="contact-content">
-          <% if msg.contact.photo.attached? %>
-            <%= image_tag msg.contact.photo.variant(resize_to_fill: [80, 80]), class: "avatar-mobile mb-1" %>
-          <% else %>
-            <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
-          <% end %>
+            <% if msg.contact.photo_name.present? %>
+              <!-- Afficher l'image locale basée sur le champ photo_name -->
+              <%= image_tag msg.contact.photo_path, class: "avatar-mobile mb-1" %>
+            <% else %>
+              <!-- Afficher l'image par défaut si aucune image locale n'est définie -->
+              <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
+            <% end %>
+          </div>
           <div class="contact-name"><%= msg.contact.name %></div>
           <div class="contact-date">
             <% if msg.sent_at.present? %>
@@ -65,7 +68,6 @@
             <% else %>
               <span>Date inconnue</span>
             <% end %>
-          </div>
           </div>
           <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm" %>
         </div>

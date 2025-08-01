@@ -15,6 +15,15 @@ class Contact < ApplicationRecord
   validates :user, presence: true
   validates :relationship, presence: true
 
+  def photo_path
+    # Renvoie le chemin de l'image dans app/assets/images, ou l'avatar par défaut
+    if photo_name.present?
+      Rails.application.assets.find_asset(photo_name).try(:pathname).to_s
+    else
+      Rails.application.assets.find_asset('default-avatar.png').try(:pathname).to_s
+    end
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end

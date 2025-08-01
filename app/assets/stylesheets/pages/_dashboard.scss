@@ -16,7 +16,7 @@ $shadow-dark: rgba(0,0,0,0.25);
   margin: 0px auto 26px auto;
   background: #B5A5E8;
   box-shadow: 0 4px 4px $shadow-dark;
-  padding: 22px 22px 15px 22px;
+  padding: 22px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -28,11 +28,11 @@ $shadow-dark: rgba(0,0,0,0.25);
     margin-bottom: 6px;
     letter-spacing: -0.5px;
     line-height: 1.13;
-     text-align: center;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-   }
+  }
   .dashboard-welcome {
     color: #191919;
     font-size: 1.13rem;
@@ -52,10 +52,10 @@ $shadow-dark: rgba(0,0,0,0.25);
   }
 
   .welcome-image {
-    width: 100px;
+    width: 112px;
     height: auto;
+    border-radius: 50%;
     margin-bottom: 16px;
-    border-radius: 25px;
   }
 }
 
@@ -69,7 +69,7 @@ $shadow-dark: rgba(0,0,0,0.25);
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  width: 353px;
+  width: 90%;
   max-width: 98vw;
   margin: 0px auto 20px auto;
 }
@@ -100,7 +100,7 @@ $shadow-dark: rgba(0,0,0,0.25);
   background: #fff;
   border-radius: 50px;
   height: 14px;
-  width: 282px;
+  width: 80%;
   max-width: 80vw;
   min-width: 120px;
   box-shadow: 0 2px 8px #E28D931A;
@@ -139,11 +139,11 @@ $shadow-dark: rgba(0,0,0,0.25);
   background: $pink-header;
   border-radius: 35px;
   border: 2px solid #B5A5E8;
-  box-shadow: 0 px 18px $shadow-dark;
-  width: 353px;
+  box-shadow: 0 8px 20px $shadow-dark;
+  width: 70%;
   max-width: 98vw;
   margin: 32px auto 24px auto;
-  padding: 28px 18px 26px 18px;
+  padding: 28px 18px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -160,9 +160,9 @@ $shadow-dark: rgba(0,0,0,0.25);
   background: #fff;
   border-radius: 35px;
   box-shadow: 0 8px 20px $shadow-dark;
-  padding: 19px 16px 14px 18px;
+  padding: 19px 16px;
   margin: 0 auto 22px auto;
-  width: 296px;
+  width: 90%;
   max-width: 94vw;
   min-height: 64px;
   color: #222;
@@ -187,7 +187,7 @@ $shadow-dark: rgba(0,0,0,0.25);
 
 // bouton rekonect principal
 .main-message-btn {
-  width: 277px;
+  width: 90%;
   max-width: 90vw;
   height: 38px;
   margin: 16px auto 0 auto;
@@ -210,13 +210,13 @@ $shadow-dark: rgba(0,0,0,0.25);
 
 // section et sinon
 .quick-contacts-card {
-  width: 353px;
+  width: 70%;
   max-width: 98vw;
   border: 3px solid #B5A5E8;
   background: $pink-header;
   border-radius: 35px;
   box-shadow: 0 4px 18px $shadow-dark;
-  padding: 26px 12px 32px 12px;
+  padding: 26px 12px;
   margin: 32px auto;
   text-align: center;
   box-sizing: border-box;
@@ -229,96 +229,96 @@ $shadow-dark: rgba(0,0,0,0.25);
   }
 
   .quick-contacts-list {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 12px;
-  width: 100%;
-  box-sizing: border-box;
-  flex-wrap: nowrap;
-  padding: 0 6px;
-  margin: 0 auto;
-}
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    padding: 0 6px;
+    margin: 0 auto;
+  }
 
-.quick-contact {
-  background: #fff;
-  border-radius: 15px;
-   border: 2px solid #B5A5E8;
-  box-shadow: 0 8px 22px $shadow-dark;
-  flex: 1 1 0;
-  align-self: stretch;
-  min-height: 180px;
-  height: auto;
-  box-sizing: border-box;
-  padding: 16px 6px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  overflow: hidden;
-
-  .contact-content {
+  .quick-contact {
+    background: #fff;
+    border-radius: 15px;
+    border: 2px solid #B5A5E8;
+    box-shadow: 0 8px 22px $shadow-dark;
+    flex: 1 1 0;
+    align-self: stretch;
+    min-height: 180px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 16px 6px;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-  }
-
-  .avatar-mobile {
-    width: 66px;
-    height: 66px;
-    border-radius: 50%;
-    margin-bottom: 8px;
-    border: 3px solid $pink-header;
-    box-shadow: 0 2px 6px #E28D9344;
-    object-fit: cover;
-  }
-
-  .contact-name {
-    font-weight: 800;
-    font-size: 1.05rem;
-    color: #191919;
-    margin-bottom: 2px;
-    line-height: 1.1;
-    word-break: break-word;
+    justify-content: space-between;
     overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 95%;
-    text-align: center;
-  }
 
-  .contact-date {
-    font-size: 0.92rem;
-    color: $txt-gray;
-    margin-bottom: 4px;
-    font-weight: 500;
-    line-height: 1.2;
-  }
+    .contact-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
-  .btn {
-    width: 90%;
-    height: 36px;
-    background: $pink-btn;
-    color: #fff;
-    font-size: 1.1rem;
-    font-weight: 800;
-    border-radius: 50px;
-    border: none;
-    box-shadow: 0 7px 15px $shadow-dark;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: auto;
-    text-align: center;
-    text-decoration: none;
-    transition: background 0.2s;
+    .avatar-mobile {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      margin-bottom: 8px;
+      border: 3px solid $pink-header;
+      box-shadow: 0 2px 6px #E28D9344;
+      object-fit: cover;
+    }
 
-    &:hover {
-      background: $pink-btn-hover;
+    .contact-name {
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: #191919;
+      margin-bottom: 2px;
+      line-height: 1.1;
+      word-break: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 95%;
+      text-align: center;
+    }
+
+    .contact-date {
+      font-size: 0.92rem;
+      color: $txt-gray;
+      margin-bottom: 4px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .btn {
+      width: 90%;
+      height: 36px;
+      background: $pink-btn;
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      border-radius: 50px;
+      border: none;
+      box-shadow: 0 7px 15px $shadow-dark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: auto;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+
+      &:hover {
+        background: $pink-btn-hover;
+      }
     }
   }
- }
 }
 
 .badges-list {
@@ -328,14 +328,13 @@ $shadow-dark: rgba(0,0,0,0.25);
   gap: 12px;
   margin-top: 24px;
   .card-mobile {
-  border: 2px solid #B5A5E8;
+    border: 2px solid #B5A5E8;
   }
 }
 
 // Responsive
 @media (max-width: 400px) {
   .quick-contacts-card {
-    width: 98vw;
     padding: 20px 8px 24px 8px;
   }
 
