@@ -1,10 +1,12 @@
-<div class="dashboard-header">
-  <div class="dashboard-title-card">
-    <div class="dashboard-title-row">
-      <%= image_tag "logo.png", alt: "Logo Rekonect", class: "welcome-image" %>
-      <div class="dashboard-title-text">
-        <h1>Bon retour <%= @user.username %></h1>
-        <div class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</div>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <div class="dashboard-title-card">
+      <div class="dashboard-title-row">
+        <%= image_tag "logo.png", alt: "Logo Rekonect", class: "welcome-image" %>
+        <div class="dashboard-title-text">
+          <p>Bon retour <%= @user.username %></p>
+          <div class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</div>
+        </div>
       </div>
     </div>
   </div>

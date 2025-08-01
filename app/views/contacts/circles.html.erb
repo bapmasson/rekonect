@@ -1,7 +1,4 @@
-<div class="contacts-circles-page">
-  <div class="circles-header-card">
-    <h1>Gestion des cercles de contact</h1>
-  </div>
+<h2 class="dashboard-header">Gestion des cercles de contact</h2>
   <%= form_with url: contacts_path, method: :put, local: true do %>
     <% @contacts.each do |contact| %>
       <!-- Carte Avatar + Nom -->

@@ -1,4 +1,4 @@
-<h1 class="dashboard-header">Mes messages</h1>
+<h2 class="dashboard-header">Mes messages</h2>
 
 <% awaiting_messages = @messages.select { |m| m.status == "draft_by_ai" && (m.dismissed == false || m.dismissed.nil?) } %>
 <% if awaiting_messages.any? %>

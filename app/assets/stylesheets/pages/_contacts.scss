@@ -27,23 +27,13 @@
   padding: 30px 0 88px 0;
 }
 
-.circles-header-card {
-  background: $pink-header;
-  border-radius: 36px;
-  box-shadow: 0 4px 18px $card-shadow;
-  width: 94vw;
-  max-width: 500px;
-  margin: 0 auto 25px auto;
-  padding: 20px 8px 10px 8px;
-  text-align: center;
 
-  h1 {
-    color: #222;
-    font-family: $headers-font;
-    font-weight: 800;
-    font-size: 2rem;
-    margin: 0;
-  }
+h1 {
+  color: #222;
+  font-family: $headers-font;
+  font-weight: 800;
+  font-size: 2rem;
+  margin: 0;
 }
 
 .contact-circle-card {

@@ -64,26 +64,20 @@
 </div>
 
 <script>
-  function toggleBlock(blockId, iconId) {
-    const block = document.getElementById(blockId);
-    const icon = document.getElementById(iconId);
+function toggleBlock(blockId, iconId) {
+  const block = document.getElementById(blockId);
+  const icon = document.getElementById(iconId);
 
-    if (!block || !icon) return;
+  if (!block || !icon) return;
 
-    const isOpen = block.classList.contains("open");
+  const isOpen = block.classList.contains("open");
 
-    if (isOpen) {
-      block.classList.remove("open");
-      icon.textContent = "▲";
-    } else {
-      block.classList.add("open");
-      icon.textContent = "▼";
-    }
+  if (isOpen) {
+    block.classList.remove("open");
+    icon.innerHTML = "<i class='fas fa-chevron-down'></i>";
+  } else {
+    block.classList.add("open");
+    icon.innerHTML = "<i class='fas fa-chevron-up'></i>";
   }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll('.slide-toggle').forEach(el => {
-      el.classList.add('open');
-    });
-  });
+}
 </script>
