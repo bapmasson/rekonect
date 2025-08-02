@@ -1,5 +1,6 @@
 class ContactsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_contact, only: [:show, :edit, :update]
   skip_after_action :verify_authorized, only: [:circles]
 
   def index
@@ -22,18 +23,12 @@ class ContactsController < ApplicationController
   end
 
   def show
-    @contact = Contact.find(params[:id])
-    authorize @contact
   end
 
   def edit
-    @contact = Contact.find(params[:id])
-    authorize @contact
   end
 
   def update
-    @contact = Contact.find(params[:id])
-    authorize @contact
     if @contact.update(contact_params)
       redirect_to contact_path(@contact), notice: "Contact mis à jour avec succès."
     else
@@ -46,6 +41,11 @@ class ContactsController < ApplicationController
   end
 
   private
+
+  def set_contact
+    @contact = Contact.find(params[:id])
+    authorize @contact
+  end
 
   def contact_params
     params.require(:contact).permit(:name, :notes, :relationship_id, :photo)

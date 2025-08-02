@@ -1,12 +1,13 @@
 class MessagesController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_message, only: [:show, :edit, :update, :send_message, :reply, :rekonect]
+  before_action :reply_rekonect, only: [:reply, :rekonect]
   skip_after_action :verify_authorized, only: [:success]
 
   def index
     @messages = policy_scope(Message)
     authorize @messages
-    @awaiting_messages = @messages.where(status: :sent)
-                          .where.not(sender_id: current_user.id)
+    @awaiting_messages = @messages.where.not(sender_id: current_user.id)
                           .select do |msg|
                             Message.where(conversation_id: msg.conversation_id)
                             .order(created_at: :desc)
@@ -24,24 +25,11 @@ class MessagesController < ApplicationController
   end
 
   def reply
-    @message = Message.find(params[:id])
-    @conversation = @message.conversation
-    authorize @message
-    @history_messages = history_messages(@message)
-    @summary = message_summary(@history_messages)
     ai_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
   end
 
   def rekonect
-    @message = Message.find(params[:id])
-    authorize @message
-    last_messages = Message.where(contact_id: @message.contact_id)
-      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
-      .order(updated_at: :desc)
-      .last(3)
-    @summary = message_summary(last_messages)
-    @new_message = Message.new(contact: @message.contact, sender: current_user)
-    rekonect_suggestion(@new_message, @summary)
+    rekonect_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
   end
 
   def create
@@ -71,14 +59,10 @@ class MessagesController < ApplicationController
   end
 
   def show
-    @message = Message.find(params[:id])
-    authorize @message
   end
 
   def edit
-    @message = Message.find(params[:id])
     @conversation = @message.conversation
-    authorize @message
     @history_messages = history_messages(@message)
     @summary = message_summary(@history_messages)
   end
@@ -91,9 +75,6 @@ class MessagesController < ApplicationController
   end
 
   def update
-    @message = Message.find(params[:id])
-    authorize @message
-
     if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
@@ -102,9 +83,6 @@ class MessagesController < ApplicationController
   end
 
   def send_message
-    @message = Message.find(params[:id])
-    authorize @message
-
     if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
@@ -117,8 +95,19 @@ class MessagesController < ApplicationController
 
   private
 
+  def set_message
+    @message = Message.find(params[:id])
+    authorize @message
+  end
+
   def message_params
     params.require(:message).permit(:content, :contact_id)
+  end
+
+  def reply_rekonect
+    @conversation = @message.conversation
+    @history_messages = history_messages(@message)
+    @summary = message_summary(@history_messages)
   end
 
   def history_messages(message)
@@ -185,7 +174,7 @@ class MessagesController < ApplicationController
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant that generates messages." },
-          { role: "user", content: "It has been a long time since you last wrote to #{message.contact.name}. This is the background of the conversation: #{summary}. Generate in French a warmful message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply." }
+          { role: "user", content: "It has been a long time since you last wrote to #{message.contact.name}. This is the background of the conversation: #{summary}. This is the last message you sent : #{message.content}. Generate in French a warmful message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply." }
         ]
       }
     )
