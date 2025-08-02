@@ -5,6 +5,13 @@ class MessagesController < ApplicationController
   def index
     @messages = policy_scope(Message)
     authorize @messages
+    @awaiting_messages = @messages.where(status: :sent)
+                          .where.not(sender_id: current_user.id)
+                          .select do |msg|
+                            Message.where(conversation_id: msg.conversation_id)
+                            .order(created_at: :desc)
+                            .first == msg
+                          end
     @contacts = current_user.contacts
     @sent_messages = current_user.sent_messages
     @received_messages = current_user.received_messages
@@ -18,20 +25,10 @@ class MessagesController < ApplicationController
 
   def reply
     @message = Message.find(params[:id])
+    @conversation = @message.conversation
     authorize @message
-
-    @history_messages = Message.where(contact_id: @message.contact_id)
-      .where.not(id: @message.id)
-      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
-      .order(created_at: :desc)
-      .limit(3)
-      .where(status: :sent)
-
-    last_messages = Message.where(contact_id: @message.contact_id)
-      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
-      .order(updated_at: :desc)
-      .last(3)
-    @summary = message_summary(last_messages)
+    @history_messages = history_messages(@message)
+    @summary = message_summary(@history_messages)
     ai_suggestion(@message, @summary) if @message.ai_draft.blank? && @message.status != "draft_by_ai"
   end
 
@@ -62,7 +59,7 @@ class MessagesController < ApplicationController
         @conversation,
         render_to_string(partial: "messages/message", locals: { message: @message })
       )
-      redirect_to conversation_by_name_path(contact_name: @conversation.contact.name.parameterize), notice: "Message envoyé avec succès."
+      redirect_to conversation_path(@conversation), notice: "Message envoyé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -80,14 +77,10 @@ class MessagesController < ApplicationController
 
   def edit
     @message = Message.find(params[:id])
+    @conversation = @message.conversation
     authorize @message
-
-    @history_messages = Message.where(contact_id: @message.contact_id)
-      .where.not(id: @message.id)
-      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
-      .order(created_at: :desc)
-      .limit(3)
-      .where(status: :sent)
+    @history_messages = history_messages(@message)
+    @summary = message_summary(@history_messages)
   end
 
   def dismiss_suggestion
@@ -128,6 +121,14 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :contact_id)
   end
 
+  def history_messages(message)
+    Message.where(contact_id: message.contact_id)
+      .where.not(id: message.id)
+      .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
+      .order(created_at: :desc)
+      .limit(3)
+  end
+
   def message_summary(messages)
     cache_key = "message_summary_#{messages.map(&:id).join('_')}"
     summary = Rails.cache.read(cache_key)
@@ -143,9 +144,9 @@ class MessagesController < ApplicationController
             role: "user",
             content:
               "Make a very short recap (80 words max) in French of each interaction between " \
-              "#{messages.first&.contact&.name} and the user #{messages.first&.sender&.first_name}. " \
-              "Speak directly to the user : " \
-              "#{messages.map { |m| "message de #{m.contact.name}: #{m.content}#{m.user_answer.present? ? ", réponse utilisateur: #{m.user_answer}" : ""}" }.join(", ")}"
+              "#{messages.first&.contact&.name} and the user #{current_user.first_name}. " \
+              "The user is #{current_user.first_name}. Speak directly to him, don't use his name: " \
+              "#{messages.map { |m| "date d'envoi: #{m.created_at}, message de #{m.sender_id == current_user.id ? current_user.first_name : m.contact.name}: #{m.content}" }.join(", ")}"
           }
         ]
       }

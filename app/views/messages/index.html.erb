@@ -1,6 +1,6 @@
 <h2 class="dashboard-header">Mes messages</h2>
 
-<% awaiting_messages = @messages.select { |m| m.status == "draft_by_ai" && (m.dismissed == false || m.dismissed.nil?) } %>
+<% awaiting_messages = @awaiting_messages  %>
 <% if awaiting_messages.any? %>
   <div class="messages-list">
     <% awaiting_messages.each do |message| %>
@@ -16,7 +16,7 @@
         </div>
         <div class="message-actions">
           <%= link_to "Rekonect", rekonect_message_path(message), class: "btn btn-rekonect" %>
-          <%= link_to "Conversation", conversation_by_name_path(contact_name: message.contact.name.parameterize), class: "btn btn-conversation" %>
+          <%= link_to "Conversation", conversation_path(message.conversation), class: "btn btn-conversation" %>
         </div>
       </div>
     <% end %>
@@ -26,18 +26,18 @@
 <% end %>
 <%= render "shared/navbar_bottom" %>
 
-<h2>Mes contacts</h2>
+<h2>Mes conversations</h2>
 <div class="contacts-list">
-  <% @contacts.each do |contact| %>
-    <%= link_to conversation_by_name_path(contact_name: contact.name.parameterize), class: "contact-card" do %>
+  <% @conversations.each do |conversation| %>
+    <%= link_to conversation_path(conversation), class: "contact-card" do %>
       <div class="contact-avatar">
-        <% if contact.photo.attached? %>
-          <%= image_tag contact.photo, class: "avatar-img" %>
+        <% if conversation.contact.photo.attached? %>
+          <%= image_tag conversation.contact.photo, class: "avatar-img" %>
         <% else %>
           <%= image_tag "default-avatar.png", class: "avatar-img" %>
         <% end %>
       </div>
-      <div class="contact-name"><%= contact.name %></div>
+      <div class="contact-name"><%= conversation.contact.name %></div>
     <% end %>
   <% end %>
 </div>

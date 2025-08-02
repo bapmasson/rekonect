@@ -51,7 +51,6 @@ class ApplicationController < ActionController::Base
   # Derniers messages reçus non ignorés par l'utilisateur courant.
   received_messages = last_messages_by_contact.values.select do |msg|
     msg.receiver_id == current_user.id &&
-    msg.status == "sent" &&
     (msg.dismissed == false || msg.dismissed.nil?)
   end
 
@@ -73,17 +72,13 @@ end
   def quick_messages
     # On récupère les derniers messages envoyés par contact
     sent_messages = last_messages_by_contact.values.select do |msg|
-      msg.sender_id == current_user.id && msg.status == "sent"
+      msg.sender_id == current_user.id
     end
-
-    # on enlève les doublons de content car la seed génère plusieurs messages avec le même contenu et le même contact
-    # à corriger dans la seed pour éviter de devoir faire ça en production
-    unique_messages = sent_messages.uniq { |msg| msg.content }
 
     # Trie les messages par ancienneté croissante puis par proximité décroissante.
     # On prend les 3 premiers messages après le tri.
     # La proximité est inversée pour que les contacts les plus proches soient prioritaires.
-    prioritized = unique_messages
+    prioritized = sent_messages
       .sort_by { |msg| [msg.created_at, -(msg.contact.relationship.proximity || 1)] }
       .first(3)
 

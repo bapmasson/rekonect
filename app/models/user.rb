@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :badges, through: :user_badges
   has_many :sent_messages, class_name: "Message", foreign_key: :sender_id
   has_many :received_messages, class_name: "Message", foreign_key: :receiver_id
+  has_many :conversations_as_asker, class_name: "Conversation", foreign_key: :user1_id
+  has_many :conversations_as_receiver, class_name: "Conversation", foreign_key: :user2_id
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
