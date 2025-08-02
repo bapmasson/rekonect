@@ -1,46 +1,51 @@
 <h2 class="dashboard-header">Gestion des cercles de contact</h2>
-  <%= form_with url: contacts_path, method: :put, local: true do %>
+
+<%= form_with url: contacts_path, method: :put, local: true do %>
+  <div class="contacts-list">
     <% @contacts.each do |contact| %>
-      <!-- Carte Avatar + Nom -->
-      <div class="contact-circle-card">
-        <div class="contact-circle-main">
-          <% if contact.photo.attached? %>
-            <%= image_tag contact.photo.variant(resize_to_limit: [64, 64]), alt: contact.name, class: "avatar-mobile" %>
-          <% else %>
-            <%= image_tag "default-avatar.png", alt: contact.name, class: "avatar-mobile" %>
-          <% end %>
-          <span class="contact-circle-name"><%= contact.name %></span>
-        </div>
-      </div>
+      <div class="contact-card-container">
+        <%= link_to contact_path(contact), class: "contact-card" do %>
+          <div class="contact-avatar">
+            <% if contact.photo.attached? %>
+              <%= image_tag contact.photo, class: "avatar-img", alt: contact.name %>
+            <% else %>
+              <%= image_tag "default-avatar.png", class: "avatar-img", alt: contact.name %>
+            <% end %>
+          </div>
+          <div class="contact-name"><%= contact.name %></div>
+        <% end %>
 
-      <!-- Bandeau Inputs (en dehors de la carte blanche) -->
-      <div class="contact-circle-fields-card">
-        <div class="contact-circle-fields">
-          <label class="circle-label">Niveau de priorité :</label>
-          <%= select_tag "contacts[#{contact.id}][priority]",
-                options_for_select([
-                  ['👨‍👩‍👧‍👦 Famille (parents/enfants)', 9],
-                  ['👵 Grands-parents', 8],
-                  ['👨‍❤️‍👨 Frères / Sœurs', 7],
-                  ['🧑‍🤝‍🧑 Cousin·e(s)', 6],
-                  ['🧔‍♂️ Oncles / Tantes', 5],
-                  ['💑 Partenaire de vie', 4],
-                  ['🧒 Neveu / Nièce', 3],
-                  ['💛 Ami·e très proche', 2],
-                  ['🤝 Connaissance / collègue', 1],
-                  ['🫥 Autre / Distant', 0]
-                ], contact.relationship&.proximity),
-                class: "circle-select" %>
-          <%= select_tag "contacts[#{contact.id}][reminder_days]",
-                options_for_select([7, 14, 21, 30, 60, 90].map { |d| ["Rappel dans #{d} jours", d] }, selected: contact.notes&.to_i),
-                class: "circle-select" %>
+        <!-- Bandeau Inputs -->
+        <div class="contact-circle-fields-card">
+          <div class="contact-circle-fields">
+            <label class="circle-label">Niveau de priorité :</label>
+            <%= select_tag "contacts[#{contact.id}][priority]",
+              options_for_select([
+                ['👨‍👩‍👧‍👦 Famille (parents/enfants)', 9],
+                ['👵 Grands-parents', 8],
+                ['👨‍❤️‍👨 Frères / Sœurs', 7],
+                ['🧑‍🤝‍🧑 Cousin·e(s)', 6],
+                ['🧔‍♂️ Oncles / Tantes', 5],
+                ['💑 Partenaire de vie', 4],
+                ['🧒 Neveu / Nièce', 3],
+                ['💛 Ami·e très proche', 2],
+                ['🤝 Connaissance / collègue', 1],
+                ['🫥 Autre / Distant', 0]
+              ], contact.relationship&.proximity),
+              class: "circle-select" %>
+
+            <%= select_tag "contacts[#{contact.id}][reminder_days]",
+              options_for_select([7, 14, 21, 30, 60, 90].map { |d| ["Rappel dans #{d} jours", d] }, selected: contact.notes&.to_i),
+              class: "circle-select" %>
+          </div>
         </div>
-      </div>
+      </div> <!-- /.contact-card-container -->
     <% end %>
-    <div class="circle-submit-container">
-      <%= submit_tag "Enregistrer", class: "btn-pink circles-btn-submit" %>
-    </div>
-  <% end %>
-</div>
+  </div> <!-- /.contacts-list -->
 
-  <%= render 'shared/navbar_bottom', active: 'contacts' %>
+  <div class="circle-submit-container">
+    <%= submit_tag "Enregistrer", class: "btn-pink circles-btn-submit" %>
+  </div>
+<% end %>
+
+<%= render 'shared/navbar_bottom', active: 'contacts' %>

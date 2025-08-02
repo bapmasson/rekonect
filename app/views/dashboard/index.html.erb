@@ -51,26 +51,27 @@
     <div class="quick-contacts-title">Et sinon ?</div>
     <div class="quick-contacts-list">
       <% quick_msgs.each do |msg| %>
-        <div class="quick-contact">
-          <div class="contact-content">
-            <% if msg.contact.photo_name.present? %>
-              <!-- Afficher l'image locale basée sur le champ photo_name -->
-              <%= image_tag msg.contact.photo_path, class: "avatar-mobile mb-1" %>
-            <% else %>
-              <!-- Afficher l'image par défaut si aucune image locale n'est définie -->
-              <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
-            <% end %>
-          </div>
-          <div class="contact-name"><%= msg.contact.name %></div>
-          <div class="contact-date">
+        <%= link_to rekonect_message_path(msg), class: "quick-card" do %>
+          <div class="quick-contact">
+            <div class="contact-content">
+              <% if msg.contact.photo.attached? %>
+                <%= image_tag msg.contact.photo, class: "avatar-mobile mb-1", alt: msg.contact.name %>
+              <% else %>
+                <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1", alt: msg.contact.name %>
+              <% end %>
+            </div>
+            <div class="contact-name"><%= msg.contact.name %></div>
+            <div class="contact-date">
               <%= time_ago_in_words(msg.created_at) %>
+            </div>
+            <div class="btn btn-pink btn-sm mt-1 text-center">Rekonect</div>
           </div>
-          <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm" %>
-        </div>
+        <% end %>
       <% end %>
     </div>
   </div>
 <% end %>
+
 
 <%# --- Badges et feedback XP --- %>
 <h2 class="mb-2">Mes badges :</h2>

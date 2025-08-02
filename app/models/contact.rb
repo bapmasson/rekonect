@@ -16,9 +16,7 @@ class Contact < ApplicationRecord
   include Rails.application.routes.url_helpers
 
   def photo_path
-    if photo.attached?
-      rails_blob_url(photo, only_path: true)
-    elsif photo_name.present?
+    if photo_name.present?
       ActionController::Base.helpers.asset_path(photo_name)
     else
       ActionController::Base.helpers.asset_path('default-avatar.png')

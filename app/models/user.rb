@@ -62,9 +62,7 @@ class User < ApplicationRecord
 
     # Exemple de mise à jour d'un contact avec un nom de photo
   def photo_path
-    if photo.attached?
-      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
-    elsif photo_name.present? && ActionController::Base.helpers.asset_path(photo_name)
+    if photo_name.present? && ActionController::Base.helpers.asset_path(photo_name)
       ActionController::Base.helpers.asset_path(photo_name)
     else
       ActionController::Base.helpers.asset_path('default-avatar.png')

@@ -1,15 +1,20 @@
 <div class="card-mobile mb-2 text-center">
-  <% if @contact.photo.attached? %>
-    <%= image_tag @contact.photo.variant(resize_to_fill: [80, 80]), class: "avatar-mobile mb-2" %>
-  <% else %>
-    <%= image_tag "default-avatar.png", class: "avatar-mobile mb-2" %>
+  <%= image_tag contact_image_path(@contact), class: "avatar-mobile mb-2", alt: "Photo de #{@contact.name}" %>
+
+  <% if @contact.name.present? %>
+    <div class="fw-bold mb-1">Nom : <%= @contact.name %></div>
   <% end %>
-  <div class="fw-bold mb-1">Nom : <%= @contact.name %></div>
-  <div>Notes : <%= @contact.notes %></div>
+
+  <% if @contact.notes.present? %>
+    <div>Notes : <%= @contact.notes %></div>
+  <% end %>
+
   <% if @contact.relationship %>
     <div>Relation : <%= @contact.relationship.relation_type %></div>
   <% end %>
+
   <%= link_to "Rekonect", new_message_path(contact_id: @contact.id), class: "btn btn-pink mt-2 w-100" %>
   <%= link_to "Modifier", edit_contact_path(@contact), class: "btn btn-pink mt-2 w-100" %>
 </div>
+
 <%= render "shared/navbar_bottom" %>
