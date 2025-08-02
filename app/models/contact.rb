@@ -5,23 +5,28 @@ class Contact < ApplicationRecord
   has_many :messages
   has_one_attached :photo
 
-  # nom obligatoire
   validates :name, presence: true, length: { minimum: 2, maximum: 100 }
-
-  # notes, max 1000 caractère, autorise le champ vide avec allow blank true
   validates :notes, length: { maximum: 1000 }, allow_blank: true
-
-  # valide les fks
   validates :user, presence: true
   validates :relationship, presence: true
+  validates :photo_name,
+            format: { with: /\A[a-zA-Z0-9_\-\.]+\z/, allow_blank: true,
+                      message: "ne doit pas contenir d'espaces ou caractères spéciaux" }
+
+  include Rails.application.routes.url_helpers
 
   def photo_path
-    # Renvoie le chemin de l'image dans app/assets/images, ou l'avatar par défaut
-    if photo_name.present?
-      Rails.application.assets.find_asset(photo_name).try(:pathname).to_s
+    if photo.attached?
+      rails_blob_url(photo, only_path: true)
+    elsif photo_name.present?
+      ActionController::Base.helpers.asset_path(photo_name)
     else
-      Rails.application.assets.find_asset('default-avatar.png').try(:pathname).to_s
+      ActionController::Base.helpers.asset_path('default-avatar.png')
     end
+  end
+
+  def photo_variant(size = [64, 64])
+    photo.variant(resize_to_fill: size) if photo.attached?
   end
 
   def full_name

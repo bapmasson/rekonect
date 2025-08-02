@@ -60,11 +60,12 @@ class User < ApplicationRecord
 
     # Exemple de mise à jour d'un contact avec un nom de photo
   def photo_path
-    # Renvoie le chemin de l'image dans app/assets/images, ou l'avatar par défaut
-    if photo_name.present?
-      Rails.application.assets.find_asset(photo_name).try(:pathname).to_s
+    if photo.attached?
+      Rails.application.routes.url_helpers.rails_blob_path(photo, only_path: true)
+    elsif photo_name.present? && ActionController::Base.helpers.asset_path(photo_name)
+      ActionController::Base.helpers.asset_path(photo_name)
     else
-      Rails.application.assets.find_asset('default-avatar.png').try(:pathname).to_s
+      ActionController::Base.helpers.asset_path('default-avatar.png')
     end
   end
 end

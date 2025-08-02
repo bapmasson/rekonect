@@ -5,7 +5,7 @@
       <div class="contact-circle-card">
         <div class="contact-circle-main">
           <% if contact.photo.attached? %>
-            <%= image_tag contact.photo.variant(resize_to_fill: [64, 64]), alt: contact.name, class: "avatar-mobile" %>
+            <%= image_tag contact.photo.variant(resize_to_limit: [64, 64]), alt: contact.name, class: "avatar-mobile" %>
           <% else %>
             <%= image_tag "default-avatar.png", alt: contact.name, class: "avatar-mobile" %>
           <% end %>

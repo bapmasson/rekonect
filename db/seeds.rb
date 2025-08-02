@@ -95,12 +95,12 @@ contact_data = [
 
 # 2. Création des contacts comme users
 contact_infos = [
-  { name: "Maman", notes: "C’est ma maman ❤️", relation: "Parent proche", email: "maman@test.com" },
-  { name: "Léo", notes: "Ami d’enfance, on se perd pas de vue !", relation: "Ami proche", email: "leo@test.com" },
-  { name: "Tonton Jean", notes: "Toujours présent aux repas familiaux, spécialiste des blagues beaufs.", relation: "Famille", email: "tonton.jean@test.com" },
-  { name: "Sarah", notes: "Amie de la fac, fan de séries et de Tellement Vrai.", relation: "Ami", email: "sarah@test.com" },
-  { name: "Nour", notes: "Mon binôme sur le frontend du projet.", relation: "Collègue", email: "nour@test.com" },
-  { name: "Karim", notes: "Habite juste en dessous, adore discuter.", relation: "Voisin", email: "karim@test.com" }
+  { name: "Maman", notes: "C’est ma maman ❤️", relation: "Parent proche", email: "maman@test.com", photo_name: "maman.png" },
+  { name: "Léo", notes: "Ami d’enfance, on se perd pas de vue !", relation: "Ami proche", email: "leo@test.com", photo_name: "leo.png" },
+  { name: "Tonton Jean", notes: "Toujours présent aux repas familiaux, spécialiste des blagues beaufs.", relation: "Famille", email: "tonton.jean@test.com", photo_name: "tonton_jean.png" },
+  { name: "Sarah", notes: "Amie de la fac, fan de séries et de Tellement Vrai.", relation: "Ami", email: "sarah@test.com", photo_name: "sarah.png" },
+  { name: "Nour", notes: "Mon binôme sur le frontend du projet.", relation: "Collègue", email: "nour@test.com", photo_name: "nour.png" },
+  { name: "Karim", notes: "Habite juste en dessous, adore discuter.", relation: "Voisin", email: "karim@test.com", photo_name: "karim.png" }
 ]
 
 contact_users = {}
