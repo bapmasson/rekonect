@@ -48,7 +48,7 @@
 <% quick_msgs = @quick_messages %>
 <% if quick_msgs.any? %>
   <div class="quick-contacts-card">
-    <div class="quick-contacts-title">Et sinon ?</div>
+    <div class="quick-contacts-title">Et si on relançait la conversation avec ?</div>
     <div class="quick-contacts-list">
       <% quick_msgs.each do |msg| %>
         <%= link_to rekonect_message_path(msg), class: "quick-card" do %>
