@@ -18,7 +18,6 @@ Rails.application.routes.draw do
   end
   get 'contacts/circles', to: 'contacts#circles', as: :contact_circles
   resources :contacts
-  get 'conversations/:contact_name', to: 'conversations#show', as: :conversation_by_name
   resources :conversations, only: [:show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

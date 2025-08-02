@@ -55,10 +55,16 @@
     <div class="message-content"><%= @message.ai_draft %></div>
   </div>
   <div class="reply-btn-row">
-    <%= form_with url: send_message_message_path(@message), method: :post, local: true do |form| %>
-      <%= form.hidden_field :user_answer, value: @message.ai_draft %>
-      <%= form.submit "Envoyer", class: "btn btn-pink reply-btn" %>
+    <%= simple_form_for Message.new do |f| %>
+      <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
+      <%= f.input :content, as: :hidden, input_html: { value: @message.ai_draft } %>
+      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
     <% end %>
+
+    <%#= form_with url: send_message_message_path(@message), method: :post, local: true do |form| %>
+      <%#= form.hidden_field :user_answer, value: @message.ai_draft %>
+      <%#= form.submit "Envoyer", class: "btn btn-pink reply-btn" %>
+    <%# end %>
     <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
   </div>
 </div>

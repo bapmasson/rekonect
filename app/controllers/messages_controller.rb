@@ -5,6 +5,13 @@ class MessagesController < ApplicationController
   def index
     @messages = policy_scope(Message)
     authorize @messages
+    @awaiting_messages = @messages.where(status: :sent)
+                          .where.not(sender_id: current_user.id)
+                          .select do |msg|
+                            Message.where(conversation_id: msg.conversation_id)
+                            .order(created_at: :desc)
+                            .first == msg
+                          end
     @contacts = current_user.contacts
     @sent_messages = current_user.sent_messages
     @received_messages = current_user.received_messages
@@ -18,6 +25,7 @@ class MessagesController < ApplicationController
 
   def reply
     @message = Message.find(params[:id])
+    @conversation = @message.conversation
     authorize @message
 
     @history_messages = Message.where(contact_id: @message.contact_id)
@@ -62,7 +70,7 @@ class MessagesController < ApplicationController
         @conversation,
         render_to_string(partial: "messages/message", locals: { message: @message })
       )
-      redirect_to conversation_by_name_path(contact_name: @conversation.contact.name.parameterize), notice: "Message envoyé avec succès."
+      redirect_to conversation_path(@conversation), notice: "Message envoyé avec succès."
     else
       render :new, status: :unprocessable_entity
     end
@@ -80,6 +88,8 @@ class MessagesController < ApplicationController
 
   def edit
     @message = Message.find(params[:id])
+    @conversation = @message.conversation
+
     authorize @message
 
     @history_messages = Message.where(contact_id: @message.contact_id)
