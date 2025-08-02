@@ -63,11 +63,7 @@
           </div>
           <div class="contact-name"><%= msg.contact.name %></div>
           <div class="contact-date">
-            <% if msg.sent_at.present? %>
-              <%= time_ago_in_words(msg.sent_at) %>
-            <% else %>
-              <span>Date inconnue</span>
-            <% end %>
+              <%= time_ago_in_words(msg.created_at) %>
           </div>
           <%= link_to "Rekonect", rekonect_message_path(msg), class: "btn btn-pink btn-sm" %>
         </div>

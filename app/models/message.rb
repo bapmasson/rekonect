@@ -15,7 +15,7 @@ class Message < ApplicationRecord
   validate :content_or_ai_draft_or_user_answer_present
 
   # Date d’envoi optionnelle, pas dans le futur, peut être blanc
-  validates :sent_at, allow_blank: true, comparison: { less_than_or_equal_to: Date.today }
+  # validates :sent_at, allow_blank: true, comparison: { less_than_or_equal_to: Date.today }
 
   validates :sender, presence: true
   validates :receiver, presence: true
