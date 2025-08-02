@@ -15,7 +15,7 @@
           <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
         </div>
         <div class="message-actions">
-          <%= link_to "Rekonect", rekonect_message_path(message), class: "btn btn-rekonect" %>
+          <%= link_to "Rekonect", reply_message_path(message), class: "btn btn-rekonect" %>
           <%= link_to "Conversation", conversation_path(message.conversation), class: "btn btn-conversation" %>
         </div>
       </div>

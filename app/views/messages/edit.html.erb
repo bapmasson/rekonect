@@ -1,6 +1,6 @@
 <div class="reply-header">
   <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" data-target="section1">
-    <h1 class="reply-title" style="margin: 0;">Prends donc un peu de temps pour</h1>
+    <h1 class="reply-title" style="margin: 0;"><%= @message.sender == current_user ? "Peut-être est-il temps de relancer la conversation avec :" : "Prends donc un peu de temps pour :" %></h1>
   </div>
   <div id="section1" class="collapsible-content" style="transition: max-height 0.3s ease; overflow: hidden;">
     <div class="reply-avatar-block" style="margin-top: 10px;">
@@ -16,7 +16,7 @@
 
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
-    <span>Dernier message non-répondu</span>
+    <span><%= @message.sender == current_user ? "Dernier message de ta part" : "Dernier message non-répondu" %></span>
     <span id="icon-last">▼</span>
   </div>
   <div id="last-message-block" class="slide-toggle open">
