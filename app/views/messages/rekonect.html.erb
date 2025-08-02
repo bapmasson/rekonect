@@ -16,7 +16,7 @@
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
     <span>Dernier message de ta part</span>
-    <span id="icon-last">▼</span>
+    <span id="icon-last"><i class='fas fa-chevron-up'></i></span>
   </div>
   <div id="last-message-block" class="slide-toggle open">
     <div class="card-mobile msg-inner-bubble mb-0">
@@ -35,7 +35,7 @@
         <%= @message.contact.name %> fait partie de votre entourage proche !<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span id="icon-history">▼</span>
+      <span id="icon-history"><i class='fas fa-chevron-up'></i></span>
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
@@ -60,7 +60,7 @@
       <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
     <% end %>
 
-    <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
+    <%= link_to "Modifier", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
   </div>
 </div>
 
