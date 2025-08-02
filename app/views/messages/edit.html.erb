@@ -15,34 +15,32 @@
 </div>
 
 <div class="msg-bubble-pink mb-3">
-  <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" data-target="section2">
-    <div class="reply-block-title" style="margin: 0;">Dernier message non-répondu</div>
-    <span class="toggle-arrow" style="font-size: 1.5em;">˅</span>
+  <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
+    <span>Dernier message non-répondu</span>
+    <span id="icon-last">▼</span>
   </div>
-  <div id="section2" class="collapsible-content" style="transition: max-height 0.3s ease; overflow: hidden;">
-    <div class="card-mobile msg-inner-bubble mb-0" style="margin-top: 10px;">
+  <div id="last-message-block" class="slide-toggle open">
+    <div class="card-mobile msg-inner-bubble mb-0">
       <div class="message-content"><%= @message.content %></div>
       <div class="message-date text-end">Il y a <%= time_ago_in_words(@message.created_at) %></div>
     </div>
   </div>
 </div>
 
-<% if @history_messages.present? %>
+<% if @summary.present? %>
   <div class="msg-bubble-pink mb-2">
-    <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" data-target="section3">
-      <div class="reply-block-title" style="margin: 0;">
+    <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
+      <div>
         <%= @message.contact.name %> fait partie de votre entourage proche !<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span class="toggle-arrow" style="font-size: 1.5em;">▾</span>
+      <span id="icon-history">▼</span>
     </div>
-    <div id="section3" class="collapsible-content" style="transition: max-height 0.3s ease; overflow: hidden;">
-      <% @history_messages.each do |m| %>
+
+    <div id="history-messages-block" class="slide-toggle open">
         <div class="card-mobile msg-inner-bubble mb-1">
-          <div class="message-content"><%= m.content %></div>
-          <div class="message-date text-end">Il y a <%= time_ago_in_words(m.created_at) %></div>
+          <div class="message-content"><%= @summary %></div>
         </div>
-      <% end %>
     </div>
   </div>
 <% end %>
@@ -52,16 +50,14 @@
   <div class="card-mobile msg-inner-bubble mb-0">
     <%= simple_form_for Message.new do |f| %>
       <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
-      <%= f.input :content, as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
+      <%= f.input :content, label: "Votre réponse", as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
       <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
     <% end %>
 
 
     <%#= form_with(model: @message, local: true) do |form| %>
-      <div class="mb-3">
-        <%#= form.label :content, "Votre réponse" %>
-        <%#= form.text_area :content, value: @message.ai_draft.presence || @message.content, rows: 5, class: "input-mobile" %>
-      </div>
+      <%#= form.label :content, "Votre réponse" %>
+      <%#= form.text_area :content, value: @message.ai_draft.presence || @message.content, rows: 5, class: "input-mobile" %>
       <%#= form.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
     <%# end %>
   </div>
@@ -70,31 +66,20 @@
 <%= render 'shared/navbar_bottom' %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll('.collapsible-header').forEach(function(header) {
-      header.addEventListener('click', function() {
-        const targetId = header.dataset.target;
-        const content = document.getElementById(targetId);
-        const arrow = header.querySelector('.toggle-arrow');
+ function toggleBlock(blockId, iconId) {
+  const block = document.getElementById(blockId);
+  const icon = document.getElementById(iconId);
 
-        if (content.style.maxHeight && content.style.maxHeight !== "0px") {
-          // Collapse
-          content.style.maxHeight = "0";
-          arrow.textContent = "▾";  // Flèche vers le bas
-        } else {
-          // Expand
-          content.style.maxHeight = content.scrollHeight + "px";
-          arrow.textContent = "▴";  // Flèche vers le haut
-        }
-      });
-    });
+  if (!block || !icon) return;
 
-    // Initial collapse the sections if you want (optional)
-    ['section1', 'section2'].forEach(function(id) {
-      const el = document.getElementById(id);
-      if(el) {
-        el.style.maxHeight = el.scrollHeight + "px"; // start expanded
-      }
-    });
-  });
+  const isOpen = block.classList.contains("open");
+
+  if (isOpen) {
+    block.classList.remove("open");
+    icon.innerHTML = "<i class='fas fa-chevron-down'></i>";
+  } else {
+    block.classList.add("open");
+    icon.innerHTML = "<i class='fas fa-chevron-up'></i>";
+  }
+}
 </script>

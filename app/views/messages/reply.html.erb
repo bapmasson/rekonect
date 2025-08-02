@@ -27,7 +27,7 @@
 </div>
 
 <!-- Historique -->
-<% if @history_messages.present? %>
+<% if @summary.present? %>
   <div class="msg-bubble-pink mb-2">
     <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
       <div>
@@ -38,12 +38,9 @@
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
-      <% @history_messages.each do |m| %>
         <div class="card-mobile msg-inner-bubble mb-1">
-          <div class="message-content"><%= m.content %></div>
-          <div class="message-date text-end">Il y a <%= time_ago_in_words(m.created_at) %></div>
+          <div class="message-content"><%= @summary %></div>
         </div>
-      <% end %>
     </div>
   </div>
 <% end %>
@@ -61,10 +58,6 @@
       <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
     <% end %>
 
-    <%#= form_with url: send_message_message_path(@message), method: :post, local: true do |form| %>
-      <%#= form.hidden_field :user_answer, value: @message.ai_draft %>
-      <%#= form.submit "Envoyer", class: "btn btn-pink reply-btn" %>
-    <%# end %>
     <%= link_to "Editer", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
   </div>
 </div>
