@@ -5,13 +5,14 @@ class MessagesController < ApplicationController
   def index
     @messages = policy_scope(Message)
     authorize @messages
-    @awaiting_messages = @messages.where(status: :sent)
-                          .where.not(sender_id: current_user.id)
-                          .select do |msg|
-                            Message.where(conversation_id: msg.conversation_id)
-                            .order(created_at: :desc)
-                            .first == msg
-                          end
+
+    # Sélectionne les messages en attente de réponse du user
+    # (uniquement ceux qui sont les derniers messages de chaque conversation)
+    subquery = @messages
+      .where.not(sender_id: current_user.id)
+      .select('DISTINCT ON (conversation_id) *')
+      .order('conversation_id, created_at DESC')
+    @awaiting_messages = Message.from(subquery, :messages)
     @contacts = current_user.contacts
     @sent_messages = current_user.sent_messages
     @received_messages = current_user.received_messages
