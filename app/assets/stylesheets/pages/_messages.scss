@@ -19,6 +19,25 @@
 }
 
 // header arrondi
+.slide-toggle {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.slide-toggle.open {
+  max-height: 1000px; /* Assez large pour tout contenu */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.reply-block-title {
+  cursor: pointer;
+  user-select: none;
+}
+
 .reply-header {
   width: 100%;
   max-width: 98vw;

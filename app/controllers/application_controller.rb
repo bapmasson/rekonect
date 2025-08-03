@@ -38,7 +38,7 @@ class ApplicationController < ActionController::Base
 
   # Retourne le message reçu le plus prioritaire selon l'ancienneté et la proximité.
   def main_message
-    received_messages = Message.where(receiver_id: current_user.id, status: :received, dismissed: [false, nil])
+    received_messages = Message.where(receiver_id: current_user.id, status: :sent, dismissed: [false, nil])
 
     # La priorité est calculée comme le produit du temps écoulé (en heures) depuis la réception du message et de la proximité du contact.
     # Le message avec le score le plus élevé est retourné.
