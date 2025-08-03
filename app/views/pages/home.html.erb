@@ -37,11 +37,11 @@
     <div class="d-flex gap-2 justify-content-center">
       <% @quick_messages.first(2).each do |msg| %>
         <div class="text-center">
-          <% if msg.contact.photo.attached? %>
-            <%= image_tag msg.contact.photo.variant(resize_to_fill: [48, 48]), class: "avatar-mobile mb-1" %>
-          <% else %>
-            <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1" %>
-          <% end %>
+              <% if msg.contact.photo.attached? %>
+                <%= image_tag msg.contact.photo, class: "avatar-mobile mb-1", alt: msg.contact.name %>
+              <% else %>
+                <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1", alt: msg.contact.name %>
+              <% end %>
           <div><%= msg.contact.name %></div>
           <div class="text-muted small"><%= time_ago_in_words(msg.created_at) %> sans réponse</div>
           <%= link_to "Rekonect", reply_message_path(msg), class: "btn btn-pink btn-sm mt-1" %>

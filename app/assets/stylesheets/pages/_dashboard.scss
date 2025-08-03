@@ -217,7 +217,7 @@ $shadow-dark: rgba(0,0,0,0.25);
   border-radius: 35px;
   box-shadow: 0 4px 18px $shadow-dark;
   padding: 26px 12px;
-  margin: 32px auto;
+  margin: 40px auto;
   text-align: center;
   box-sizing: border-box;
 
@@ -240,7 +240,7 @@ $shadow-dark: rgba(0,0,0,0.25);
     margin: 0 auto;
   }
 
-  .quick-contact {
+  .quick-card {
     background: #fff;
     border-radius: 15px;
     border: 2px solid #B5A5E8;
@@ -250,13 +250,17 @@ $shadow-dark: rgba(0,0,0,0.25);
     min-height: 180px;
     height: auto;
     box-sizing: border-box;
-    padding: 16px 6px;
+    padding: 16px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
+
+  // 🔽 Ceci gère l’espace vertical entre les enfants
+    gap: 20px; // augmente la valeur pour plus d'espacement
+
 
     .contact-content {
       display: flex;
@@ -298,11 +302,15 @@ $shadow-dark: rgba(0,0,0,0.25);
 
     .btn {
       width: 90%;
-      height: 36px;
+      max-width: 90vw;
+      height: 38px;
+      margin: 26px auto 0 auto;
+      padding-left: 12px;
+      padding-right: 12px;
       background: $pink-btn;
       color: #fff;
-      font-size: 1.1rem;
-      font-weight: 800;
+      font-weight: 650;
+      font-size: 1.20rem;
       border-radius: 50px;
       border: none;
       box-shadow: 0 7px 15px $shadow-dark;

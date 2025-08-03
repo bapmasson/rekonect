@@ -1,0 +1,53 @@
+.welcome-image {
+    width: 200px;
+    height: auto;
+    border-radius: 50px;
+    margin-bottom: 16px;
+}
+
+h1 {
+  width: 90%;
+  max-width: 98vw;
+  margin: 0 auto 20px auto;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #ffffff; // ou une autre couleur de votre choix
+  text-shadow:
+    0 0 5px #B5A5E8,
+    0 0 10px #B5A5E8,
+    0 0 15px #B5A5E8;
+}
+p {
+  width: 90%;
+  font-size: large;
+  text-align: center;
+  margin: 0 auto 20px auto;
+  max-width: 600px;
+  color: #000000; // ou garde la couleur d'origine si tu préfères
+  text-shadow:
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 15px #fff;
+}
+
+.form-actions {
+  width: 90%;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 16px auto;
+  background: $pink-btn;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.20rem;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 8px 22px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+  &:hover {
+    background: $pink-btn-hover;
+  }
+}
