@@ -63,8 +63,6 @@ class MessagesController < ApplicationController
 
   def edit
     @conversation = @message.conversation
-    @history_messages = history_messages(@message)
-    @summary = message_summary(@history_messages)
   end
 
   def dismiss_suggestion

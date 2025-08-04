@@ -10,6 +10,7 @@
       <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
     <% end %>
 
-    <%= link_to "Modifier", edit_message_path(message), class: "btn btn-pink reply-btn" %>
+    <%= link_to "Modifier", edit_message_path(message), data: { turbo_frame: :message_suggestion }, class: "btn btn-pink reply-btn" %>
+
   </div>
 <% end %>
