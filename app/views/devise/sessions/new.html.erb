@@ -1,7 +1,26 @@
-<%= image_tag "logo.png", alt: "Logo Rekonect", class: "welcome-image"%>
-<h1>Rekonect - Restes proches, simplement.</h1>
-<p>Rekonect vous aide à reprendre contact avec vos proches en douceur. Des rappels personnalisés pour garder le lien, sans efforts.</p>
-<h2>Log in</h2>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-12">
+      <div class="devise-header">
+        <%= image_tag "logo.png", alt: "Logo Rekonect", class: "devise-logo" %>
+        <div class="devise-title-block">
+        <h1 class="devise-title">Rekonect</h1>
+        <div class="app-slogan">
+          <i class="fas fa-comment-dots slogan-bubble"></i>
+          <span>Restes proches, simplement</span>
+          </div>
+        </div>
+        <p class="devise-desc">
+          Rekonect vous aide à reprendre contact avec vos proches en douceur.<br>
+          Des rappels personnalisés pour garder le lien, sans efforts.
+        </p>
+      </div>
+
+      <div class="devise-card card shadow-lg p-4">
+        <h2 class="text-center mb-3">Connexion à Rekonect</h2>
+        <p class="text-center mb-4 text-muted" style="font-size: 1.08rem;">
+          Heureux de te revoir 👋<br>
+        </p>
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
