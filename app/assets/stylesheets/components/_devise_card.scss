@@ -90,3 +90,86 @@
   flex-direction: column;
   align-items: center;
 }
+
+.devise-links {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.devise-links a {
+  color: #B27AE8;
+  font-weight: 700;
+  font-size: 1.09rem;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 8px #fff, 0 0 2px #fff;
+  transition: color 0.18s, text-shadow 0.18s;
+
+  &:hover {
+    color: #e573a4;
+    text-shadow: 0 2px 12px #e573a4AA, 0 0 8px #fff;
+    text-decoration: underline;
+  }
+}
+
+.cta-signup {
+  display: inline-block;
+  margin: 28px auto 14px auto;
+  padding: 0.72em 2.5em;
+  font-size: 1.13rem;
+  font-weight: 800;
+  border-radius: 23px;
+  background: linear-gradient(97deg, #ffb8d0 0%, #b5a5e8 45%, #e573a4 100%);
+  color: #fff !important;
+  box-shadow: 0 4px 30px 0px #e573a47e, 0 1.5px 7px #b5a5e8a0;
+  letter-spacing: 0.04em;
+  border: 2.5px solid #fff6;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+  filter: drop-shadow(0 6px 16px #ffb8d055);
+  transition:
+    background 0.15s,
+    box-shadow 0.13s,
+    border 0.17s,
+    transform 0.13s;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(93deg, #e573a4 0%, #b5a5e8 60%, #ffb8d0 100%);
+    box-shadow: 0 7px 40px 3px #b5a5e8bb, 0 2px 9px #fff3;
+    border-color: #e573a4a6;
+    color: #fff !important;
+    transform: translateY(-2px) scale(1.045) rotate(-1deg);
+    outline: none;
+    filter: brightness(1.05) drop-shadow(0 0 12px #e573a499);
+  }
+
+  &:active {
+    transform: scale(0.96);
+    filter: brightness(0.97);
+  }
+
+}
+
+.devise-link-muted {
+  padding: 5px 16px;
+  border-radius: 20px;
+  border: 1.5px solid #e573a455;
+  background: $card-shadow;
+  color: black !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 14px #fff6;
+  font-weight: 600;
+
+  &:hover,
+  &:focus {
+    color: #e573a4 !important;
+    text-decoration: underline !important;
+    box-shadow: 0 4px 20px #e573a444;
+    background: #fff8;
+    outline: none;
+  }
+}
