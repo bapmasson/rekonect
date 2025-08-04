@@ -25,19 +25,24 @@
 
 <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="form-inputs">
+    <div class="input-with-icon">
+      <i class="fas fa-envelope"></i>
     <%= f.input :email,
                 required: false,
                 autofocus: true,
                 input_html: { autocomplete: "email" } %>
+      <i class="fas fa-lock"></i>
     <%= f.input :password,
                 required: false,
                 input_html: { autocomplete: "current-password" } %>
     <%= f.input :remember_me, as: :boolean if devise_mapping.rememberable? %>
-  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Log in" %>
+    <%= f.button :submit, "🔓 Se connecter", class: "devise-link" %>
+          </div>
+        </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
-
 <%= render "devise/shared/links" %>
