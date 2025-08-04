@@ -3,6 +3,7 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :send_message, :reply, :rekonect]
   before_action :reply_rekonect, only: [:reply, :rekonect]
   skip_after_action :verify_authorized, only: [:success]
+  # after_create_commit :broadcast_message
 
   def index
     @messages = policy_scope(Message)
@@ -43,13 +44,15 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
-      ChatChannel.broadcast_to(
-        @conversation,
-        render_to_string(partial: "messages/message", locals: { message: @message })
-      )
-      redirect_to conversation_path(@conversation), notice: "Message envoyé avec succès."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
+            locals: { message: @message })
+        end
+        format.html { redirect_to conversation_path(@conversation) }
+      end
     else
-      render :new, status: :unprocessable_entity
+      render "conversations/show", status: :unprocessable_entity
     end
   end
 
@@ -102,6 +105,13 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:content, :contact_id)
+  end
+
+  def broadcast_message
+    broadcast_append_to "conversation_#{conversation.id}_messages",
+                        partial: "messages/message",
+                        target: "messages",
+                        locals: { message: self }
   end
 
   def reply_rekonect
