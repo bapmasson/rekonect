@@ -15,58 +15,25 @@
 @import "pages/chat";
 @import "pages/sessions";
 
-/* Base responsive setup */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 body {
-  margin: 0;
-  padding-bottom: 5rem;
+  padding-bottom: 80px;
+  background: #EEAECA;
   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-  font-family: sans-serif;
 }
 
-/* Containers */
-.main-container,
-.logout-page {
-  padding-bottom: 5rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+.main-container, .logout-page {
+  padding-bottom: 80px;
 }
 
-/* Header */
 h2 {
   width: 100%;
   max-width: 98vw;
-  margin: 0 auto 1.5rem auto;
+  margin: 0px auto 26px auto;
   background: #B5A5E8;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2); /* remplace $shadow-dark */
-  padding: 1.5rem 1rem 1rem 1rem;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: clamp(1.2rem, 2.5vw, 2rem); /* s’adapte à la taille de l’écran */
-}
-
-/* Media queries pour affiner si besoin */
-@media (min-width: 768px) {
-  .main-container,
-  .logout-page {
-    padding-left: 2rem;
-    padding-right: 2rem;
-  }
-
-  h2 {
-    padding: 2rem;
-  }
-}
-
-@media (min-width: 1200px) {
-  h2 {
-    max-width: 800px;
-  }
 }
