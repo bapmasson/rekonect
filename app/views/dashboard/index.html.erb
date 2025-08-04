@@ -40,7 +40,7 @@
         Il y a <%= time_ago_in_words(main_msg.created_at) %>
       </div>
     </div>
-    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn btn-pink main-message-btn" %>
+    <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn-reply btn-pink main-message-btn" %>
   </div>
 <% end %>
 
@@ -64,7 +64,7 @@
             <div class="contact-date">
               <%= time_ago_in_words(msg.created_at) %>
             </div>
-            <div class="btn btn-sm mt-1 text-center">Rekonect</div>
+            <div class="btn-sinon btn-sm mt-1 text-center">Rekonect</div>
           </div>
         <% end %>
       <% end %>
@@ -74,7 +74,7 @@
 
 
 <%# --- Badges et feedback XP --- %>
-<h2 class="mb-2">Mes badges :</h2>
+<h2 class="badge-header mb-2">Mes badges :</h2>
 <div class="badges-list mb-2">
   <% @badges.each do |badge| %>
     <div class="card-mobile mb-2">

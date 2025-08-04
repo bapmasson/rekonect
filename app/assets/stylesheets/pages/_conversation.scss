@@ -1,3 +1,9 @@
+body {
+  padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
 .chat-container {
   max-width: 600px;
   margin: 40px auto;
@@ -6,6 +12,69 @@
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
   padding: 32px 28px;
   box-sizing: border-box;
+}
+
+.conversation-header{
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.suggestion {
+  background: #fff;
+  border-radius: 35px;
+  box-shadow: 0 8px 20px $shadow-dark;
+  padding: 19px 16px;
+  margin: 0 auto 22px auto;
+  width: 90%;
+  max-width: 94vw;
+  min-height: 64px;
+  color: #222;
+  font-size: 1.11rem;
+  font-weight: 700;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.btn {
+  width: 90%;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink-btn;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.20rem;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 8px 22px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+
+  &:hover {
+    background: $pink-btn-hover;
+  }
 }
 
 .sms-chat {
@@ -73,6 +142,7 @@
   width: 100%;
   box-sizing: border-box;
 }
+
 
 /* 🔽 Responsive Media Queries */
 @media (max-width: 600px) {
