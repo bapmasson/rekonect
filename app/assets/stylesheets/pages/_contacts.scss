@@ -5,15 +5,34 @@
   box-sizing: border-box;
 }
 
+body {
+  padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
 /* Contacts List */
 .contacts-list {
   padding: 10px 0 90px 0;
 }
 
+.circles-header{
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 /* Contact Card */
 .contact-card {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1.125rem; /* 18px */
   padding: 1rem;
   border-radius: 20px;
@@ -146,6 +165,29 @@ h1 {
   cursor: pointer;
 }
 
+.btn-save, .btn-maj, .btn-add, .btn-modifier, .btn-new {
+    width: 90%;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink-btn;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.20rem;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 8px 22px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+
+  &:hover {
+    background: $pink-btn-hover;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 450px) {
   .circles-header-card,
@@ -157,7 +199,7 @@ h1 {
   }
 
   .contact-card {
-    flex-direction: column;
+    // flex-direction: column;
     align-items: flex-start;
     gap: 10px;
   }
