@@ -47,19 +47,7 @@
 
 <!-- Suggestion de réponse (toujours visible) -->
 <div class="msg-bubble-pink mb-3">
-  <div class="reply-block-title">Suggestion de réponse :</div>
-  <div class="card-mobile msg-inner-bubble mb-0">
-    <div class="message-content"><%= @message.ai_draft %></div>
-  </div>
-  <div class="reply-btn-row">
-    <%= simple_form_for Message.new do |f| %>
-      <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
-      <%= f.input :content, as: :hidden, input_html: { value: @message.ai_draft } %>
-      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
-    <% end %>
-
-    <%= link_to "Modifier", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
-  </div>
+  <%= render "messages/ai_suggestion", message: @message, conversation: @conversation %>
 </div>
 
 <script>
