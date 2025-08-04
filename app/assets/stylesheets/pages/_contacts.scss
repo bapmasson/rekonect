@@ -1,45 +1,64 @@
+/* Global base responsive */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Contacts List */
 .contacts-list {
   padding: 10px 0 90px 0;
 }
+
+/* Contact Card */
 .contact-card {
-  @extend .card-mobile;
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 1.125rem; /* 18px */
+  padding: 1rem;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
+
+/* Info inside card */
 .contact-info {
   flex: 1;
 }
+
+/* Name styling */
 .contact-name {
   font-weight: 700;
-  font-size: 18px;
-  color: $pink;
+  font-size: 1.125rem; /* 18px */
+  color: #e573a4; /* Replace $pink */
 }
+
+/* Notes styling */
 .contact-notes {
-  color: $gray-txt;
-  font-size: 15px;
+  font-size: 0.9375rem; /* 15px */
+  color: #777; /* Replace $gray-txt */
 }
 
-// circle
-
+/* Page Container */
 .contacts-circles-page {
   min-height: 100vh;
   padding: 30px 0 88px 0;
 }
 
-
+/* Header */
 h1 {
   color: #222;
-  font-family: $headers-font;
+  font-family: 'Poppins', sans-serif; /* Replace $headers-font */
   font-weight: 800;
   font-size: 2rem;
   margin: 0;
 }
 
+/* Contact Circle Card */
 .contact-circle-card {
-  background: $white;
+  background: #fff; /* Replace $white */
   border-radius: 30px;
-  box-shadow: 0 4px 16px $card-shadow;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); /* Replace $card-shadow */
   margin: 25px auto 40px auto;
   max-width: 430px;
   width: 93vw;
@@ -49,25 +68,28 @@ h1 {
   align-items: center;
 }
 
+/* Circle Main Section */
 .contact-circle-main {
   display: flex;
   align-items: center;
   gap: 18px;
   margin-bottom: 4px;
-
-  .avatar-mobile {
-    width: 64px;
-    height: 64px;
-    margin-right: 5px;
-  }
-  .contact-circle-name {
-    font-family: $headers-font;
-    font-size: 1.32rem;
-    font-weight: 800;
-    color: #222;
-  }
 }
 
+.avatar-mobile {
+  width: 64px;
+  height: 64px;
+  margin-right: 5px;
+}
+
+.contact-circle-name {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.32rem;
+  font-weight: 800;
+  color: #222;
+}
+
+/* Circle Fields Section */
 .contact-circle-fields {
   display: flex;
   align-items: center;
@@ -75,53 +97,56 @@ h1 {
   margin-left: 5px;
   margin-bottom: 7px;
   width: 100%;
-
-  .circle-label {
-    font-size: 1rem;
-    font-weight: 700;
-    color: $gray-txt;
-    margin-right: 6px;
-  }
-
-  .circle-select {
-    font-size: 1.04rem;
-    border-radius: 20px;
-    padding: 7px 13px;
-    border: 2.1px solid $pink-header;
-    margin-right: 8px;
-    background: #fff0f7;
-    font-family: $body-font;
-    font-weight: 700;
-    color: #333;
-    min-width: 120px;
-    box-shadow: 0 2px 10px $card-shadow;
-    outline: none;
-
-    &:focus {
-      border-color: $pink;
-      background: #fff4f7;
-    }
-  }
 }
 
+.circle-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #777;
+  margin-right: 6px;
+}
+
+.circle-select {
+  font-size: 1.04rem;
+  border-radius: 20px;
+  padding: 7px 13px;
+  border: 2.1px solid #d36aaa; /* $pink-header */
+  background: #fff0f7;
+  font-family: 'Inter', sans-serif; /* $body-font */
+  font-weight: 700;
+  color: #333;
+  min-width: 120px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  outline: none;
+}
+
+.circle-select:focus {
+  border-color: #e573a4; /* $pink */
+  background: #fff4f7;
+}
+
+/* Submit container */
 .circle-submit-container {
   text-align: right;
   max-width: 440px;
   margin: 28px auto 0 auto;
   padding-right: 7px;
-
-  .circles-btn-submit {
-    font-size: 1.34rem !important;
-    font-weight: 800 !important;
-    border-radius: 16px !important;
-    box-shadow: 0 4px 18px $card-shadow;
-    background: linear-gradient(90deg, $pink 0%, $pink-dark 100%);
-    padding: 10px 28px !important;
-    margin: 0 !important;
-    width: unset;
-  }
 }
 
+.circles-btn-submit {
+  font-size: 1.34rem;
+  font-weight: 800;
+  border-radius: 16px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08); /* $card-shadow */
+  background: linear-gradient(90deg, #e573a4 0%, #d24f85 100%); /* $pink to $pink-dark */
+  padding: 10px 28px;
+  margin: 0;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
 @media (max-width: 450px) {
   .circles-header-card,
   .contact-circle-card {
@@ -129,5 +154,21 @@ h1 {
     max-width: 99vw;
     padding-left: 6px;
     padding-right: 6px;
+  }
+
+  .contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .circle-select {
+    min-width: auto;
+    width: 100%;
+  }
+
+  .circle-submit-container {
+    text-align: center;
+    padding-right: 0;
   }
 }

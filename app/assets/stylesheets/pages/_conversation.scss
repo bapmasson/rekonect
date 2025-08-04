@@ -1,11 +1,11 @@
-
 .chat-container {
   max-width: 600px;
   margin: 40px auto;
   background: #fff;
   border-radius: 24px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
   padding: 32px 28px;
+  box-sizing: border-box;
 }
 
 .sms-chat {
@@ -14,6 +14,7 @@
   width: 100%;
   gap: 14px;
   padding: 24px 0;
+  box-sizing: border-box;
 }
 
 .sms-meta {
@@ -29,21 +30,20 @@
   border-radius: 18px;
   font-size: 1.08rem;
   margin-bottom: 2px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   word-break: break-word;
   position: relative;
+  line-height: 1.4;
 }
 
 .sms-me {
   margin-left: auto;
-  // background: none;
-  color: $white;
+  color: #fff;
   text-align: right;
 }
 
 .sms-other {
   margin-right: auto;
-  // background: none;
   color: #222;
   text-align: left;
 }
@@ -53,11 +53,13 @@
   width: 100%;
   border-top: 1px solid #eee;
   padding-top: 16px;
+  box-sizing: border-box;
 }
 
 .chat-form {
   display: flex;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .chat-input {
@@ -70,4 +72,46 @@
   resize: none;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* 🔽 Responsive Media Queries */
+@media (max-width: 600px) {
+  .chat-container {
+    margin: 20px 12px;
+    padding: 24px 18px;
+    border-radius: 18px;
+  }
+
+  .sms-bubble {
+    max-width: 80%;
+    font-size: 1rem;
+    padding: 12px 16px;
+  }
+
+  .chat-input {
+    font-size: 0.95rem;
+    padding: 8px 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .chat-container {
+    margin: 16px 8px;
+    padding: 20px 14px;
+  }
+
+  .sms-bubble {
+    max-width: 90%;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+
+  .sms-meta {
+    font-size: 0.85em;
+  }
+
+  .chat-input {
+    font-size: 0.9rem;
+    padding: 8px 10px;
+  }
 }

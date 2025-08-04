@@ -1,8 +1,9 @@
 .welcome-image {
-    width: 200px;
-    height: auto;
-    border-radius: 50px;
-    margin-bottom: 16px;
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 50px;
+  margin-bottom: 16px;
 }
 
 h1 {
@@ -11,19 +12,20 @@ h1 {
   margin: 0 auto 20px auto;
   font-size: 2.5rem;
   text-align: center;
-  color: #ffffff; // ou une autre couleur de votre choix
+  color: #ffffff;
   text-shadow:
     0 0 5px #B5A5E8,
     0 0 10px #B5A5E8,
     0 0 15px #B5A5E8;
 }
+
 p {
   width: 90%;
-  font-size: large;
+  font-size: 1.125rem;
   text-align: center;
   margin: 0 auto 20px auto;
   max-width: 600px;
-  color: #000000; // ou garde la couleur d'origine si tu préfères
+  color: #000000;
   text-shadow:
     0 0 5px #fff,
     0 0 10px #fff,
@@ -33,12 +35,12 @@ p {
 .form-actions {
   width: 90%;
   max-width: 90vw;
-  height: 38px;
-  margin: 16px auto 16px auto;
+  height: 48px;
+  margin: 16px auto;
   background: $pink-btn;
   color: #fff;
   font-weight: 800;
-  font-size: 1.20rem;
+  font-size: 1.2rem;
   border-radius: 50px;
   border: none;
   box-shadow: 0 8px 22px $shadow-dark;
@@ -47,7 +49,59 @@ p {
   justify-content: center;
   transition: background 0.2s;
   text-align: center;
+
   &:hover {
     background: $pink-btn-hover;
+  }
+}
+
+/* Responsive Media Queries */
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.05rem;
+  }
+
+  .form-actions {
+    font-size: 1.05rem;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-image {
+    max-width: 160px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .form-actions {
+    font-size: 1rem;
+    height: 42px;
+  }
+}
+
+@media (max-width: 360px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+
+  .form-actions {
+    font-size: 0.95rem;
+    height: 40px;
   }
 }

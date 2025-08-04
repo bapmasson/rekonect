@@ -4,14 +4,65 @@
   color: $gray-txt;
   padding: 32px 12px 24px 12px;
   text-align: center;
+
+  h1 {
+    font-family: $headers-font;
+    font-size: 27px;
+    color: $pink;
+    margin-bottom: 18px;
+    font-weight: 800;
+  }
+
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 8px;
+  }
 }
-.hero h1 {
-  font-family: $headers-font;
-  font-size: 27px;
-  color: $pink;
-  margin-bottom: 18px;
-  font-weight: 800;
+
+// 🔽 Responsive
+@media (max-width: 768px) {
+  .hero {
+    padding: 28px 10px 20px 10px;
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 16px;
+    }
+  }
 }
-.hero p {
-  font-size: 18px;
+
+@media (max-width: 480px) {
+  .hero {
+    padding: 24px 8px 18px 8px;
+
+    h1 {
+      font-size: 21px;
+      margin-bottom: 14px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .hero {
+    padding: 20px 6px 16px 6px;
+
+    h1 {
+      font-size: 19px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 }

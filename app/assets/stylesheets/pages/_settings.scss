@@ -2,21 +2,44 @@
   background: $page-bg;
   min-height: 100vh;
   padding: 26px 10px 70px 10px;
+
+  @media (max-width: 768px) {
+    padding: 20px 8px 60px 8px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 6px 50px 6px;
+  }
 }
+
 .settings-title {
   font-family: $headers-font;
-  font-size: 26px;
+  font-size: clamp(20px, 4vw, 26px);
   color: $pink;
   font-weight: 700;
   margin-bottom: 22px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 16px;
+  }
 }
+
 .settings-label {
-  font-size: 17px;
+  font-size: clamp(14px, 3vw, 17px);
   color: $gray-txt;
   margin-bottom: 4px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 3px;
+  }
 }
+
 .settings-value {
-  font-size: 18px;
+  font-size: clamp(16px, 3.5vw, 18px);
   margin-bottom: 12px;
   color: $pink;
+
+  @media (max-width: 480px) {
+    margin-bottom: 10px;
+  }
 }
