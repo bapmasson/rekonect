@@ -8,7 +8,10 @@
     <% end %>
   </div>
   <div class="chat-form-row">
-    <%= form_with model: Message.new, url: messages_path, local: true, html: { class: "chat-form" } do |f| %>
+    <%= form_with model: Message.new, url: messages_path, local: true, html: { class: "chat-form",
+                                                                              data: { controller: "reset-form",
+                                                                                      action: "turbo:submit-end->reset-form#reset"
+                                                                                      }} do |f| %>
       <%= f.hidden_field :conversation_id, value: @conversation.id %>
       <%= f.hidden_field :contact_id, value: @conversation.contact_id %>
       <%= f.text_area :content, placeholder: "Message", class: "chat-input" %>

@@ -3,6 +3,7 @@ class Message < ApplicationRecord
   belongs_to :conversation
   belongs_to :sender, class_name: "User"
   belongs_to :receiver, class_name: "User"
+  after_create_commit :broadcast_message
 
   # contenu taille min 1, max 2000
   # conditions similaires pour la suggestion IA et la réponse utilisateur
@@ -32,5 +33,12 @@ class Message < ApplicationRecord
     if [content, ai_draft].all?(&:blank?)
       errors.add(:base, "Please provide content, an AI draft" )
     end
+  end
+
+  def broadcast_message
+    broadcast_append_to "conversation_#{conversation.id}_messages",
+                        partial: "messages/message",
+                        locals: { message: self },
+                        target: "messages"
   end
 end

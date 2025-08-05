@@ -1,4 +1,7 @@
-<div class="sms-row <%= message.sender_id == current_user.id ? 'sms-me' : 'sms-other' %>">
+<div class="sms-row"
+     id="message-<%= message.id %>"
+     data-controller="message"
+     data-message-user-id-value="<%= message.sender_id %>">
         <div class="sms-bubble">
           <span class="sms-content"><%= message.content %></span>
         </div>

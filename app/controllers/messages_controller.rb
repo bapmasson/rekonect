@@ -3,7 +3,6 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :send_message, :reply, :rekonect]
   before_action :reply_rekonect, only: [:reply, :rekonect]
   skip_after_action :verify_authorized, only: [:success]
-  # after_create_commit :broadcast_message
 
   def index
     @messages = policy_scope(Message)
@@ -98,20 +97,8 @@ class MessagesController < ApplicationController
 
   private
 
-  def set_message
-    @message = Message.find(params[:id])
-    authorize @message
-  end
-
   def message_params
     params.require(:message).permit(:content, :contact_id)
-  end
-
-  def broadcast_message
-    broadcast_append_to "conversation_#{conversation.id}_messages",
-                        partial: "messages/message",
-                        target: "messages",
-                        locals: { message: self }
   end
 
   def reply_rekonect
