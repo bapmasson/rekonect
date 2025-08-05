@@ -1,4 +1,4 @@
-<h2 class="dashboard-header">Gestion des cercles de contact</h2>
+<h2 class="circles-header">Gestion des cercles de contact</h2>
 
 <%= form_with url: contacts_path, method: :put, local: true do %>
   <div class="contacts-list">
@@ -44,7 +44,7 @@
   </div> <!-- /.contacts-list -->
 
   <div class="circle-submit-container">
-    <%= submit_tag "Enregistrer", class: "btn-pink circles-btn-submit" %>
+    <%= submit_tag "Enregistrer", class: "btn-save btn-pink circles-btn-submit" %>
   </div>
 <% end %>
 

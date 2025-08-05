@@ -7,6 +7,12 @@ $pink-dark: #C84B62;
 $txt-gray: #948D8D;
 $shadow-dark: rgba(0,0,0,0.25);
 
+body {
+  padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
 // header arrrondi
 .dashboard-title-card {
   width: 100%;
@@ -49,13 +55,6 @@ $shadow-dark: rgba(0,0,0,0.25);
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  .welcome-image {
-    width: 112px;
-    height: auto;
-    border-radius: 50%;
-    margin-bottom: 16px;
   }
 }
 
@@ -189,7 +188,7 @@ $shadow-dark: rgba(0,0,0,0.25);
 }
 
 // bouton rekonect principal
-.main-message-btn {
+.btn-reply {
   width: 90%;
   max-width: 90vw;
   height: 38px;
@@ -300,7 +299,7 @@ $shadow-dark: rgba(0,0,0,0.25);
       line-height: 1.2;
     }
 
-    .btn {
+    .btn-sinon {
       width: 90%;
       max-width: 90vw;
       height: 38px;
@@ -338,6 +337,19 @@ $shadow-dark: rgba(0,0,0,0.25);
   }
 }
 
+.badge-header{
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 // Responsive
 @media (max-width: 768px) {
   .quick-card {
@@ -350,7 +362,7 @@ $shadow-dark: rgba(0,0,0,0.25);
   }
 
   .main-message-btn,
-  .btn {
+  .btn-reply {
     font-size: 1rem;
     height: 36px;
   }
@@ -389,7 +401,7 @@ $shadow-dark: rgba(0,0,0,0.25);
       font-size: 0.88rem;
     }
 
-    .btn {
+    .btn-reply {
       height: 34px;
       font-size: 1rem;
     }
@@ -399,7 +411,7 @@ $shadow-dark: rgba(0,0,0,0.25);
     width: 72px;
   }
 
-  .btn {
+  .btn-reply {
     font-size: 0.95rem;
     height: 32px;
   }
@@ -432,7 +444,7 @@ $shadow-dark: rgba(0,0,0,0.25);
       font-size: 0.85rem;
     }
 
-    .btn {
+    .btn-reply {
       height: 32px;
       font-size: 0.95rem;
     }

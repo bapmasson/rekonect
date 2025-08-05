@@ -1,4 +1,4 @@
-<h2 class="dashboard-header">Mes messages</h2>
+<h2 class="discussion-header">Mes messages</h2>
 
 <% awaiting_messages = @awaiting_messages  %>
 <% if awaiting_messages.any? %>
@@ -10,7 +10,7 @@
           <i class="bi bi-x-lg"></i>
         <% end %>
         <div class="message-author"><strong>De :</strong> <%= message.contact.name %></div>
-        <div class="message-content"><strong>Message :</strong> <%= message.content %></div>
+        <div class="message-content"><%= message.content %></div>
         <div class="suggestion">
           <%= message.ai_draft.presence || "Aucune suggestion disponible." %>
         </div>
@@ -26,9 +26,10 @@
 <% end %>
 <%= render "shared/navbar_bottom" %>
 
-<h2>Mes conversations</h2>
+<h2 class="discussion-header">Mes conversations</h2>
 <div class="contacts-list">
   <% @conversations.each do |conversation| %>
+  <div class="reply-container">
     <%= link_to conversation_path(conversation), class: "contact-card" do %>
       <div class="contact-avatar">
         <% if conversation.contact.photo.attached? %>

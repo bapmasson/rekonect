@@ -194,4 +194,11 @@ class MessagesController < ApplicationController
       Rails.logger.error("OpenAI API error: #{e.message}")
       "Unable to generate suggestion at this time."
   end
+
+  def set_message
+    @message = Message.find(params[:id])
+    authorize @message
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Message introuvable."
+  end
 end

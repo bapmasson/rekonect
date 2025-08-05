@@ -1,31 +1,68 @@
-<h2>Sign up</h2>
+<div class="container-fluid py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-12">
+      <div class="devise-header">
+        <%= image_tag "logo.png", alt: "Logo Rekonect", class: "devise-logo" %>
+        <div class="devise-title-block">
+          <h1 class="devise-title">Rekonect</h1>
+          <div class="app-slogan">
+            <i class="fas fa-comment-dots slogan-bubble"></i>
+            <span>Restes proches, simplement</span>
+          </div>
+        </div>
+        <p class="devise-desc">
+          Inscris-toi pour retrouver et garder le lien avec tes proches.<br>
+          Une inscription, et c’est parti pour des rappels sur-mesure !
+        </p>
+      </div>
+
+      <div class="devise-card card shadow-lg p-4">
+        <h2 class="text-center mb-3">Créer un compte Rekonect</h2>
+        <p class="text-center mb-4 text-muted" style="font-size: 1.08rem;">
+          On est ravi de t’accueillir dans la famille 🎉<br>
+        </p>
 
 <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
+     <div class="input-with-icon">
+        <i class="fas fa-envelope"></i>
     <%= f.input :email,
                 required: true,
                 autofocus: true,
+                placeholder: "Ton email 📧",
                 input_html: { autocomplete: "email" }%>
-    <%= f.input :first_name, required: true, input_html: { autocomplete: "given-name" } %>
-    <%= f.input :last_name, required: true, input_html: { autocomplete: "family-name" } %>
-    <%= f.input :username, required: true, input_html: { autocomplete: "username" } %>
-    <%= f.input :address, required: true, input_html: { autocomplete: "street-address" } %>
-    <%= f.input :phone_number, required: true, input_html: { autocomplete: "tel" } %>
-    <%= f.input :birth_date, required: true, input_html: { autocomplete: "bday" } %>
+        <i class="fas fa-user"></i>
+    <%= f.input :first_name, required: true,  placeholder: "Prénom 👤", input_html: { autocomplete: "given-name" } %>
+        <i class="fas fa-user"></i>
+    <%= f.input :last_name, required: true, placeholder: "Nom de famille 👨‍👩‍👧‍👦", input_html: { autocomplete: "family-name" } %>
+         <i class="fas fa-user-circle"></i>
+    <%= f.input :username, required: true,  placeholder: "Pseudo unique 🚀", input_html: { autocomplete: "username" } %>
+        <i class="fas fa-map-marker-alt"></i>
+    <%= f.input :address, required: true, placeholder: "Adresse 🏡", input_html: { autocomplete: "street-address" } %>
+        <i class="fas fa-phone"></i>
+    <%= f.input :phone_number, required: true, placeholder: "Téléphone 📱",  input_html: { autocomplete: "tel" } %>
+        <i class="fas fa-birthday-cake"></i>
+    <%= f.input :birth_date, as: :string, placeholder: "Date de naissance 🎂", input_html: { type: "date", autocomplete: "bday" } %>
+        <i class="fas fa-lock"></i>
     <%= f.input :password,
                 required: true,
+                placeholder: "Mot de passe 🔑",
                 hint: ("#{@minimum_password_length} characters minimum" if @minimum_password_length),
                 input_html: { autocomplete: "new-password" } %>
+                <i class="fas fa-lock"></i>
     <%= f.input :password_confirmation,
                 required: true,
+                placeholder: "Confirmation 🔑",
                 input_html: { autocomplete: "new-password" } %>
-  </div>
 
-  <div class="form-actions">
-    <%= f.button :submit, "Sign up" %>
+                <%= f.button :submit, "📝 S’inscrire", class: "devise-link mt-4" %>
+     </div>
+     </div>
+    <% end %>
+    </div>
+   </div>
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>
+ <%= render "devise/shared/links" %>

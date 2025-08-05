@@ -1,5 +1,5 @@
 <div class="chat-container">
-  <h2>Conversation avec <%= @conversation.contact.name %></h2>
+  <h2 class="conversation-header">Conversation avec <%= @conversation.contact.name %></h2>
   <hr>
   <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
   <div class="sms-chat" id="messages">
