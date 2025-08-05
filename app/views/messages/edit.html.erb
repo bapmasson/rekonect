@@ -5,7 +5,7 @@
   <div id="section1" class="collapsible-content" style="transition: max-height 0.3s ease; overflow: hidden;">
     <div class="reply-avatar-block" style="margin-top: 10px;">
       <% if @message.contact.photo.attached? %>
-        <%= image_tag @message.contact.photo.variant(resize_to_fill: [38, 38]), class: "avatar-mobile ms-2" %>
+        <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
       <% else %>
         <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
       <% end %>
@@ -13,6 +13,10 @@
     </div>
   </div>
 </div>
+
+
+
+
 
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">

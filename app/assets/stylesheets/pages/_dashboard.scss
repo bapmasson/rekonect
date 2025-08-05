@@ -137,7 +137,7 @@ body {
   background: $pink-header;
   border-radius: 35px;
   border: 2px solid #B5A5E8;
-  box-shadow: 0 8px 20px $shadow-dark;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   width: 70%;
   max-width: 98vw;
   margin: 32px auto 24px auto;
@@ -146,10 +146,12 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .main-message-title {
-  color: #191919;
+  color: #333;
   font-weight: 800;
   font-size: 1.25rem;
   margin-bottom: 19px;
@@ -176,6 +178,7 @@ body {
 
   .message-content {
     margin-bottom: 8px;
+    color: #222;
   }
 
   .message-date {
@@ -229,13 +232,15 @@ body {
   border: 3px solid #B5A5E8;
   background: $pink-header;
   border-radius: 35px;
-  box-shadow: 0 4px 18px $shadow-dark;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   padding: 26px 12px;
   margin: 40px auto;
   text-align: center;
   box-sizing: border-box;
+  margin-top: 20px;
+  margin-bottom: 20px;
 
-  .quick-contacts-title {
+  .quick-contacts-title, .priority-msg {
     font-size: 1.31rem;
     font-weight: 800;
     color: #191919;
@@ -352,6 +357,7 @@ body {
 
 .arrow-left, .arrow-right {
   color: #C84B62;
+  size: 0cap;
 }
 
 .badges-list {
