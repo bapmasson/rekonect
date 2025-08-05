@@ -1,84 +1,10 @@
-<div class="reply-header">
-  <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" data-target="section1">
-    <h1 class="reply-title" style="margin: 0;"><%= @message.sender == current_user ? "Peut-être est-il temps de relancer la conversation avec :" : "Prends donc un peu de temps pour :" %></h1>
-  </div>
-  <div id="section1" class="collapsible-content" style="transition: max-height 0.3s ease; overflow: hidden;">
-    <div class="reply-avatar-block" style="margin-top: 10px;">
-      <% if @message.contact.photo.attached? %>
-        <%= image_tag @message.contact.photo.variant(resize_to_fill: [38, 38]), class: "avatar-mobile ms-2" %>
-      <% else %>
-        <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
-      <% end %>
-      <span class="reply-contact-name"><%= @message.contact.name %></span>
-    </div>
-  </div>
-</div>
-
-<div class="msg-bubble-pink mb-3">
-  <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
-    <span><%= @message.sender == current_user ? "Dernier message de ta part" : "Dernier message non-répondu" %></span>
-    <span id="icon-last" style="cursor:pointer">🔻</span>
-  </div>
-  <div id="last-message-block" class="slide-toggle open">
+<%= turbo_frame_tag :message_suggestion do %>
+  <div class="reply-block-title"><%= @message.sender_id == current_user.id ? "Modification de la relance à envoyer :" : "Modification de la réponse à envoyer :" %></div>
     <div class="card-mobile msg-inner-bubble mb-0">
-      <div class="message-content"><%= @message.content %></div>
-      <div class="message-date text-end">Il y a <%= time_ago_in_words(@message.created_at) %></div>
+      <%= simple_form_for Message.new do |f| %>
+        <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
+        <%= f.input :content, label: "Votre réponse", as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
+        <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn", data: { turbo: false } %>
+      <% end %>
     </div>
-  </div>
-</div>
-
-<% if @summary.present? %>
-  <div class="msg-bubble-pink mb-2">
-    <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
-      <div>
-        <%= @message.contact.name %> fait partie de votre entourage proche !<br>
-        Voici un résumé de vos derniers échanges :
-      </div>
-      <span id="icon-history" style="cursor:pointer">🔻</span>
-    </div>
-
-    <div id="history-messages-block" class="slide-toggle open">
-        <div class="card-mobile msg-inner-bubble mb-1">
-          <div class="message-content"><%= @summary %></div>
-        </div>
-    </div>
-  </div>
 <% end %>
-
-<div class="msg-bubble-pink mb-3">
-  <div class="reply-block-title">Modification de la réponse à envoyer :</div>
-  <div class="card-mobile msg-inner-bubble mb-0">
-    <%= simple_form_for Message.new do |f| %>
-      <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
-      <%= f.input :content, label: "Votre réponse", as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
-      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
-    <% end %>
-
-
-    <%#= form_with(model: @message, local: true) do |form| %>
-      <%#= form.label :content, "Votre réponse" %>
-      <%#= form.text_area :content, value: @message.ai_draft.presence || @message.content, rows: 5, class: "input-mobile" %>
-      <%#= form.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
-    <%# end %>
-  </div>
-</div>
-
-<%= render 'shared/navbar_bottom' %>
-
-<script>
-function toggleBlock(blockId, iconId) {
-  const block = document.getElementById(blockId);
-  const icon = document.getElementById(iconId);
-
-  if (!block || !icon) return;
-
-  block.classList.toggle("open");
-
-  if (block.classList.contains("open")) {
-    icon.textContent = "🔺"; // flèche vers le haut → ouvert
-  } else {
-    icon.textContent = "🔻"; // flèche vers le bas → fermé
-  }
-}
-
-</script>

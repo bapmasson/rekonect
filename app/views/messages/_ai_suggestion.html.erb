@@ -1,0 +1,16 @@
+<%= turbo_frame_tag :message_suggestion do %>
+  <div class="reply-block-title"><%= message.sender_id == current_user.id ? "Suggestion de relance :" : "Suggestion de réponse :" %></div>
+  <div class="card-mobile msg-inner-bubble mb-0">
+    <div class="message-content"><%= message.ai_draft %></div>
+  </div>
+  <div class="reply-btn-row">
+    <%= simple_form_for Message.new do |f| %>
+      <%= f.input :conversation_id, as: :hidden, input_html: { value: conversation.id } %>
+      <%= f.input :content, as: :hidden, input_html: { value: message.ai_draft } %>
+      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
+    <% end %>
+
+    <%= link_to "Modifier", edit_message_path(message), data: { turbo_frame: :message_suggestion }, class: "btn btn-pink reply-btn" %>
+
+  </div>
+<% end %>
