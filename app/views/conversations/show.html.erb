@@ -1,20 +1,17 @@
 <div class="chat-container">
   <h2 class="conversation-header">Conversation avec <%= @conversation.contact.name %></h2>
   <hr>
-  <div class="sms-chat">
+  <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
+  <div class="sms-chat" id="messages">
     <% @messages.each do |message| %>
-      <div class="sms-row <%= message.sender_id == current_user.id ? 'sms-me' : 'sms-other' %>">
-        <div class="sms-bubble">
-          <span class="sms-content"><%= message.content %></span>
-        </div>
-        <div class="sms-meta">
-          <%= l(message.created_at + 2.hours, format: :short) %>
-        </div>
-      </div>
+      <%= render 'messages/message', message: message %>
     <% end %>
   </div>
   <div class="chat-form-row">
-    <%= form_with model: Message.new, url: messages_path, local: true, html: { class: "chat-form" } do |f| %>
+    <%= form_with model: Message.new, url: messages_path, local: true, html: { class: "chat-form",
+                                                                              data: { controller: "reset-form",
+                                                                                      action: "turbo:submit-end->reset-form#reset"
+                                                                                      }} do |f| %>
       <%= f.hidden_field :conversation_id, value: @conversation.id %>
       <%= f.hidden_field :contact_id, value: @conversation.contact_id %>
       <%= f.text_area :content, placeholder: "Message", class: "chat-input" %>
