@@ -2,24 +2,21 @@
   <div>
     <h1 class="reply-title">Peut-être est-il temps de relancer la conversation avec :</h1>
   </div>
-
-  <%= link_to message_path(@message.contact), class: "reply-card" do %>
-    <div class="reply-avatar-block">
-      <% if @message.contact.photo.attached? %>
-        <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
-      <% else %>
-        <%= image_tag "default-avatar.png", class: "avatar-img", alt: @message.contact.name %>
-      <% end %>
-      <span class="reply-contact-name"><%= @message.contact.name %></span>
-    </div>
-  <% end %>
+  <div class="reply-avatar-block">
+    <% if @message.contact.photo.attached? %>
+      <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
+    <% else %>
+      <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
+    <% end %>
+    <span class="reply-contact-name"><%= @message.contact.name %></span>
+  </div>
 </div>
 
 <!-- Dernier message envoyé par l'utilisateur et resté sans réponse -->
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
     <span>Dernier message de ta part</span>
-    <span id="icon-last">🔻</span>
+    <span id="icon-last">🔻</span> <!-- Flèche vers le bas -->
   </div>
   <div id="last-message-block" class="slide-toggle open">
     <div class="card-mobile msg-inner-bubble mb-0">
@@ -29,7 +26,6 @@
   </div>
 </div>
 
-
 <!-- Historique -->
 <% if @summary.present? %>
   <div class="msg-bubble-pink mb-2">
@@ -38,7 +34,7 @@
         <%= @message.contact.name %> fait partie de votre entourage proche !<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span id="icon-history">🔻</span>
+      <span id="icon-history">🔻</span> <!-- Flèche vers le bas -->
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
@@ -48,7 +44,6 @@
     </div>
   </div>
 <% end %>
-
 
 <!-- Suggestion de réponse (toujours visible) -->
 <div class="msg-bubble-pink mb-3">
@@ -66,10 +61,10 @@ function toggleBlock(blockId, iconId) {
 
   if (isOpen) {
     block.classList.remove("open");
-    icon.innerHTML = "🔻"; // Flèche vers le bas pour fermer
+    icon.innerHTML = "🔻"
   } else {
     block.classList.add("open");
-    icon.innerHTML = "🔺"; // Flèche vers le haut pour ouvrir
+    icon.innerHTML = "🔺"
   }
 }
 </script>

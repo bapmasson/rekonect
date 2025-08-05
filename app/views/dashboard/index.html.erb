@@ -30,7 +30,7 @@
 <% if main_msg %>
   <div class="main-message-card">
     <div class="main-message-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-bubble', 'icon-last')">
-      Hey! Voici un message de <%= main_msg.contact.name %> attendant un retour de ta part
+      <p class="priority-msg">Hey! Voici un message de <%= main_msg.contact.name %> attendant un retour de ta part</p>
       <span id="icon-last" style="cursor:pointer;">🔻</span>
     </div>
 
@@ -51,7 +51,9 @@
 <% quick_msgs = @quick_messages %>
 <% if quick_msgs.any? %>
   <div class="quick-contacts-card">
-    <div class="quick-contacts-title">Et sinon ?</div>
+    <div>
+    <p class="quick-contacts-title">Une rekonection supplémentaire ?</p>
+    </div>
 
     <div class="slider-container">
       <button class="arrow left"><</button>
@@ -69,7 +71,7 @@
               </div>
               <div class="contact-name"><%= msg.contact.name %></div>
               <div class="contact-date">
-                <%= time_ago_in_words(msg.created_at) %>
+                <p>Il y a <%= time_ago_in_words(msg.created_at) %></p>
               </div>
               <div class="btn-sinon btn-sm mt-1 text-center">Rekonect</div>
             </div>
