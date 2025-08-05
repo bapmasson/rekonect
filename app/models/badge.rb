@@ -1,6 +1,7 @@
 class Badge < ApplicationRecord
   has_many :user_badges
   has_many :users, through: :user_badges
+  has_one_attached :image
 
   # titre est obligatoire, unique, max 20 caractères ( succès)
   validates :title, presence: true, uniqueness: true, length: { maximum: 50 }

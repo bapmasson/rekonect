@@ -45,7 +45,8 @@ fr:
   devise:
     failure:
       unauthenticated: "Vous devez vous connecter ou créer un compte pour continuer."
-  devise:
+      user:
+        unauthenticated: "Vous devez vous connecter ou vous inscrire pour continuer."
     sessions:
       user:
         signed_in: "Bienvenue, vous êtes connecté(e) !"
