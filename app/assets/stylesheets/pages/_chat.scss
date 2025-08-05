@@ -1,3 +1,9 @@
+body {
+  padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
 .sms-row {
   display: flex;
   flex-direction: column;
@@ -9,6 +15,29 @@
 
   &.sms-me {
     align-items: flex-end;
+  }
+}
+
+.btn-envoyer {
+  width: 90%;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink-btn;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.20rem;
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 8px 22px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+
+  &:hover {
+    background: $pink-btn-hover;
   }
 }
 

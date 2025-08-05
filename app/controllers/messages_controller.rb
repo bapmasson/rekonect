@@ -43,13 +43,15 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
-      ChatChannel.broadcast_to(
-        @conversation,
-        render_to_string(partial: "messages/message", locals: { message: @message })
-      )
-      redirect_to conversation_path(@conversation), notice: "Message envoyé avec succès."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
+            locals: { message: @message })
+        end
+        format.html { redirect_to conversation_path(@conversation) }
+      end
     else
-      render :new, status: :unprocessable_entity
+      render "conversations/show", status: :unprocessable_entity
     end
   end
 
@@ -92,11 +94,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-  def set_message
-    @message = Message.find(params[:id])
-    authorize @message
-  end
 
   def message_params
     params.require(:message).permit(:content, :contact_id)
@@ -181,5 +178,12 @@ class MessagesController < ApplicationController
     rescue StandardError => e
       Rails.logger.error("OpenAI API error: #{e.message}")
       "Unable to generate suggestion at this time."
+  end
+
+  def set_message
+    @message = Message.find(params[:id])
+    authorize @message
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: "Message introuvable."
   end
 end

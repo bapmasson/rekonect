@@ -1,22 +1,26 @@
 <div class="reply-header">
   <div>
-    <h1 class="reply-title">Prends donc un peu de temps pour : </h1>
+    <h1 class="reply-title">Prends donc un peu de temps pour :</h1>
   </div>
-  <div class="reply-avatar-block">
-    <% if @message.contact.photo.attached? %>
-      <%= image_tag @message.contact.photo.variant(resize_to_fill: [38, 38]), class: "avatar-mobile ms-2" %>
-    <% else %>
-      <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
-    <% end %>
-    <span class="reply-contact-name"><%= @message.contact.name %></span>
-  </div>
+
+  <%= link_to message_path(@message.contact), class: "reply-card" do %>
+    <div class="reply-avatar-block">
+      <% if @message.contact.photo.attached? %>
+        <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
+      <% else %>
+        <%= image_tag "default-avatar.png", class: "avatar-img", alt: @message.contact.name %>
+      <% end %>
+      <span class="reply-contact-name"><%= @message.contact.name %></span>
+    </div>
+  <% end %>
 </div>
+
 
 <!-- Dernier message non répondu -->
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
     <span>Dernier message non-répondu</span>
-    <span id="icon-last"><i class='fas fa-chevron-up'></i></span>
+    <span id="icon-last">🔻</span>
   </div>
   <div id="last-message-block" class="slide-toggle open">
     <div class="card-mobile msg-inner-bubble mb-0">
@@ -26,15 +30,14 @@
   </div>
 </div>
 
-<!-- Historique -->
 <% if @summary.present? %>
   <div class="msg-bubble-pink mb-2">
     <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
       <div>
-        <%= @message.contact.name %> fait partie de votre entourage proche !<br>
+        <%= @message.contact.name %> fait partie de votre entourage proche<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span id="icon-history"><i class='fas fa-chevron-up'></i></span>
+      <span id="icon-history">🔻</span>
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
@@ -61,10 +64,10 @@ function toggleBlock(blockId, iconId) {
 
   if (isOpen) {
     block.classList.remove("open");
-    icon.innerHTML = "<i class='fas fa-chevron-down'></i>";
+    icon.innerHTML = "🔻"; // Flèche vers le bas pour fermer
   } else {
     block.classList.add("open");
-    icon.innerHTML = "<i class='fas fa-chevron-up'></i>";
+    icon.innerHTML = "🔺"; // Flèche vers le haut pour ouvrir
   }
 }
 </script>

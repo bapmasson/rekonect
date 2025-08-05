@@ -13,8 +13,8 @@
     <div>Relation : <%= @contact.relationship.relation_type %></div>
   <% end %>
 
-  <%= link_to "Rekonect", new_message_path(contact_id: @contact.id), class: "btn btn-pink mt-2 w-100" %>
-  <%= link_to "Modifier", edit_contact_path(@contact), class: "btn btn-pink mt-2 w-100" %>
+  <%= link_to "Rekonect", new_message_path(contact_id: @contact.id), class: "btn-new btn-pink mt-2 w-100" %>
+  <%= link_to "Modifier", edit_contact_path(@contact), class: "btn-modifier btn-pink mt-2 w-100" %>
 </div>
 
 <%= render "shared/navbar_bottom" %>

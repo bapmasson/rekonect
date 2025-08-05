@@ -56,6 +56,7 @@ gem "ruby-openai"
 gem "solid_cache"
 gem 'cloudinary', '~> 1.24'
 gem 'activestorage-cloudinary-service'
+gem "solid_cable"
 
 group :development, :test do
   gem "dotenv-rails"

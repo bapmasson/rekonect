@@ -1,4 +1,7 @@
 body {
+  padding-bottom: 80px;
+  background: #EEAECA;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +13,20 @@ body {
   max-width: 960px; // Responsive container limit
 }
 
+.discussion-header {
+  width: 100%;
+  max-width: 98vw;
+  margin: 0px auto 26px auto;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  padding: 22px 22px 15px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .contact-card {
   background: $white;
   border-radius: 20px;
@@ -20,11 +37,12 @@ body {
   width: 100%;
 }
 
-.card-mobile {
+
+.card-mobile{
   background: $pink-header;
   border-radius: 35px;
   border: 2px solid #B5A5E8;
-  box-shadow: 0 8px 18px $shadow-dark;
+  box-shadow: 0 px 18px $shadow-dark;
   width: 100%;
   max-width: 100%;
   margin: 32px auto 24px auto;
@@ -32,60 +50,340 @@ body {
   text-align: center;
 }
 
-@media (max-width: 768px) {
-  body {
-    padding-left: 16px;
-    padding-right: 16px;
-  }
+.messages-list {
+  padding: 10px 0 90px 0; // pour pas que la navbar recouvre les cards
+}
+.suggestion {
+  background: $gray-bg;
+  border-radius: 13px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  color: #191919;
+  box-shadow: 0 8px 22px $shadow-dark;
+}
+.message-author {
+  font-weight: 700;
+  color: $pink;
+  font-size: 17px;
+}
+.message-content {
+  color: $gray-txt;
+  font-size: 16px;
+}
 
-  .reply-header, .msg-bubble-pink, .validation-header, .contacts-xp-list {
-    max-width: 96vw;
-  }
+// header arrondi
+.slide-toggle {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.4s ease, padding 0.3s ease;
+  padding-top: 0;
+  padding-bottom: 0;
+}
 
-  .reply-title {
-    font-size: 1.25rem;
-  }
+.slide-toggle.open {
+  max-height: 1000px; /* Assez large pour tout contenu */
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
-  .reply-btn {
-    font-size: 1.05rem !important;
-  }
+.reply-block-title {
+  cursor: pointer;
+  user-select: none;
+}
 
-  .gain-xp {
-    font-size: 1.1rem;
-    padding: 8px 14px;
-  }
+.reply-header {
+  width: 100%;
+  max-width: 98vw;
+  background: $pink-header;
+  padding: 18px 22px 14px 22px;
+  background: #B5A5E8;
+  box-shadow: 0 4px 4px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto 18px auto;
+}
 
-  .xp-badge {
-    width: 78px;
-    height: 78px;
-  }
+.reply-title {
+  font-family: $headers-font;
+  font-size: 1.46rem;
+  font-weight: 800;
+  color: #222;
+  margin: 0;
+  line-height: 1.15;
+}
 
-  .avatar-contact-xp {
-    width: 48px;
-    height: 48px;
-  }
+.reply-avatar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 15px;
+}
+.reply-contact-name {
+  font-size: 1.11rem;
+  font-weight: 700;
+  color: $gray-txt;
+  margin-top: 2px;
+  text-align: center;
+}
 
-  .reply-btn-row {
-    flex-direction: column;
-    gap: 14px;
+// Card pink
+.msg-bubble-pink{
+  border: 2px solid #B5A5E8;
+  background: $pink-header;
+  border-radius: 28px;
+  box-shadow: 0 10px 18px $card-shadow;
+  padding: 18px 14px 14px 14px;
+  max-width: 450px;
+  margin: 0 auto 24px auto;
+}
 
-    > * {
-      max-width: 100%;
-    }
-  }
+.reply-block-title {
+  text-align: center;
+  font-size: 1.09rem;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
 
-  .reply-btn {
-    width: 100% !important;
-  }
+.msg-inner-bubble {
+  background: $white;
+  border-radius: 19px;
+  box-shadow: 0 2px 8px $card-shadow;
+  padding: 18px 16px 14px 18px;
+  margin: 12px auto 14px auto;
+  max-width: 98%;
+  min-width: 70px;
+  font-size: 1.06rem;
+}
 
-  .message-actions,
-  .btn-rekonect,
-  .btn-conversation {
-    width: 100%;
-    max-width: 100%;
-    font-size: 1rem;
+.message-content {
+  color: #222;
+  font-size: 1.03rem;
+  font-weight: 700;
+}
+
+.message-date {
+  color: $gray-txt;
+  font-size: 0.96rem;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+// Boutons envoyer et éditer
+.reply-btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  margin: 18px 0 0 0;
+
+  > * {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 170px;
+    display: flex !important;
   }
 }
+
+// .reply-btn {
+//   width: 100% !important;
+//   min-width: 120px;
+//   max-width: 170px;
+//   font-size: 1.19rem !important;
+//   border-radius: 18px !important;
+//   margin: 0;
+//   box-shadow: 0 4px 16px $card-shadow;
+//   font-weight: 700;
+//   padding: 12px 0 !important;
+//   transition: transform 0.13s;
+//   text-align: center;
+//   align-items: center;
+//   justify-content: center;
+//   display: flex !important;
+// }
+
+// bouton envoyer pour la view edit
+
+.btn-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.msg-bubble-pink .msg-inner-bubble form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.msg-bubble-pink .msg-inner-bubble form .reply-btn {
+  width: auto !important;
+  min-width: 120px;
+  margin-top: 18px;
+}
+
+// validation xp view
+
+.validation-header {
+  text-align: center;
+  background: $pink-header;
+  border-radius: 28px;
+  margin: 20px auto 0 auto;
+  padding: 22px 18px 11px 18px;
+  box-shadow: 0 4px 18px $card-shadow;
+  max-width: 450px;
+}
+.validation-title {
+  font-size: 1.39rem;
+  font-weight: 800;
+  color: #222;
+  margin-bottom: 2px;
+  font-family: $headers-font;
+}
+.validation-subtitle {
+  font-size: 1.05rem;
+  color: $gray-txt;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.xp-badge-container {
+  display: flex;
+  justify-content: center;
+  margin: 28px 0 8px 0;
+}
+
+.xp-star {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.xp-badge {
+  background: rgba(226, 141, 147, 0.11);
+  border-radius: 50%;
+  width: 96px; height: 96px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto;
+}
+.xp-text {
+  color: $pink;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-top: 2px;
+  letter-spacing: 1.1px;
+  font-family: $headers-font;
+}
+.xp-gain-title {
+  margin: 17px 0 19px 0;
+  text-align: center;
+}
+.gain-xp {
+  font-family: $headers-font;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #222;
+  background: #fff;
+  border-radius: 14px;
+  padding: 9px 20px;
+  box-shadow: 0 3px 12px $card-shadow;
+  display: inline-block;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+
+.contacts-xp-list {
+  margin: 0 auto 24px auto;
+  padding: 18px 12px 8px 12px;
+  background: $pink-header;
+  border-radius: 34px;
+  box-shadow: 0 4px 18px $card-shadow;
+  max-width: 470px;
+}
+
+.contact-suggestion {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 2px 8px $card-shadow;
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  margin: 15px 0;
+  min-height: 64px;
+}
+.contact-avatar {
+  flex: 0 0 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-contact-xp {
+  border-radius: 50%;
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px #E28D9344;
+  border: 3px solid $pink-header;
+}
+.contact-xp-info {
+  margin-left: 16px;
+  font-size: 1.05rem;
+  color: #191919;
+  font-weight: 700;
+  font-family: $body-font;
+}
+.contact-xp-detail {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.97rem;
+  color: $gray-txt;
+  font-weight: 500;
+  font-family: $body-font;
+}
+
+// Message actions buttons
+.message-actions {
+  display: flex;
+  width: 277px;
+  max-width: 90vw;
+  height: 38px;
+  margin: 0 auto;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.btn-rekonect,
+.btn-conversation {
+  width: 277px;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink-btn;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.00rem;
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 4px 6px $shadow-dark;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+  &:hover {
+    background: $pink-btn-hover;
+  }
+}
+
+.btn-rekonect:hover,
+.btn-conversation:hover {
+  background-color: $pink-hover;
+}
+
+// Responsive
 
 @media (max-width: 480px) {
   .msg-bubble-pink {
@@ -144,5 +442,11 @@ body {
     height: auto;
     font-size: 0.95rem;
     padding: 10px 0;
+  }
+
+  .contact-card {
+    // flex-direction: column;
+  align-items: flex-start;
+    gap: 10px;
   }
 }
