@@ -29,10 +29,12 @@
 <% main_msg = @main_message || Message.where("(sender_id = :id OR receiver_id = :id) AND status = :status AND (dismissed = false OR dismissed IS NULL)", id: current_user.id, status: Message.statuses[:received]).last %>
 <% if main_msg %>
   <div class="main-message-card">
-    <div class="main-message-title">
+    <div class="main-message-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-bubble', 'icon-last')">
       Hey! Voici un message de <%= main_msg.contact.name %> attendant un retour de ta part
+      <span id="icon-last" style="cursor:pointer;">🔻</span>
     </div>
-    <div class="main-message-bubble">
+
+    <div id="last-message-bubble" class="main-message-bubble" style="display:none;">
       <div class="message-content">
         <%= main_msg.content %>
       </div>
@@ -40,6 +42,7 @@
         Il y a <%= time_ago_in_words(main_msg.created_at) %>
       </div>
     </div>
+
     <%= link_to "Rekonect", reply_message_path(main_msg), class: "btn-reply btn-pink main-message-btn" %>
   </div>
 <% end %>
@@ -49,26 +52,34 @@
 <% if quick_msgs.any? %>
   <div class="quick-contacts-card">
     <div class="quick-contacts-title">Et sinon ?</div>
-    <div class="quick-contacts-list">
-      <% quick_msgs.each do |msg| %>
-        <%= link_to rekonect_message_path(msg), class: "quick-card" do %>
-          <div class="quick-contact">
-            <div class="contact-content">
-              <% if msg.contact.photo.attached? %>
-                <%= image_tag msg.contact.photo, class: "avatar-mobile mb-1", alt: msg.contact.name %>
-              <% else %>
-                <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1", alt: msg.contact.name %>
-              <% end %>
+
+    <div class="slider-container">
+      <button class="arrow left"><</button>
+
+      <div class="quick-contacts-list">
+        <% quick_msgs.each do |msg| %>
+          <%= link_to rekonect_message_path(msg), class: "quick-card" do %>
+            <div class="quick-contact">
+              <div class="contact-content">
+                <% if msg.contact.photo.attached? %>
+                  <%= image_tag msg.contact.photo, class: "avatar-mobile mb-1", alt: msg.contact.name %>
+                <% else %>
+                  <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1", alt: msg.contact.name %>
+                <% end %>
+              </div>
+              <div class="contact-name"><%= msg.contact.name %></div>
+              <div class="contact-date">
+                <%= time_ago_in_words(msg.created_at) %>
+              </div>
+              <div class="btn-sinon btn-sm mt-1 text-center">Rekonect</div>
             </div>
-            <div class="contact-name"><%= msg.contact.name %></div>
-            <div class="contact-date">
-              <%= time_ago_in_words(msg.created_at) %>
-            </div>
-            <div class="btn-sinon btn-sm mt-1 text-center">Rekonect</div>
-          </div>
+          <% end %>
         <% end %>
-      <% end %>
+      </div>
+
+      <button class="arrow right">></button>
     </div>
+
   </div>
 <% end %>
 
@@ -77,9 +88,17 @@
 <h2 class="badge-header mb-2">Mes badges :</h2>
 <div class="badges-list mb-2">
   <% @badges.each do |badge| %>
-    <div class="card-mobile mb-2">
-      <div class="fw-bold"><%= badge.title %></div>
-      <div class="text-muted small"><em>Condition : <%= badge.condition_description %></em></div>
+    <div class="card-mobile mb-2 d-flex align-items-center">
+      <% if badge.image.attached? %>
+        <%= image_tag badge.image, class: "badge-icon me-3", alt: badge.title %>
+      <% else %>
+        <%= image_tag "badge.png", class: "badge-icon me-3", alt: badge.title %>
+      <% end %>
+
+      <div class="badge-content">
+        <div class="fw-bold"><%= badge.title %></div>
+        <div class="text-muted small"><em>Condition : <%= badge.condition_description %></em></div>
+      </div>
     </div>
   <% end %>
 </div>
@@ -87,3 +106,54 @@
 <%= link_to "Voir tous mes messages", messages_path, class: "btn btn-pink mb-3 w-100" %>
 
 <%= render "shared/navbar_bottom" %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const slider = document.querySelector(".quick-contacts-list");
+  const cards = document.querySelectorAll(".quick-card");
+  const leftArrow = document.querySelector(".arrow.left");
+  const rightArrow = document.querySelector(".arrow.right");
+
+  if (!slider || !cards.length) return;
+
+  let currentIndex = 0;
+  const totalCards = cards.length;
+
+  function updateSlider() {
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  leftArrow?.addEventListener("click", () => {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlider();
+    }
+  });
+
+  rightArrow?.addEventListener("click", () => {
+    if (currentIndex < totalCards - 1) {
+      currentIndex++;
+      updateSlider();
+    }
+  });
+
+  updateSlider(); // init
+});
+</script>
+
+<script>
+function toggleBlock(bubbleId, iconId) {
+  const bubble = document.getElementById(bubbleId);
+  const icon = document.getElementById(iconId);
+
+  if (!bubble || !icon) return;
+
+  if (bubble.style.display === "none" || bubble.style.display === "") {
+    bubble.style.display = "block";
+    icon.textContent = "🔺"; // flèche vers le haut (inversée)
+  } else {
+    bubble.style.display = "none";
+    icon.textContent = "🔻"; // flèche vers le bas
+  }
+}
+</script>

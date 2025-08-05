@@ -211,6 +211,17 @@ body {
   }
 }
 
+#icon-last {
+  cursor: pointer;
+  user-select: none;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+#icon-last.open {
+  transform: rotate(180deg);
+}
+
 // section et sinon
 .quick-contacts-card {
   width: 70%;
@@ -231,27 +242,39 @@ body {
     margin-bottom: 24px;
   }
 
+  .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 0 40px;
+  }
+
   .quick-contacts-list {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 12px;
+    transition: transform 0.5s ease;
     width: 100%;
-    box-sizing: border-box;
-    flex-wrap: wrap;
-    padding: 0 6px;
-    margin: 0 auto;
   }
 
   .quick-card {
+    flex: 0 0 100%; // ✅ pleine largeur
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1rem;
+  }
+
+  .quick-contact {
     background: #fff;
     border-radius: 15px;
     border: 2px solid #B5A5E8;
     box-shadow: 0 8px 22px $shadow-dark;
-    flex: 1 1 0;
-    align-self: stretch;
+    width: 90%;
     min-height: 180px;
-    height: auto;
     box-sizing: border-box;
     padding: 16px;
     text-align: center;
@@ -259,13 +282,12 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 20px; // espacement vertical régulier
+    gap: 20px;
 
     .contact-content {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
     }
 
     .avatar-mobile {
@@ -284,10 +306,6 @@ body {
       color: #191919;
       margin-bottom: 2px;
       line-height: 1.1;
-      word-break: break-word;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      max-width: 95%;
       text-align: center;
     }
 
@@ -300,21 +318,18 @@ body {
     }
 
     .btn-sinon {
-      width: 90%;
-      max-width: 90vw;
-      height: 38px;
-      padding: 0 12px;
-      background: $pink-btn;
-      color: #fff;
-      font-weight: 650;
-      font-size: 1.20rem;
-      border-radius: 50px;
-      border: none;
-      box-shadow: 0 7px 15px $shadow-dark;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: auto;
+      max-width: 100%;
+      padding: 10px 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 15px;
+      background-color: #d88c8c;
+      color: white;
+      font-weight: bold;
       text-align: center;
+      display: inline-block;
       text-decoration: none;
       transition: background 0.2s;
 
@@ -323,6 +338,20 @@ body {
       }
     }
   }
+
+  .arrow {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0 0.5rem;
+    user-select: none;
+    z-index: 10;
+  }
+}
+
+.arrow-left, .arrow-right {
+  color: #C84B62;
 }
 
 .badges-list {
@@ -350,6 +379,49 @@ body {
   align-items: center;
 }
 
+.card-mobile {
+  background: #F5DCE5;
+  border-radius: 25px;
+  padding: 18px 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  position: relative;
+
+  .fw-bold {
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+
+  .text-muted {
+    text-align: center;
+    font-size: 0.95rem;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+  }
+
+  /* ✅ Effet déplié au hover */
+  &:hover .text-muted {
+    max-height: 100px;
+    opacity: 1;
+  }
+}
+
+.badge-icon {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+
+
 // Responsive
 @media (max-width: 768px) {
   .quick-card {
@@ -363,6 +435,11 @@ body {
 
   .main-message-btn,
   .btn-reply {
+    font-size: 1rem;
+    height: 36px;
+  }
+
+  .btn-sinon{
     font-size: 1rem;
     height: 36px;
   }
@@ -415,6 +492,12 @@ body {
     font-size: 0.95rem;
     height: 32px;
   }
+
+
+  .btn-sinon{
+    font-size: 0.95rem;
+    height: 32px;
+  }
 }
 
 @media (max-width: 360px) {
@@ -448,5 +531,9 @@ body {
       height: 32px;
       font-size: 0.95rem;
     }
+  }
+    .btn-sinon{
+      height: 32px;
+      font-size: 0.95rem;
   }
 }
