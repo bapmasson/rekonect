@@ -8,7 +8,7 @@
           <span class="sms-content"><%= message.content %></span>
         </div>
         <div class="sms-meta">
-          <%= l(message.created_at, format: :short) %>
+          <%= l(message.created_at + 2.hours, format: :short) %>
         </div>
       </div>
     <% end %>

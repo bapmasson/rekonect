@@ -17,7 +17,7 @@
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
     <span><%= @message.sender == current_user ? "Dernier message de ta part" : "Dernier message non-répondu" %></span>
-    <span id="icon-last">▼</span>
+    <span id="icon-last" style="cursor:pointer">🔻</span>
   </div>
   <div id="last-message-block" class="slide-toggle open">
     <div class="card-mobile msg-inner-bubble mb-0">
@@ -34,7 +34,7 @@
         <%= @message.contact.name %> fait partie de votre entourage proche !<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span id="icon-history">▼</span>
+      <span id="icon-history" style="cursor:pointer">🔻</span>
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
@@ -66,20 +66,19 @@
 <%= render 'shared/navbar_bottom' %>
 
 <script>
- function toggleBlock(blockId, iconId) {
+function toggleBlock(blockId, iconId) {
   const block = document.getElementById(blockId);
   const icon = document.getElementById(iconId);
 
   if (!block || !icon) return;
 
-  const isOpen = block.classList.contains("open");
+  block.classList.toggle("open");
 
-  if (isOpen) {
-    block.classList.remove("open");
-    icon.innerHTML = "<i class='fas fa-chevron-down'></i>";
+  if (block.classList.contains("open")) {
+    icon.textContent = "🔺"; // flèche vers le haut → ouvert
   } else {
-    block.classList.add("open");
-    icon.innerHTML = "<i class='fas fa-chevron-up'></i>";
+    icon.textContent = "🔻"; // flèche vers le bas → fermé
   }
 }
+
 </script>
