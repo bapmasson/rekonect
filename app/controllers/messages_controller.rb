@@ -151,7 +151,7 @@ class MessagesController < ApplicationController
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant that generates message replies." },
-          { role: "user", content: "You are #{current_user.first_name}. This is the background of the conversation with #{message.contact.name}: #{summary}. This is the last message you received : #{message.content}. It was sent #{message.created_at} and today is #{Time.current}. Generate in French a warmful reply of 50 words max to this last message without repeating the summary as it is meant only for you and not for being in the reply. Take into account that some time has passed and the context may have changed." }
+          { role: "user", content: "You are #{current_user.first_name}. This is the background of the conversation with #{message.contact.name}: #{summary}. This is the last message you received : #{message.content}. It was sent #{message.created_at} and today is #{Time.current}. Generate in French a warm reply of 50 words max to this last message without repeating the summary as it is meant only for you and not for being in the reply. Take into account that some time has passed and the context may have changed." }
         ]
       }
     )
@@ -169,7 +169,7 @@ class MessagesController < ApplicationController
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant that generates messages." },
-          { role: "user", content: "You are #{current_user.first_name}. Last time you wrote to #{message.contact.name} was #{message.created_at} and today is #{Time.current}. This is the background of the conversation between you two: #{summary}. This is the last message you sent : #{message.content}. It was the last message between you two. Generate in French a warmful message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply. Keep in mind that some time has passed since your last message so the context may have changed." }
+          { role: "user", content: "You are #{current_user.first_name}. Last time you wrote to #{message.contact.name} was #{message.created_at} and today is #{Time.current}. This is the background of the conversation between you two: #{summary}. This is the last message you sent : #{message.content}. It was the last message between you two. Generate in French a warm message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply. Keep in mind that some time has passed since your last message so the context may have changed." }
         ]
       }
     )
