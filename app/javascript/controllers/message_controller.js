@@ -6,8 +6,6 @@ export default class extends Controller {
   connect() {
      // triggered when a new message is added to the page
     const currentUserId = parseInt(document.body.dataset.currentUserId, 10);
-    console.log(currentUserId);
-    console.log(this.userIdValue);
     if (this.userIdValue === currentUserId) {
       this.element.classList.add('sms-me');
       this.element.classList.remove('sms-other');
