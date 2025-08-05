@@ -4,7 +4,7 @@
       <%= simple_form_for Message.new do |f| %>
         <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
         <%= f.input :content, label: "Votre réponse", as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
-        <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn", data: { turbo: false} %>
+        <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn", data: { turbo: false } %>
       <% end %>
     </div>
 <% end %>
