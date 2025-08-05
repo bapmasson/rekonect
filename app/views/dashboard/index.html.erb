@@ -2,7 +2,7 @@
   <div class="dashboard-header">
     <div class="dashboard-title-card">
       <div class="dashboard-title-row">
-        <%= image_tag "logo.png", alt: "Logo Rekonect", class: "welcome-image" %>
+        <%= image_tag "logo.png", alt: "Logo Rekonect", class: "logo-image" %>
         <div class="dashboard-title-text">
           <p>Bon retour <%= @user.username %></p>
           <div class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</div>
@@ -30,11 +30,11 @@
 <% if main_msg %>
   <div class="main-message-card">
     <div class="main-message-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-bubble', 'icon-last')">
-      <p class="priority-msg">Hey! Voici un message de <%= main_msg.contact.name %> attendant un retour de ta part</p>
+      <p class="priority-msg">Hey! Hésites pas à répondre à <%= main_msg.contact.name %></p>
       <span id="icon-last" style="cursor:pointer;">🔻</span>
     </div>
 
-    <div id="last-message-bubble" class="main-message-bubble" style="display:none;">
+    <div id="last-message-bubble" class="main-message-bubble">
       <div class="message-content">
         <%= main_msg.content %>
       </div>
@@ -52,7 +52,7 @@
 <% if quick_msgs.any? %>
   <div class="quick-contacts-card">
     <div>
-    <p class="quick-contacts-title">Une rekonection supplémentaire ?</p>
+    <p class="quick-contacts-title">Qui d'autre ?</p>
     </div>
 
     <div class="slider-container">

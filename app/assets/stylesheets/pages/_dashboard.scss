@@ -14,6 +14,8 @@ body {
 }
 
 // header arrrondi
+
+
 .dashboard-title-card {
   width: 100%;
   max-width: 98vw;
@@ -25,6 +27,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  .logo-image {
+  width: 100px;
+  height: auto;
+  border-radius: 50px;
+  margin-bottom: 16px;
+  }
 
   p {
     color: #191919;
@@ -138,7 +147,7 @@ body {
   border-radius: 35px;
   border: 2px solid #B5A5E8;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  width: 70%;
+  width: 100%;
   max-width: 98vw;
   margin: 32px auto 24px auto;
   padding: 28px 18px;
@@ -164,7 +173,7 @@ body {
   box-shadow: 0 8px 20px $shadow-dark;
   padding: 19px 16px;
   margin: 0 auto 22px auto;
-  width: 90%;
+  width: 100%;
   max-width: 94vw;
   min-height: 64px;
   color: #222;
@@ -227,12 +236,8 @@ body {
 
 // section et sinon
 .quick-contacts-card {
-  width: 70%;
+  width: 100%;
   max-width: 98vw;
-  border: 3px solid #B5A5E8;
-  background: $pink-header;
-  border-radius: 35px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   padding: 26px 12px;
   margin: 40px auto;
   text-align: center;
@@ -241,7 +246,7 @@ body {
   margin-bottom: 20px;
 
   .quick-contacts-title, .priority-msg {
-    font-size: 1.31rem;
+    font-size: 1.15rem;
     font-weight: 800;
     color: #191919;
     margin-bottom: 24px;
