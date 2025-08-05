@@ -1,10 +1,10 @@
 <%= turbo_frame_tag :message_suggestion do %>
-  <div class="reply-block-title">Modification de la réponse à envoyer :</div>
+  <div class="reply-block-title"><%= @message.sender_id == current_user.id ? "Modification de la relance à envoyer :" : "Modification de la réponse à envoyer :" %></div>
     <div class="card-mobile msg-inner-bubble mb-0">
       <%= simple_form_for Message.new do |f| %>
         <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
         <%= f.input :content, label: "Votre réponse", as: :text, input_html: { value: @message.ai_draft, rows: 5 } %>
-        <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn" %>
+        <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn", data: { turbo: false} %>
       <% end %>
     </div>
 <% end %>

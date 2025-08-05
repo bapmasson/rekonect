@@ -2,21 +2,24 @@
   <div>
     <h1 class="reply-title">Peut-être est-il temps de relancer la conversation avec :</h1>
   </div>
-  <div class="reply-avatar-block">
-    <% if @message.contact.photo.attached? %>
-      <%= image_tag @message.contact.photo.variant(resize_to_fill: [38, 38]), class: "avatar-mobile ms-2" %>
-    <% else %>
-      <%= image_tag "default-avatar.png", class: "avatar-mobile" %>
-    <% end %>
-    <span class="reply-contact-name"><%= @message.contact.name %></span>
-  </div>
+
+  <%= link_to message_path(@message.contact), class: "reply-card" do %>
+    <div class="reply-avatar-block">
+      <% if @message.contact.photo.attached? %>
+        <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
+      <% else %>
+        <%= image_tag "default-avatar.png", class: "avatar-img", alt: @message.contact.name %>
+      <% end %>
+      <span class="reply-contact-name"><%= @message.contact.name %></span>
+    </div>
+  <% end %>
 </div>
 
 <!-- Dernier message envoyé par l'utilisateur et resté sans réponse -->
 <div class="msg-bubble-pink mb-3">
   <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-block', 'icon-last')">
     <span>Dernier message de ta part</span>
-    <span id="icon-last"><i class='fas fa-chevron-up'></i></span>
+    <span id="icon-last">🔻</span>
   </div>
   <div id="last-message-block" class="slide-toggle open">
     <div class="card-mobile msg-inner-bubble mb-0">
@@ -32,10 +35,10 @@
   <div class="msg-bubble-pink mb-2">
     <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
       <div>
-        <%= @message.contact.name %> fait partie de votre entourage proche !<br>
+        <%= @message.contact.name %> fait partie de votre entourage proche<br>
         Voici un résumé de vos derniers échanges :
       </div>
-      <span id="icon-history"><i class='fas fa-chevron-up'></i></span>
+      <span id="icon-history">🔻</span>
     </div>
 
     <div id="history-messages-block" class="slide-toggle open">
@@ -49,19 +52,7 @@
 
 <!-- Suggestion de réponse (toujours visible) -->
 <div class="msg-bubble-pink mb-3">
-  <div class="reply-block-title">Suggestion de relance :</div>
-  <div class="card-mobile msg-inner-bubble mb-0">
-    <div class="message-content"><%= @message.ai_draft %></div>
-  </div>
-  <div class="reply-btn-row">
-    <%= simple_form_for Message.new do |f| %>
-      <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
-      <%= f.input :content, as: :hidden, input_html: { value: @message.ai_draft } %>
-      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn" %>
-    <% end %>
-
-    <%= link_to "Modifier", edit_message_path(@message), class: "btn btn-pink reply-btn" %>
-  </div>
+  <%= render "messages/ai_suggestion", message: @message, conversation: @conversation %>
 </div>
 
 <script>
@@ -75,10 +66,10 @@ function toggleBlock(blockId, iconId) {
 
   if (isOpen) {
     block.classList.remove("open");
-    icon.innerHTML = "<i class='fas fa-chevron-down'></i>";
+    icon.innerHTML = "🔻"; // Flèche vers le bas pour fermer
   } else {
     block.classList.add("open");
-    icon.innerHTML = "<i class='fas fa-chevron-up'></i>";
+    icon.innerHTML = "🔺"; // Flèche vers le haut pour ouvrir
   }
 }
 </script>

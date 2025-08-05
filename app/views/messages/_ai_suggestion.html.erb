@@ -1,5 +1,5 @@
 <%= turbo_frame_tag :message_suggestion do %>
-  <div class="reply-block-title">Suggestion de réponse :</div>
+  <div class="reply-block-title"><%= message.sender_id == current_user.id ? "Suggestion de relance :" : "Suggestion de réponse :" %></div>
   <div class="card-mobile msg-inner-bubble mb-0">
     <div class="message-content"><%= message.ai_draft %></div>
   </div>
