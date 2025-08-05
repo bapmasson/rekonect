@@ -123,13 +123,13 @@ class MessagesController < ApplicationController
       parameters: {
         model: "gpt-4o-mini",
         messages: [
-          { role: "system", content: "You are a helpful assistant that summarizes conversations." },
+          { role: "system", content: "You are a helpful assistant that summarizes conversations between two people." },
           {
             role: "user",
             content:
               "Make a very short recap (80 words max) in French of each interaction between " \
               "#{messages.first&.contact&.name} and the user #{current_user.first_name}. " \
-              "The user is #{current_user.first_name}. Speak directly to him, don't use his name: " \
+              "The user is #{current_user.first_name} and the recap will only be read by him. Speak directly to him, don't use his name at all: " \
               "#{messages.map { |m| "date d'envoi: #{m.created_at}, message de #{m.sender_id == current_user.id ? current_user.first_name : m.contact.name}: #{m.content}" }.join(", ")}"
           }
         ]
@@ -151,7 +151,7 @@ class MessagesController < ApplicationController
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant that generates message replies." },
-          { role: "user", content: "This is the background of the conversation: #{summary}. This is the last message you received : #{message.content}. Generate in French a warmful reply of 50 words max to this last message without repeating the summary as it is meant only for you and not for being in the reply." }
+          { role: "user", content: "You are #{current_user.first_name}. This is the background of the conversation with #{message.contact.name}: #{summary}. This is the last message you received : #{message.content}. It was sent #{message.created_at} and today is #{Time.current}. Generate in French a warm reply of 50 words max to this last message without repeating the summary as it is meant only for you and not for being in the reply. Take into account that some time has passed and the context may have changed." }
         ]
       }
     )
@@ -169,7 +169,7 @@ class MessagesController < ApplicationController
         model: "gpt-4o-mini",
         messages: [
           { role: "system", content: "You are a helpful assistant that generates messages." },
-          { role: "user", content: "It has been a long time since you last wrote to #{message.contact.name}. This is the background of the conversation: #{summary}. This is the last message you sent : #{message.content}. Generate in French a warmful message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply." }
+          { role: "user", content: "You are #{current_user.first_name}. Last time you wrote to #{message.contact.name} was #{message.created_at} and today is #{Time.current}. This is the background of the conversation between you two: #{summary}. This is the last message you sent : #{message.content}. It was the last message between you two. Generate in French a warm message of 50 words max to recreate a conversation with this contact without repeating the summary as it is meant only for you and not for being in the reply. Keep in mind that some time has passed since your last message so the context may have changed." }
         ]
       }
     )
