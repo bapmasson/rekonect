@@ -43,13 +43,15 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
-      ChatChannel.broadcast_to(
-        @conversation,
-        render_to_string(partial: "messages/message", locals: { message: @message })
-      )
-      redirect_to conversation_path(@conversation), notice: "Message envoyé avec succès."
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
+            locals: { message: @message })
+        end
+        format.html { redirect_to conversation_path(@conversation) }
+      end
     else
-      render :new, status: :unprocessable_entity
+      render "conversations/show", status: :unprocessable_entity
     end
   end
 
@@ -63,8 +65,6 @@ class MessagesController < ApplicationController
 
   def edit
     @conversation = @message.conversation
-    @history_messages = history_messages(@message)
-    @summary = message_summary(@history_messages)
   end
 
   def dismiss_suggestion
@@ -94,11 +94,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-  def set_message
-    @message = Message.find(params[:id])
-    authorize @message
-  end
 
   def message_params
     params.require(:message).permit(:content, :contact_id)
