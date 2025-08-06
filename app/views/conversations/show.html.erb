@@ -1,5 +1,5 @@
 <div class="chat-container">
-  <h2 class="conversation-header">Conversation avec <%= @conversation.contact.name %></h2>
+  <h2 class="conversation-header">Conversation avec <strong><%= @conversation.contact.name %></strong></h2>
   <hr>
   <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>
   <div class="sms-chat" id="messages">
@@ -19,7 +19,9 @@
       <%= f.hidden_field :conversation_id, value: @conversation.id %>
       <%= f.hidden_field :contact_id, value: @conversation.contact_id %>
       <%= f.text_area :content, placeholder: "Message", class: "chat-input" %>
-      <%= f.submit "Envoyer", class: "chat-send-btn" %>
+      <%= f.button :submit, class: "chat-send-btn" do %>
+        <i class="fa-solid fa-paper-plane"></i>
+      <% end %>
     <% end %>
   </div>
 </div>

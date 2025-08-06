@@ -6,9 +6,12 @@ body {
 
 .chat-container {
   max-width: 600px;
-  margin: 40px auto;
-  background: #fff;
+  margin: 0px 0px !important;
+  background: rgba(245, 220, 229, 0.6); // Couleur #F5DCE5 avec 30% d’opacité
+  backdrop-filter: blur(20px); // Floutage de l’arrière-plan
+  -webkit-backdrop-filter: blur(20px); // Support Safari
   border-radius: 24px;
+  border: 2px solid #B5A5E8;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
   padding: 32px 28px;
   box-sizing: border-box;
@@ -18,8 +21,9 @@ body {
   width: 100%;
   max-width: 98vw;
   margin: 0px auto 26px auto;
+  border-radius: 24px;
   background: #B5A5E8;
-  box-shadow: 0 4px 4px $shadow-dark;
+  box-shadow: 0 1px 1px $shadow-dark;
   padding: 22px 22px 15px 22px;
   text-align: center;
   display: flex;
@@ -144,7 +148,9 @@ body {
   border-radius: 12px;
   padding: 10px 16px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid $pink-light;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
   margin-right: 8px;
   resize: none;
   width: 100%;
@@ -154,7 +160,7 @@ body {
 /* 🔽 Responsive Media Queries */
 @media (max-width: 600px) {
   .chat-container {
-    margin: 20px 12px;
+    margin: 20px 8px;
     padding: 24px 18px;
     border-radius: 18px;
   }
