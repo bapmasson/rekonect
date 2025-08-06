@@ -51,6 +51,31 @@ class User < ApplicationRecord
     self[:xp_points] || 0
   end
 
+  def add_contextual_xp(context)
+  xp_gained = case context
+              when :reply
+                20
+              when :rekonect
+                30
+              when :first_message
+                40
+              when :ai_reply
+                10
+              else
+                5
+              end
+
+  previous_level = self.level
+  self[:xp_points] = xp_points + xp_gained
+  self[:xp_level] = (self[:xp_points] / 100) + 1
+  self.save
+  @leveled_up = self.level > previous_level
+end
+
+def leveled_up?
+  @leveled_up == true
+end
+
   private
 
   # Valide que l'utilisateur a au moins 10 ans

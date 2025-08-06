@@ -12,9 +12,10 @@
   </head>
 
   <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
-    <%= render "shared/flashes" %>
-    <%= render 'shared/navbar_bottom' %>
-
-    <%= yield %>
-  </body>
+  <%= render "shared/flashes" %>
+  <%= render "shared/xp_bar" %>
+  <div data-controller="badge-popup"></div>
+  <%= render "shared/navbar_bottom" %>
+  <%= yield %>
+</body>
 </html>
