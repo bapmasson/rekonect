@@ -11,20 +11,7 @@
     </div>
   </div>
 
-  <div class="xp-bar-container">
-    <div class="xp-bar-logo">
-      <%= image_tag "xp.png", class: "xp-bar-icon" %>
-      <div class="xp-level">
-        <span class="xp-level-label">NIVEAU</span>
-        <span class="xp-level-number"><%= @user.level %></span>
-      </div>
-    </div>
-    <div class="xp-bar">
-      <div class="xp-bar-fill" style="width: <%= @user.xp_percent %>%"></div>
-      <span class="xp-bar-progress"><%= @user.xp_progress %>/<%= @user.xp_for_next_level %> XP</span>
-    </div>
-  </div>
-</div>
+ <%# A la limite mettre les badges ici ( suggestion) %>
 
 <% main_msg = @main_message || Message.where("(sender_id = :id OR receiver_id = :id) AND status = :status AND (dismissed = false OR dismissed IS NULL)", id: current_user.id, status: Message.statuses[:received]).last %>
 <% if main_msg %>
