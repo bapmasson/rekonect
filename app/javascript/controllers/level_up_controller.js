@@ -5,10 +5,19 @@ export default class extends Controller {
   connect() {
     if (window._levelUpListenerAdded) return;
 
-    this._onLevelUp = this.show.bind(this)
-    window.addEventListener("level-up", this._onLevelUp)
-    window._levelUpListenerAdded = true
+  this._onLevelUp = this.show.bind(this)
+  window.addEventListener("level-up", this._onLevelUp)
+  window._levelUpListenerAdded = true
+
+  const pendingLevelUp = document.getElementById("pending-levelup")
+  if (pendingLevelUp) {
+    const level = pendingLevelUp.dataset.level
+    if (window.lastLevelUp !== level) {
+      window.lastLevelUp = level
+      this.show()
+    }
   }
+}
 
   disconnect() {
     window.removeEventListener("level-up", this._onLevelUp)

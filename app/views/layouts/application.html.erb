@@ -15,6 +15,10 @@
   <%= render "shared/flashes" %>
   <%= render "shared/xp_bar" %>
   <div data-controller="badge-popup level-up"></div>
+  <% if session[:level_up] && current_user&.level == session[:level_up] %>
+  <div id="pending-levelup" data-level="<%= session[:level_up] %>"></div>
+  <% session.delete(:level_up) %>
+  <% end %>
   <%= render "shared/navbar_bottom" %>
   <%= yield %>
 </body>
