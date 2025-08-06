@@ -177,6 +177,20 @@ body {
   gap: 28px;
   margin: 18px 0 0 0;
 
+  .btn-modifier {
+    width: 90%;
+    max-width: 90vw;
+    height: 38px;
+    margin: 16px auto 0 auto;
+    background: white;
+    color: $pink-btn;
+    font-weight: 800;
+    font-size: 1.20rem;
+    border-radius: 50px;
+    border-color: $pink-btn;
+    text-decoration: none;
+  }
+
   > * {
     flex: 1 1 0;
     min-width: 0;
@@ -184,7 +198,6 @@ body {
     display: flex !important;
   }
 }
-
 // .reply-btn {
 //   width: 100% !important;
 //   min-width: 120px;

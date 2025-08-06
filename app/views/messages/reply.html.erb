@@ -15,6 +15,23 @@
   <% end %>
 </div>
 
+<!-- Historique -->
+<% if @summary.present? %>
+  <div class="msg-bubble-pink mb-2">
+    <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
+      <div>
+        Voici un résumé de vos derniers échanges :
+      </div>
+      <span id="icon-history">🔻</span>
+    </div>
+
+    <div id="history-messages-block" class="slide-toggle non-open">
+        <div class="card-mobile msg-inner-bubble mb-1">
+          <div class="message-content"><%= @summary %></div>
+        </div>
+    </div>
+  </div>
+<% end %>
 
 <!-- Dernier message non répondu -->
 <div class="msg-bubble-pink mb-3">
@@ -22,31 +39,13 @@
     <span>Dernier message non-répondu</span>
     <span id="icon-last">🔻</span>
   </div>
-  <div id="last-message-block" class="slide-toggle open">
+  <div id="last-message-block" class="slide-toggle non-open">
     <div class="card-mobile msg-inner-bubble mb-0">
       <div class="message-content"><%= @message.content %></div>
       <div class="message-date text-end">Il y a <%= time_ago_in_words(@message.created_at) %></div>
     </div>
   </div>
 </div>
-
-<% if @summary.present? %>
-  <div class="msg-bubble-pink mb-2">
-    <div class="reply-block-title d-flex justify-content-between align-items-center" onclick="toggleBlock('history-messages-block', 'icon-history')">
-      <div>
-        <%= @message.contact.name %> fait partie de votre entourage proche<br>
-        Voici un résumé de vos derniers échanges :
-      </div>
-      <span id="icon-history">🔻</span>
-    </div>
-
-    <div id="history-messages-block" class="slide-toggle open">
-        <div class="card-mobile msg-inner-bubble mb-1">
-          <div class="message-content"><%= @summary %></div>
-        </div>
-    </div>
-  </div>
-<% end %>
 
 <!-- Suggestion de réponse (toujours visible) -->
 <div class="msg-bubble-pink mb-3">
