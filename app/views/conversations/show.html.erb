@@ -19,7 +19,7 @@
       <%= f.hidden_field :conversation_id, value: @conversation.id %>
       <%= f.hidden_field :contact_id, value: @conversation.contact_id %>
       <%= f.text_area :content, placeholder: "Message", class: "chat-input" %>
-      <%= f.button :submit, class: "chat-send-btn" do %>
+      <%= f.button :submit, class: "chat-send-btn", "aria-label": "Envoyer le message" do %>
         <i class="fa-solid fa-paper-plane"></i>
       <% end %>
     <% end %>
