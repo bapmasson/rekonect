@@ -47,25 +47,23 @@ class MessagesController < ApplicationController
     xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
     @xp_gained = current_user.add_contextual_xp(xp_context)
 
-    flash[:level_up] = true if current_user.leveled_up?
+    @level_up = current_user.leveled_up?
 
     respond_to do |format|
-      # ✅ TurboStream classique
       format.turbo_stream do
         render turbo_stream: turbo_stream.append(:messages, partial: "messages/message", locals: { message: @message })
       end
 
-      # ✅ HTML fallback
       format.html { redirect_to conversation_path(@conversation) }
 
-      # ✅ JSON pour Stimulus
       format.json do
         render json: {
+          message_partial: render_to_string(partial: "messages/message", formats: [:html], locals: { message: @message }),
           xp_percent: current_user.xp_percent,
           xp_progress: current_user.xp_progress,
           xp_total: current_user.xp_for_next_level,
           level: current_user.level,
-          level_up: flash[:level_up] == true
+          level_up: @level_up
         }
       end
     end
