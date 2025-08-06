@@ -34,7 +34,7 @@ class ConversationsController < ApplicationController
     end
 
     authorize @conversation
-    @messages = @conversation.messages.order(:created_at)
+    @messages = @conversation.messages.order(created_at: :asc)
     @conversations = policy_scope(Conversation)
   end
 
