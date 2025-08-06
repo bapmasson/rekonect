@@ -110,13 +110,13 @@
 <%= render "shared/navbar_bottom" %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+function initSlider() {
   const slider = document.querySelector(".quick-contacts-list");
   const cards = document.querySelectorAll(".quick-card");
   const leftArrow = document.querySelector(".arrow.left");
   const rightArrow = document.querySelector(".arrow.right");
 
-  if (!slider || !cards.length) return;
+  if (!slider || !cards.length || !leftArrow || !rightArrow) return;
 
   let currentIndex = 0;
   const totalCards = cards.length;
@@ -125,21 +125,25 @@
     slider.style.transform = `translateX(-${currentIndex * 100}%)`;
   }
 
-  leftArrow?.addEventListener("click", () => {
+  leftArrow.addEventListener("click", () => {
     if (currentIndex > 0) {
       currentIndex--;
       updateSlider();
     }
   });
 
-  rightArrow?.addEventListener("click", () => {
+  rightArrow.addEventListener("click", () => {
     if (currentIndex < totalCards - 1) {
       currentIndex++;
       updateSlider();
     }
   });
 
-  updateSlider(); // init
+  updateSlider();
+}
+
+document.addEventListener("turbo:load", () => {
+  initSlider();
 });
 </script>
 
