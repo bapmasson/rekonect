@@ -131,7 +131,8 @@ class MessagesController < ApplicationController
       .where.not(id: message.id)
       .where("sender_id = ? OR receiver_id = ?", current_user.id, current_user.id)
       .order(created_at: :desc)
-      .limit(3)
+      .limit(4)
+      .reverse
   end
 
   def message_summary(messages)
@@ -148,9 +149,11 @@ class MessagesController < ApplicationController
           {
             role: "user",
             content:
-              "Make a very short recap (80 words max) in French of each interaction between " \
+              "Make a very short recap (50 words max) in French of each interaction between " \
               "#{messages.first&.contact&.name} and the user #{current_user.first_name}. " \
-              "The user is #{current_user.first_name} and the recap will only be read by him. Speak directly to him, don't use his name at all: " \
+              "Don't use bullets, just a single paragraph. " \
+              "Today is #{Date.current}. The user is #{current_user.first_name} and the recap will only be read by him. " \
+              "Speak directly to him, don't use his name at all: " \
               "#{messages.map { |m| "date d'envoi: #{m.created_at}, message de #{m.sender_id == current_user.id ? current_user.first_name : m.contact.name}: #{m.content}" }.join(", ")}"
           }
         ]

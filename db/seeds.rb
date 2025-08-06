@@ -27,34 +27,7 @@ user = User.create!(
   xp_level: 94,
   xp_points: 3499
 )
-puts "Utilisateur créé : #{user.username} (#{user.first_name} #{user.last_name}"
-
-# # Seed Users -- On va se créer chacun un compte utilisateur
-# prenoms = %w[Audric Barthélémy Jonathan Nour Baptiste]
-# noms = %w[Nomentsoa Terrier Cucculelli Harrag Masson]
-# usernames = %w[audricmarshall Ekenlat Laiokan u0nor bapmasson]
-
-# puts "Création des utilisateurs..."
-# prenoms.each_with_index.map do |prenom, i|
-#   User.create!(
-#     # chaque utilisateur a un email unique basé sur son prénom en minuscule sans accents
-#     email: "#{prenom.parameterize}@test.com",
-#     # mot de passe par défaut pour tous les utilisateurs
-#     password: "azerty",
-#     first_name: prenom,
-#     last_name: noms[i],
-#     username: usernames[i],
-#     # A partir de là on utilise Faker pour générer des données aléatoires
-#     phone_number: Faker::PhoneNumber.cell_phone_in_e164,
-#     address: Faker::Address.full_address,
-#     birth_date: Faker::Date.birthday(min_age: 18, max_age: 35),
-#     # On part avec déjà de l'expérience car on est des boss
-#     xp_level: rand(1..100)
-#   )
-#   puts "Utilisateur créé : #{usernames[i]} (#{prenom} #{noms[i]})"
-# end
-
-# puts "#{User.count} utilisateurs créés avec succès."
+puts "Utilisateur créé : #{user.username} (#{user.first_name} #{user.last_name})"
 
 
 # Seed Relationships
@@ -83,17 +56,6 @@ puts "#{Relationship.count} relations créées avec succès."
 # ----------------------------SEED CONTACTS DEMO--------------------------------
 # On crée des contacts pour l'utilisateur principal, avec des données réalistes
 puts "Création des contacts..."
-# contact_data = [
-#   { name: "Maman", notes: "C’est ma maman ❤️", relation: "Parent proche" },
-#   { name: "Léo", notes: "Ami d’enfance, on se perd pas de vue !", relation: "Ami proche" },
-#   { name: "Tonton Jean", notes: "Toujours présent aux repas familiaux, spécialiste des blagues beaufs.", relation: "Famille" },
-#   { name: "Sarah", notes: "Amie de la fac, fan de séries et de Tellement Vrai.", relation: "Ami" },
-#   { name: "Nour", notes: "Mon binôme sur le frontend du projet.", relation: "Collègue" },
-#   { name: "Karim", notes: "Habite juste en dessous, adore discuter.", relation: "Voisin" }
-# ]
-
-
-# 2. Création des contacts comme users
 contact_infos = [
   { name: "Maman", notes: "C’est ma maman ❤️", relation: "Parent proche", email: "maman@test.com", photo_name: "maman.png" },
   { name: "Léo", notes: "Ami d’enfance, on se perd pas de vue !", relation: "Ami proche", email: "leo@test.com", photo_name: "leo.png" },
@@ -105,6 +67,7 @@ contact_infos = [
 
 contact_users = {}
 
+# Les contacts sont avant tout des users
 contact_infos.each_with_index do |info, idx|
   contact_user = User.create!(
     email: info[:email], # email unique
@@ -118,7 +81,8 @@ contact_infos.each_with_index do |info, idx|
     xp_level: rand(1..10),
     xp_points: rand(0..1000)
     )
-  # 3. Création des contacts pour le compte principal
+
+  # Les contacts sont ensuite créés pour l'utilisateur principal
   contact = Contact.create!(
     name: info[:name],
     notes: info[:notes],
@@ -145,98 +109,6 @@ contact_infos.each_with_index do |info, idx|
   puts "Conversation avec #{contact.name} créée"
 end
 
-
-# 4. Chaque contact devient aussi contact des autres contacts --- Pas utile pour la démo
-# contact_users.values.each do |contact_user|
-#   contact_infos.each do |info|
-#     next if contact_user.email == info[:email]
-#     Contact.create!(
-#       name: info[:name],
-#       notes: info[:notes],
-#       user: contact_user,
-#       contact_user: contact_users[info[:name]],
-#       relationship: Relationship.find_by(relation_type: info[:relation])
-#     )
-#   end
-# end
-
-# Ajoute Jonathan comme contact pour chaque contact user
-# contact_users.values.each do |contact_user|
-#   Contact.create!(
-#     name: user.first_name,
-#     notes: "Utilisateur principal",
-#     user: contact_user,
-#     contact_user: user,
-#     relationship: Relationship.find_by(relation_type: "Ami proche")
-#   )
-# end
-
-# # Crée la conversation et un message du point de vue de chaque contact user vers Jonathan
-# contact_users.values.each do |contact_user|
-#   contact = Contact.find_by(user: contact_user, contact_user: user)
-#   next unless contact
-#   # Message.create!(
-#   #   content: "Salut Jonathan, c'est #{contact_user.first_name} !",
-#   #   status: :sent,
-#   #   sender_id: contact_user.id,
-#   #   receiver_id: user.id,
-#   #   user_id: contact_user.id,
-#   #   contact: contact,
-#   #   conversation_id: conversation.id,
-#   #   created_at: 1.day.ago,
-#   #   updated_at: 1.day.ago
-#   # )
-# end
-
-# # Crée toutes les conversations et messages entre tous les users
-# all_users = [user] + contact_users.values
-
-# all_users.combination(2).each do |user_a, user_b|
-#   # Contact de user_a vers user_b
-#   contact_a = Contact.find_or_create_by!(
-#     user: user_a,
-#     contact_user: user_b
-#   )
-#   conversation_a = Conversation.find_or_create_by!(
-#     contact_id: contact_a.id,
-#     user1_id: user_a.id,
-#     user2_id: user_b.id
-#   )
-#   # Message.create!(
-#   #   content: "Salut #{user_b.first_name}, c'est #{user_a.first_name} !",
-#   #   status: :sent,
-#   #   sender_id: user_a.id,
-#   #   receiver_id: user_b.id,
-#   #   user_id: user_a.id,
-#   #   contact: contact_a,
-#   #   conversation_id: conversation_a.id,
-#   #   created_at: 1.year.ago,
-#   #   updated_at: 1.year.ago
-#   # )
-
-#   # Contact de user_b vers user_a
-#   contact_b = Contact.find_or_create_by!(
-#     user: user_b,
-#     contact_user: user_a
-#   )
-#   conversation_b = Conversation.find_or_create_by!(
-#     contact_id: contact_b.id,
-#     user1_id: user_b.id,
-#     user2_id: user_a.id
-#   )
-#   # Message.create!(
-#   #   content: "Salut #{user_a.first_name}, c'est #{user_b.first_name} !",
-#   #   status: :sent,
-#   #   sender_id: user_b.id,
-#   #   receiver_id: user_a.id,
-#   #   user_id: user_b.id,
-#   #   contact: contact_b,
-#   #   conversation_id: conversation_b.id,
-#   #   created_at: 1.year.ago,
-#   #   updated_at: 1.year.ago
-#   # )
-# end
-
 # Seed Messages
 # On crée des messages pour chaque contact, en essayant de simuler des conversations réalistes et avoir des messages
 # avec des réponses de l'utilisateur et des messages en attente de réponse.
@@ -248,9 +120,10 @@ conversations.each do |conversation|
 
   case conversation.contact.name
   when "Maman"
-    t1 = 6.days.ago
+
+    t1 = 85.days.ago
     msg1 = Message.create!(
-      content: "Tu as bien reçu les résultats du médecin ? J'espère que ce n'est pas trop grave. Comment tu te sens ?",
+      content: "Tu as bien dormi cette nuit ? Tu avais l’air épuisé au téléphone hier. Repose-toi bien ❤️",
       status: :sent,
       sender: conversation.user1,
       receiver: user,
@@ -261,7 +134,172 @@ conversations.each do |conversation|
     )
 
     msg2 = Message.create!(
+      content: "Oui, j’ai dormi comme une pierre. Merci Maman, je vais essayer de ralentir un peu cette semaine.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t1 + 2.hours,
+      updated_at: t1 + 2.hours
+    )
+
+    t2 = 65.days.ago
+    Message.create!(
+      content: "Tu as pensé à prendre ton rendez-vous chez le dentiste ? Tu m’avais dit que ta dent te faisait mal.",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t2,
+      updated_at: t2
+    )
+
+    t4 = 55.days.ago
+    Message.create!(
+      content: "Tu sais que ça me fait de la peine quand tu ne réponds pas pendant plusieurs jours… Je m’inquiète 😔",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t4,
+      updated_at: t4
+    )
+
+    Message.create!(
+      content: "Désolé Maman, j’étais débordé avec le boulot. Je vais essayer d’être plus régulier, promis ❤️",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t4 + 3.hours,
+      updated_at: t4 + 3.hours
+    )
+
+    t5 = 45.days.ago
+    Message.create!(
+      content: "J’ai repensé à Papa aujourd’hui… Tu te souviens de notre pique-nique au lac ? Il avait renversé tout le café 😂",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t5,
+      updated_at: t5
+    )
+
+    Message.create!(
+      content: "Oui, j’y pensais aussi. C’était une belle journée. Il nous manque.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t5 + 1.hour,
+      updated_at: t5 + 1.hour
+    )
+
+    t6 = 25.days.ago
+    Message.create!(
+      content: "Tu m’as dit que tu avais mal au dos… Tu veux que je prenne rendez-vous chez l’ostéo pour toi ?",
+      status: :sent,
+      sender: user,
+      receiver: conversation.user1,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t6,
+      updated_at: t6
+    )
+
+    Message.create!(
+      content: "Oh c’est gentil mon chéri, je vais appeler demain. C’est juste une petite douleur, rien de grave je pense.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: conversation.user1,
+      receiver: user,
+      conversation: conversation,
+      created_at: t6 + 1.hour,
+      updated_at: t6 + 1.hour
+    )
+
+    t7 = 15.days.ago
+    Message.create!(
+      content: "Bon anniversaire mon grand 🎉 Tu me rends fière chaque jour. J’espère que tu prends le temps de célébrer un peu 🥰",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t7,
+      updated_at: t7
+    )
+
+    Message.create!(
+      content: "Merci Maman ❤️ Je vais dîner avec quelques amis ce soir. Et je passe te voir demain !",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t7 + 2.hours,
+      updated_at: t7 + 2.hours
+    )
+
+
+    t8 = 6.days.ago
+    msg1 = Message.create!(
+      content: "Tu as bien reçu les résultats du médecin ? J'espère que ce n'est pas trop grave. Comment tu te sens ? Je t'embrasse.",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t8,
+      updated_at: t8
+    )
+
+    msg2 = Message.create!(
       content: "Je suis toujours un peu fatigué, mais ça va. Le test grippal était positif donc ça devrait aller mieux dans quelques jours.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t8 + 1.hour,
+      updated_at: t8 + 1.hour
+    )
+
+    t9 = 2.days.ago
+    Message.create!(
+      content: "Coucou fils! Alors guéri ? Tu passes dimanche à la maison ? Je fais ton plat préféré 😘",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t9,
+      updated_at: t9
+    )
+
+  when "Léo"
+
+    t1 = 35.days.ago
+    Message.create!(
+      content: "Tu te rappelles quand on s’était perdus dans les bois pendant le camp scout ? 😂",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t1,
+      updated_at: t1
+    )
+
+    Message.create!(
+      content: "Haha oui, et toi t’avais juré qu’on suivait la mousse sur les arbres… On a tourné en rond 2h !",
       status: :sent,
       contact: conversation.contact,
       sender: user,
@@ -271,9 +309,9 @@ conversations.each do |conversation|
       updated_at: t1 + 1.hour
     )
 
-    t2 = 2.days.ago
+    t2 = 24.days.ago
     Message.create!(
-      content: "Coucou fils! Alors guéri ? Tu passes dimanche à la maison ? Je fais ton plat préféré 😘",
+      content: "J’ai croisé Julie au marché ce matin. Elle m’a demandé si t’étais toujours célibataire 😏",
       status: :sent,
       sender: conversation.user1,
       receiver: user,
@@ -283,8 +321,41 @@ conversations.each do |conversation|
       updated_at: t2
     )
 
-  when "Léo"
-    t = rand(3..7).days.ago
+    Message.create!(
+      content: "Ah ouais ? Désolé pour elle mais tu sais bien que je suis ne suis plus dispo depuis un moment.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t2 + 2.hours,
+      updated_at: t2 + 2.hours
+    )
+
+    t3 = 16.days.ago
+    Message.create!(
+      content: "T’as vu le match hier ? Le but de Mbappé à la 89e… j’ai hurlé dans mon salon",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t3,
+      updated_at: t3
+    )
+
+    Message.create!(
+      content: "Incroyable ! On se fait une soirée Ligue des Champions chez moi la semaine prochaine ?",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t3 + 1.hour,
+      updated_at: t3 + 1.hour
+    )
+
+    t4 = 5.days.ago
     msg = Message.create!(
       content: "Tu viens au foot ce soir ? L’équipe est presque complète.",
       status: :sent,
@@ -292,8 +363,8 @@ conversations.each do |conversation|
       receiver: user,
       contact: conversation.contact,
       conversation: conversation,
-      created_at: t,
-      updated_at: t
+      created_at: t4,
+      updated_at: t4
     )
     msg2 = Message.create!(
       content: "Bien sûr, je ramène les maillots !",
@@ -302,13 +373,26 @@ conversations.each do |conversation|
       sender: user,
       receiver: conversation.user1,
       conversation: conversation,
-      created_at: t + 1.hour,
-      updated_at: t + 1.hour
+      created_at: t4 + 1.hour,
+      updated_at: t4 + 1.hour
     )
 
 
   when "Tonton Jean"
-    t = rand(3..6).months.ago
+
+    t1 = 5.months.ago
+    Message.create!(
+      content: "Je passe à Lyon le mois prochain, si t’es dispo on peut se faire un resto. Je t’invite, mais tu choisis pas le plus cher hein 😜",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t1,
+      updated_at: t1
+    )
+
+    t2 = 3.months.ago
     msg = Message.create!(
       content: "Tu connais la différence entre un steak et un slip ? Y’en a pas, c’est dans les deux qu’on met la viande !",
       status: :sent,
@@ -316,8 +400,8 @@ conversations.each do |conversation|
       receiver: user,
       contact: conversation.contact,
       conversation: conversation,
-      created_at: t,
-      updated_at: t
+      created_at: t2,
+      updated_at: t2
     )
     msg2 = Message.create!(
       content: "Tonton Jean, tu n'as pas des amis à qui raconter tes blagues ?",
@@ -326,59 +410,38 @@ conversations.each do |conversation|
       sender: user,
       receiver: conversation.user1,
       conversation: conversation,
-      created_at: t + 12.days,
-      updated_at: t + 12.days
+      created_at: t2 + 12.days,
+      updated_at: t2 + 12.days
     )
 
   when "Sarah"
-    t = rand(2..5).days.ago
-    msg = Message.create!(
-      content: "Tellement Vrai a sorti un épisode sur les gens qui parlent à leurs plantes 😭",
-      status: :sent,
-      sender: conversation.user1,
-      receiver: user,
-      contact: conversation.contact,
-      conversation: conversation,
-      created_at: t,
-      updated_at: t
-    )
-    msg2 = Message.create!(
-      content: "J’ai vu ! J’ai failli m’y reconnaître haha",
-      status: :sent,
-      contact: conversation.contact,
-      sender: user,
-      receiver: conversation.user1,
-      conversation: conversation,
-      created_at: t + 1.day,
-      updated_at: t + 1.day
-    )
 
-  when "Nour"
-    t = rand(2..4).days.ago
-    msg = Message.create!(
-      content: "Ton Figma il est vraiment stylé ! J'ai fait une PR pour le projet, tu peux la regarder ?",
-      status: :sent,
-      sender: conversation.user1,
-      receiver: user,
-      contact: conversation.contact,
-      conversation: conversation,
-      created_at: t,
-      updated_at: t
-    )
-    msg2 = Message.create!(
-      content: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
-      status: :sent,
-      contact: conversation.contact,
-      sender: user,
-      receiver: conversation.user1,
-      conversation: conversation,
-      created_at: t + 2.hours,
-      updated_at: t + 2.hours
-    )
-
-    t2 = 1.day.ago
+    t1 = 70.days.ago
     Message.create!(
-      content: "T'as mis à jour le design du dashboard ? J'ai pas trouvé la dernière version.",
+      content: "Je suis tombée sur une playlist ‘Tristesse productive’… Tu crois que c’est censé m’aider à bosser ou à pleurer ?",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t1,
+      updated_at: t1
+    )
+
+    Message.create!(
+      content: "Les deux. C’est le concept du millénaire : souffrir en silence mais avec du style.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t1 + 2.hours,
+      updated_at: t1 + 2.hours
+    )
+
+    t2 = 48.days.ago
+    Message.create!(
+      content: "Tu te souviens du mec chelou au vernissage ? Celui qui parlait aux tableaux comme si c’était ses ex ?",
       status: :sent,
       sender: conversation.user1,
       receiver: user,
@@ -388,8 +451,136 @@ conversations.each do |conversation|
       updated_at: t2
     )
 
+    t3 = rand(2..5).days.ago
+    msg = Message.create!(
+      content: "Tellement Vrai a sorti un épisode sur les gens qui parlent à leurs plantes 😭",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t3,
+      updated_at: t3
+    )
+    msg2 = Message.create!(
+      content: "J’ai vu ! J’ai failli m’y reconnaître haha",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t3 + 1.day,
+      updated_at: t3 + 1.day
+    )
+
+  when "Nour"
+
+    t1 = 17.days.ago
+    Message.create!(
+      content: "Le café maison c’est mieux que celui du bureau, mais j’avoue qu’il me manque les potins de la machine 😅",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t1,
+      updated_at: t1
+    )
+
+    Message.create!(
+      content: "Grave. Maintenant je fais mes pauses café avec mon chat, mais il est nul en gossip.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t1 + 2.hours,
+      updated_at: t1 + 2.hours
+    )
+
+    t2 = 13.days.ago
+    Message.create!(
+      content: "Tu as vu on est dans la même équipe pour le nouveau projet ! Ça va être sympa de bosser ensemble.",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t2,
+      updated_at: t2
+    )
+
+    Message.create!(
+      content: "Oui j'ai vu ! On va pouvoir faire des merveilles. Hâte de démarrer !",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t2 + 1.hour,
+      updated_at: t2 + 1.hour
+    )
+
+    t3 = rand(2..4).days.ago
+    msg = Message.create!(
+      content: "Ton Figma il est vraiment stylé ! J'ai fait une PR pour le projet, tu peux la regarder ?",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t3,
+      updated_at: t3
+    )
+    msg2 = Message.create!(
+      content: "Merci 🤗 Je suis dessus, je merge ça dans 10 min 🚀",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t3 + 2.hours,
+      updated_at: t3 + 2.hours
+    )
+
+    t4 = 1.day.ago
+    Message.create!(
+      content: "T'as mis à jour le design du dashboard ? J'ai pas trouvé la dernière version.",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t4,
+      updated_at: t4
+    )
+
   when "Karim"
-    t = rand(2..6).weeks.ago
+
+    t1 = rand(3..4).months.ago
+    Message.create!(
+      content: "Salut ! Juste pour te dire que ton colis est chez moi, le livreur s’est encore trompé d’étage.",
+      status: :sent,
+      sender: conversation.user1,
+      receiver: user,
+      contact: conversation.contact,
+      conversation: conversation,
+      created_at: t1,
+      updated_at: t1
+    )
+
+    Message.create!(
+      content: "Ah merci beaucoup ! Je passe le récupérer dans la soirée si ça te va.",
+      status: :sent,
+      contact: conversation.contact,
+      sender: user,
+      receiver: conversation.user1,
+      conversation: conversation,
+      created_at: t1 + 2.hours,
+      updated_at: t1 + 2.hours
+    )
+
+    t = rand(2..4).weeks.ago
     msg = Message.create!(
       content: "Dis donc, t’aurais pas un tournevis plat à me prêter ?",
       status: :sent,
