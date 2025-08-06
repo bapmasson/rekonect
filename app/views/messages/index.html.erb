@@ -1,14 +1,17 @@
 <h2 class="discussion-header">Mes messages</h2>
 
-<% awaiting_messages = @awaiting_messages  %>
+<% awaiting_messages = @awaiting_messages %>
 <% if awaiting_messages.any? %>
   <div class="messages-list">
     <% awaiting_messages.each do |message| %>
       <% next if message.nil? || message.id.nil? %>
-      <div class="card-mobile position-relative mb-3">
-        <%= button_to dismiss_suggestion_message_path(message), method: :patch, class: "btn-close-alert", title: "Ignorer cette suggestion" do %>
+      <div id="message-card-<%= message.id %>" class="card-mobile position-relative mb-3">
+
+        <!-- Bouton de fermeture -->
+        <button class="btn-close-alert" title="Ignorer cette suggestion" onclick="dismissMessage(<%= message.id %>)">
           <i class="bi bi-x-lg"></i>
-        <% end %>
+        </button>
+
         <div class="message-author"><strong>De :</strong> <%= message.contact.name %></div>
         <div class="message-content"><%= message.content %></div>
         <div class="suggestion">
@@ -24,21 +27,49 @@
 <% else %>
   <div class="alert-mobile mt-4">Aucun message en attente de réponse.</div>
 <% end %>
+
 <%= render "shared/navbar_bottom" %>
 
 <h2 class="discussion-header">Mes conversations</h2>
 <div class="contacts-list">
   <% @conversations.each do |conversation| %>
-  <div class="reply-container">
-    <%= link_to conversation_path(conversation), class: "contact-card" do %>
-      <div class="contact-avatar">
-        <% if conversation.contact.photo.attached? %>
-          <%= image_tag conversation.contact.photo, class: "avatar-img" %>
-        <% else %>
-          <%= image_tag "default-avatar.png", class: "avatar-img" %>
-        <% end %>
-      </div>
-      <div class="contact-name"><%= conversation.contact.name %></div>
-    <% end %>
+    <div class="reply-container">
+      <%= link_to conversation_path(conversation), class: "contact-card" do %>
+        <div class="contact-avatar">
+          <% if conversation.contact.photo.attached? %>
+            <%= image_tag conversation.contact.photo, class: "avatar-img" %>
+          <% else %>
+            <%= image_tag "default-avatar.png", class: "avatar-img" %>
+          <% end %>
+        </div>
+        <div class="contact-name"><%= conversation.contact.name %></div>
+      <% end %>
+    </div>
   <% end %>
 </div>
+
+<!-- Script JavaScript -->
+<script>
+  function dismissMessage(messageId) {
+    // Cacher visuellement la carte
+    const card = document.getElementById(`message-card-${messageId}`);
+    if (card) {
+      card.style.transition = "opacity 0.3s ease";
+      card.style.opacity = 0;
+      setTimeout(() => {
+        card.style.display = "none";
+      }, 300);
+    }
+
+    // Envoi de la requête PATCH en arrière-plan
+    fetch(`/messages/${messageId}/dismiss_suggestion`, {
+      method: "PATCH",
+      headers: {
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        "Content-Type": "application/json"
+      }
+    }).catch(error => {
+      console.error("Erreur lors du rejet de la suggestion :", error);
+    });
+  }
+</script>
