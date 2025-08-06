@@ -3,9 +3,11 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="level-up"
 export default class extends Controller {
   connect() {
-    window.addEventListener("level-up", () => {
-      this.show()
-    })
+    window.addEventListener("level-up", this.show, { once: true })
+  }
+
+  disconnect() {
+    window.removeEventListener("level-up", this.show)
   }
 
   show() {
