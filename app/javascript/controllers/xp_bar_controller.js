@@ -5,25 +5,27 @@ export default class extends Controller {
   static targets = ["fill", "progress", "level"]
 
   connect() {
-    console.log("XP Bar controller connecté")
-  }
+    const fill = this.fillTarget
 
-  update(event) {
-    const { xp, level } = event.detail
+    const percent = parseFloat(fill.dataset.xpPercent || 0)
+    const current = parseInt(fill.dataset.xpCurrent || 0)
+    const total = parseInt(fill.dataset.xpTotal || 100)
 
-    const percent = xp % 100
-    const xpInLevel = xp % 100
+    // Démarre à 0%
+    fill.style.width = "0%"
 
-    if (this.fillTarget) {
-      this.fillTarget.style.width = `${percent}%`
-    }
+    // Déclenche l'animation au prochain frame
+    requestAnimationFrame(() => {
+      fill.style.width = `${percent}%`
+    })
 
     if (this.progressTarget) {
-      this.progressTarget.innerText = `${xpInLevel}/100 XP`
+      this.progressTarget.innerText = `${current}/${total} XP`
     }
 
-    if (this.levelTarget) {
-      this.levelTarget.innerText = `${Math.floor(xp / 100) + 1}`
-    }
+    /* if (this.levelTarget) {
+      const level = Math.floor(current / total) + 1
+      this.levelTarget.innerText = level
+    } */
   }
 }

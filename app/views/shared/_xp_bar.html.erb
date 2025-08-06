@@ -15,7 +15,6 @@
 
     <div class="xp-bar mt-3">
       <div class="xp-bar-fill"
-           style="width: <%= current_user.xp_percent %>%"
            data-xp-bar-target="fill"
            data-xp-percent="<%= current_user.xp_percent %>"
            data-xp-current="<%= current_user.xp_progress %>"
@@ -27,8 +26,7 @@
       </span>
     </div>
   </div>
-   <div data-controller="level-up"
-       data-level-up-level-up-value="<%= flash[:level_up] == true %>"></div>
 
-   <div data-controller="badge-popup"></div>
+  <div data-controller="level-up" data-level-up-level-up-value="<%= flash[:level_up] == true %>"></div>
+  <div data-controller="badge-popup"></div>
 <% end %>
