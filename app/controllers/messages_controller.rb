@@ -54,7 +54,7 @@ class MessagesController < ApplicationController
         format.html { redirect_to conversation_path(@conversation) }
       end
     else
-      render "conversations/show", status: :unprocessable_entity
+      redirect_to conversations_show_path(@conversation), status: :unprocessable_entity
     end
   end
 
