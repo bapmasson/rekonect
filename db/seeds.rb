@@ -20,7 +20,7 @@ user = User.create!(
   password: "azerty",
   first_name: "Jonathan",
   last_name: "Cucculelli",
-  username: "Laiokan",
+  username: "Jonathan",
   phone_number: "+33612345678",
   address: "123 Rue de la Demo, 69006 Lyon, France",
   birth_date: Faker::Date.birthday(min_age: 25, max_age: 35),
