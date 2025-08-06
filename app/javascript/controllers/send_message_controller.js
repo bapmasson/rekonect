@@ -12,14 +12,18 @@ export default class extends Controller {
 
     fetch(url, {
       method: "POST",
-      headers: { Accept: "application/json" },
+      headers: {
+        "Accept": "application/json",
+        "X-CSRF-Token": document.querySelector("[name='csrf-token']").content // sécurité rails
+      },
       body: formData
     })
       .then(response => response.json())
       .then(data => {
-        // Reset le formulaire
+        // reset le champ
         this.formTarget.reset()
 
+        // met à jour les valeurs dynamiques de la barre d’XP
         const fill = document.querySelector(".xp-bar-fill")
         const progress = document.querySelector(".xp-bar-progress")
         const level = document.querySelector(".xp-level-number")
@@ -28,7 +32,10 @@ export default class extends Controller {
           fill.dataset.xpPercent = data.xp_percent
           fill.dataset.xpCurrent = data.xp_progress
           fill.dataset.xpTotal = data.xp_total
-          fill.style.width = `${data.xp_percent}%`
+          // Animation
+          requestAnimationFrame(() => {
+            fill.style.width = `${data.xp_percent}%`
+          })
         }
 
         if (progress) {
@@ -38,11 +45,13 @@ export default class extends Controller {
         if (level) {
           level.innerText = data.level
         }
-
-        // 🎉 Animation LEVEL UP ?
+        
         if (data.level_up) {
           window.dispatchEvent(new Event("level-up"))
         }
+      })
+      .catch(error => {
+        console.error("Erreur envoi message", error)
       })
   }
 }
