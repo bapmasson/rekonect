@@ -11,6 +11,21 @@
     </div>
   </div>
 
+  <div class="xp-bar-container">
+    <div class="xp-bar-logo">
+      <%= image_tag "xp.png", class: "xp-bar-icon" %>
+      <div class="xp-level">
+        <span class="xp-level-label">NIVEAU</span>
+        <span class="xp-level-number"><%= @user.level %></span>
+      </div>
+    </div>
+    <div class="xp-bar">
+      <div class="xp-bar-fill" style="width: <%= @user.xp_percent %>%"></div>
+      <span class="xp-bar-progress"><%= @user.xp_progress %>/<%= @user.xp_for_next_level %> XP</span>
+    </div>
+  </div>
+</div>
+
 <% main_msg = @main_message || Message.where("(sender_id = :id OR receiver_id = :id) AND status = :status AND (dismissed = false OR dismissed IS NULL)", id: current_user.id, status: Message.statuses[:received]).last %>
 <% if main_msg %>
   <div class="main-message-card">
@@ -95,13 +110,13 @@
 <%= render "shared/navbar_bottom" %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
+function initSlider() {
   const slider = document.querySelector(".quick-contacts-list");
   const cards = document.querySelectorAll(".quick-card");
   const leftArrow = document.querySelector(".arrow.left");
   const rightArrow = document.querySelector(".arrow.right");
 
-  if (!slider || !cards.length) return;
+  if (!slider || !cards.length || !leftArrow || !rightArrow) return;
 
   let currentIndex = 0;
   const totalCards = cards.length;
@@ -110,21 +125,25 @@
     slider.style.transform = `translateX(-${currentIndex * 100}%)`;
   }
 
-  leftArrow?.addEventListener("click", () => {
+  leftArrow.addEventListener("click", () => {
     if (currentIndex > 0) {
       currentIndex--;
       updateSlider();
     }
   });
 
-  rightArrow?.addEventListener("click", () => {
+  rightArrow.addEventListener("click", () => {
     if (currentIndex < totalCards - 1) {
       currentIndex++;
       updateSlider();
     }
   });
 
-  updateSlider(); // init
+  updateSlider();
+}
+
+document.addEventListener("turbo:load", () => {
+  initSlider();
 });
 </script>
 
