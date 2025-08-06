@@ -6,7 +6,7 @@ body {
 
 .chat-container {
   max-width: 600px;
-  margin: 0px 0px !important;
+  margin: 0px 0px;
   background: rgba(245, 220, 229, 0.6); // Couleur #F5DCE5 avec 30% d’opacité
   backdrop-filter: blur(20px); // Floutage de l’arrière-plan
   -webkit-backdrop-filter: blur(20px); // Support Safari
