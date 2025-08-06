@@ -67,14 +67,26 @@
 }
 
 .chat-send-btn {
-  background: $blue !important;
-  color: $white !important;
-  border-radius: 12px !important;
+  width: 20%;
+  max-width: 90vw;
+  height: 38px;
+  margin: 16px auto 0 auto;
+  background: $pink;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-radius: 50px;
   border: none;
-  font-size: 1rem !important;
-  padding: 0 24px !important;
-  height: 48px !important;
-  min-width: 100px;
-  cursor: pointer;
   box-shadow: 0 2px 8px $card-shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  text-align: center;
+  text-decoration: none;
+  margin-bottom: 16px;
+
+  &:hover {
+    background: $pink-hover;
+  }
 }
