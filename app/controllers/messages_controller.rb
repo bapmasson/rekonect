@@ -43,18 +43,34 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
-      xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
-      @xp_gained = current_user.add_contextual_xp(xp_context)
-      flash[:level_up] = true if current_user.leveled_up?
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
-            locals: { message: @message })
-        end
-        format.html { redirect_to conversation_path(@conversation) }
+    # 🔥 Ajout XP
+    xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
+    @xp_gained = current_user.add_contextual_xp(xp_context)
+
+    flash[:level_up] = true if current_user.leveled_up?
+
+    respond_to do |format|
+      # ✅ TurboStream classique
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.append(:messages, partial: "messages/message", locals: { message: @message })
       end
-    else
-      redirect_to conversations_show_path(@conversation), status: :unprocessable_entity
+
+      # ✅ HTML fallback
+      format.html { redirect_to conversation_path(@conversation) }
+
+      # ✅ JSON pour Stimulus
+      format.json do
+        render json: {
+          xp_percent: current_user.xp_percent,
+          xp_progress: current_user.xp_progress,
+          xp_total: current_user.xp_for_next_level,
+          level: current_user.level,
+          level_up: flash[:level_up] == true
+        }
+      end
+    end
+  else
+    redirect_to conversations_show_path(@conversation), status: :unprocessable_entity
     end
   end
 
