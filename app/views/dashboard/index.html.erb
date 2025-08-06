@@ -5,7 +5,7 @@
         <%= image_tag "logo.png", alt: "Logo Rekonect", class: "logo-image" %>
         <div class="dashboard-title-text">
           <p>Bon retour <%= @user.username %></p>
-          <div class="dashboard-welcome">Prends un peu de temps pour prendre des nouvelles de tes proches</div>
+          <div class="dashboard-welcome">Prends le temps de prendre des nouvelles de tes proches.</div>
         </div>
       </div>
     </div>
@@ -15,7 +15,7 @@
 <% if main_msg %>
   <div class="main-message-card">
     <div class="main-message-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-bubble', 'icon-last')">
-      <p class="priority-msg">Hey! Hésites pas à répondre à <%= main_msg.contact.name %></p>
+      <p class="priority-msg">Hey! N'hésites pas à répondre à <%= main_msg.contact.name %></p>
       <span id="icon-last" style="cursor:pointer;">🔻</span>
     </div>
 

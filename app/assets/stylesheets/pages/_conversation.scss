@@ -31,7 +31,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
@@ -61,8 +61,8 @@ body {
   margin: 16px auto 0 auto;
   background: $pink-btn;
   color: #fff;
-  font-weight: 800;
-  font-size: 1.20rem;
+  font-weight: 600;
+  font-size: 0.95rem;
   border-radius: 50px;
   border: none;
   box-shadow: 0 8px 22px $shadow-dark;
@@ -71,6 +71,8 @@ body {
   justify-content: center;
   transition: background 0.2s;
   text-align: center;
+  text-decoration: none;
+  margin-bottom: 16px;
 
   &:hover {
     background: $pink-btn-hover;
@@ -142,7 +144,6 @@ body {
   width: 100%;
   box-sizing: border-box;
 }
-
 
 /* 🔽 Responsive Media Queries */
 @media (max-width: 600px) {
