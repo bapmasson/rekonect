@@ -1,1 +1,13 @@
 <%= turbo_stream.append "chat-messages", partial: "messages/message", locals: { message: @message } %>
+<turbo-stream action="append" target="notifications-container">
+  <template>
+    <script>
+      window.dispatchEvent(new CustomEvent("xp-gained", {
+      detail: { gained: <%= @xp_gained %> }
+      }))
+      window.dispatchEvent(new CustomEvent("badge-unlocked", {
+        detail: { title: "Premier Message", imageUrl: "/images/badges/badge1.png" }
+      }))
+    </script>
+  </template>
+</turbo-stream>

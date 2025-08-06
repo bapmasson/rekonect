@@ -58,7 +58,19 @@ body {
   }
 }
 
+
+
 // section barre xp
+
+.sticky-xp {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: #f5fbe8;
+  padding-top: 10px;
+  padding-bottom: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
 .xp-bar-container {
   border: 2px solid white;
   border-radius: 35px;
@@ -122,14 +134,15 @@ body {
 }
 
 .xp-bar-fill {
-  background: linear-gradient(90deg, $pink-btn 60%, $pink-btn-hover 100%);
-  height: 100%;
-  border-radius: 50px;
-  transition: width 0.4s;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 1;
+  background: linear-gradient(270deg, #ff9aa2, #c39bd3, #a8e6cf);
+  background-size: 600% 600%;
+  animation: xpGlow 4s ease infinite;
+  transition: width 0.4s ease-in-out;
+}
+@keyframes xpGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 // card message principal

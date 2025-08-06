@@ -43,6 +43,9 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
+      xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
+      @xp_gained = current_user.add_contextual_xp(xp_context)
+      flash[:level_up] = true if current_user.leveled_up?
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(:messages, partial: "messages/message",
@@ -84,6 +87,8 @@ class MessagesController < ApplicationController
 
   def send_message
     if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
+      current_user.add_contextual_xp(:ai_reply)
+      flash[:level_up] = true if current_user.leveled_up?
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       redirect_to reply_message_path(@message), alert: "Erreur lors de l’envoi de la réponse."
