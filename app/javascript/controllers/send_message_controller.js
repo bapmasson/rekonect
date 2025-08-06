@@ -1,4 +1,4 @@
-// import { Controller } from "@hotwired/stimulus"
+/* import { Controller } from "@hotwired/stimulus"
 
 // export default class extends Controller {
 //   static targets = ["form"]
@@ -32,7 +32,8 @@
 //   const messagesContainer = document.getElementById("messages")
 //   messagesContainer.insertAdjacentHTML("beforeend", data.html)
 
-//   // Réinitialise le formulaire
-//   this.formTarget.reset()
-//   } )
-// } }
+  // Réinitialise le formulaire
+  this.formTarget.reset()
+  } )
+} }
+ */
