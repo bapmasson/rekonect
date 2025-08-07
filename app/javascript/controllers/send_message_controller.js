@@ -45,10 +45,21 @@ export default class extends Controller {
         if (level) {
           level.innerText = data.level
         }
-        
+
         if (data.level_up) {
-          window.dispatchEvent(new Event("level-up"))
+          window.dispatchEvent(new CustomEvent("level-up", { detail: { level: data.level } }))
         }
+
+        if (data.xp_percent !== undefined) {
+        window.dispatchEvent(new CustomEvent("xp-gain", {
+          detail: {
+            xpPercent: data.xp_percent,
+            xpCurrent: data.xp_progress,
+            xpTotal: data.xp_total,
+            level: data.level
+          }
+        }))
+      }
       })
       .catch(error => {
         console.error("Erreur envoi message", error)

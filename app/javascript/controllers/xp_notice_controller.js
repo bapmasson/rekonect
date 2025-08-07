@@ -24,6 +24,6 @@ export default class extends Controller {
 
   setTimeout(() => {
     box.remove()
-  }, 3000)
+  }, 20000)
  }
 }

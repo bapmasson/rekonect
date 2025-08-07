@@ -11,6 +11,9 @@
     </div>
   </div>
 
+ <%= render "shared/xp_bar" %>
+
+
 <% main_msg = @main_message || Message.where("(sender_id = :id OR receiver_id = :id) AND status = :status AND (dismissed = false OR dismissed IS NULL)", id: current_user.id, status: Message.statuses[:received]).last %>
 <% if main_msg %>
   <div class="main-message-card">
