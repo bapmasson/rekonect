@@ -43,33 +43,33 @@ class MessagesController < ApplicationController
     )
     authorize @message
     if @message.save
-    # 🔥 Ajout XP
-    xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
-    @xp_gained = current_user.add_contextual_xp(xp_context)
+      # 🔥 Ajout XP
+      xp_context = Message.where(sender: current_user, contact_id: @conversation.contact_id).count == 0 ? :first_message : :rekonect
+      @xp_gained = current_user.add_contextual_xp(xp_context)
 
-    @level_up = current_user.leveled_up?
-    session[:level_up] = current_user.level if @level_up
+      @level_up = current_user.leveled_up?
+      session[:level_up] = current_user.level if @level_up
 
-    respond_to do |format|
-      format.turbo_stream do
-        render turbo_stream: turbo_stream.append(:messages, partial: "messages/message", locals: { message: @message })
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(:messages, partial: "messages/message", locals: { message: @message })
+        end
+
+        format.html { redirect_to conversation_path(@conversation) }
+
+        format.json do
+          render json: {
+            message_partial: render_to_string(partial: "messages/message", formats: [:html], locals: { message: @message }),
+            xp_percent: current_user.xp_percent,
+            xp_progress: current_user.xp_progress,
+            xp_total: current_user.xp_for_next_level,
+            level: current_user.level,
+            level_up: @level_up
+          }
+        end
       end
-
-      format.html { redirect_to conversation_path(@conversation) }
-
-      format.json do
-        render json: {
-          message_partial: render_to_string(partial: "messages/message", formats: [:html], locals: { message: @message }),
-          xp_percent: current_user.xp_percent,
-          xp_progress: current_user.xp_progress,
-          xp_total: current_user.xp_for_next_level,
-          level: current_user.level,
-          level_up: @level_up
-        }
-      end
-    end
-  else
-    redirect_to conversations_show_path(@conversation), status: :unprocessable_entity
+    else
+      redirect_to conversations_show_path(@conversation), status: :unprocessable_entity
     end
   end
 

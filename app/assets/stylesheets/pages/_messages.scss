@@ -67,6 +67,7 @@ body {
 .message-content {
   color: $gray-txt;
   font-size: 16px;
+
 }
 
 // header arrondi
@@ -181,6 +182,14 @@ body {
   font-weight: 700;
 }
 
+.edit-form-content {
+  overflow-y: auto; // Permet le défilement si le contenu est trop long
+}
+
+.edit-form-content:hover {
+    color: #222 !important;
+}
+
 .message-date {
   color: $gray-txt;
   font-size: 0.96rem;
@@ -243,22 +252,6 @@ body {
     display: flex !important;
   }
 }
-// .reply-btn {
-//   width: 100% !important;
-//   min-width: 120px;
-//   max-width: 170px;
-//   font-size: 1.19rem !important;
-//   border-radius: 18px !important;
-//   margin: 0;
-//   box-shadow: 0 4px 16px $card-shadow;
-//   font-weight: 700;
-//   padding: 12px 0 !important;
-//   transition: transform 0.13s;
-//   text-align: center;
-//   align-items: center;
-//   justify-content: center;
-//   display: flex !important;
-// }
 
 // bouton envoyer pour la view edit
 
