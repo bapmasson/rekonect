@@ -33,7 +33,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   </head>
 
-  <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
+  <%# ajout d'une classe personnalisée dans le body pour ne pas casser le body général quand on veut toucher à celui d'une page %>
+  <body data-current-user-id="<%= current_user ? current_user.id : "" %>" class="<%= controller_name %>-<%= action_name %>">
   <%= render "shared/flashes" %>
   <%= render "shared/xp_bar" %>
   <div data-controller="badge-popup level-up"></div>

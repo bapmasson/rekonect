@@ -1,15 +1,19 @@
 body {
-  margin: 0;
-  padding: 0 4px 0 4px; // 4px sur les côtés pour éviter le débordement
-  overflow: hidden;
-  height: 100vh;
+  padding-bottom: 80px;
   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
+
+.conversations-show {
+    padding: 0 4px 66px 4px;
+    overflow: hidden;
+    height: 100vh;
+  }
+
 
 .chat-container {
   height: 100vh;
   width: 100%;
-  margin: 0 auto 42px auto; //
+  margin: 0 auto 66px auto; // 66px pour la navbar
   background: rgba(245, 220, 229, 0.6); // Couleur #F5DCE5 avec 30% d’opacité
   backdrop-filter: blur(20px); // Floutage de l’arrière-plan
   -webkit-backdrop-filter: blur(20px); // Support Safari
