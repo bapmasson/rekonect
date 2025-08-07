@@ -9,6 +9,28 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <title><%= meta_title %></title>
+    <meta name="description" content="<%= meta_description %>">
+
+    <!-- Facebook Open Graph data -->
+    <meta property="og:title" content="Rekonect" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="<%= request.original_url %>" />
+    <meta property="og:image" content="https://rekonect.com/rekonect_1200x630.png" />
+    <meta property="og:description" content="Rekonect permet de reprendre contact avec ses proches tout en douceur!" />
+    <meta property="og:site_name" content="Rekonect" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@rekonect"> <!-- Remplace par ton compte Twitter -->
+    <meta name="twitter:title" content="Rekonect">
+    <meta name="twitter:description" content="Rekonect permet de reprendre contact avec ses proches tout en douceur!">
+    <meta name="twitter:creator" content="@rekonect"> <!-- Remplace par ton compte Twitter -->
+    <meta name="twitter:image:src" content="https://rekonect.com/rekonect_1200x630.png">
+
+
+    <!-- app/views/layouts/application.html.erb -->
+    <%= <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"> %>
   </head>
 
   <body data-current-user-id="<%= current_user ? current_user.id : "" %>">
