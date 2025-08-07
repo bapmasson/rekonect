@@ -6,7 +6,7 @@
   <%= link_to message_path(@message.contact), class: "reply-card" do %>
     <div class="reply-avatar-block">
       <% if @message.contact.photo.attached? %>
-        <%= image_tag @message.contact.photo, class: "avatar-mobile ms-2" %>
+        <%= cl_image_tag @message.contact.photo.key, class: "avatar-mobile ms-2" %>
       <% else %>
         <%= image_tag "default-avatar.png", class: "avatar-img", alt: @message.contact.name %>
       <% end %>
