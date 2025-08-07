@@ -7,7 +7,7 @@
     <%= simple_form_for Message.new do |f| %>
       <%= f.input :conversation_id, as: :hidden, input_html: { value: conversation.id } %>
       <%= f.input :content, as: :hidden, input_html: { value: message.ai_draft } %>
-      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn", data: { turbo: false } %>
+      <%= f.submit "Envoyer", class: "btn btn-pink reply-btn btn-envoyer", data: { turbo: false } %>
     <% end %>
 
     <%= link_to "Modifier", edit_message_path(message), data: { turbo_frame: :message_suggestion }, class: "btn-modifier btn-pink reply-btn" %>
