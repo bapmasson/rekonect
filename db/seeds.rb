@@ -613,8 +613,8 @@ puts "#{Message.count} messages créés avec succès."
 puts "Création des badges..."
 
 badges_infos = [
-  { title: "Répondeur Express", description: "Toujours prêt à dégainer une réponse en moins de 5 minutes.", condition_description: "Répondre à 50 messages en moins de 5 minutes", photo_name: "badge_repondeur.png" },
-  { title: "Relanceur Pro", description: "Relancer les conversations comme un vrai stratège.", condition_description: "Relancer 30 conversations restées sans réponse pendant plus de 24h", photo_name: "badge_relanceur.png" },
+  { title: "Répondeur Express", description: "Toujours prêt à dégainer une réponse.", condition_description: "Répondre à 10 messages en moins de 5 minutes", photo_name: "badge_repondeur.png" },
+  { title: "Relanceur Pro", description: "Relancer les conversations comme un vrai stratège.", condition_description: "Relancer 15 conversations restées sans réponse pendant plus de 24h", photo_name: "badge_relanceur.png" },
   { title: "Rekonecteur Débutant", description: "Constante et réactivité sont les clés de la connexion.", condition_description: "Atteindre le niveau 10 dans l’application", photo_name: "badge_rekonecteur_debutant.png" },
   { title: "Rekonecteur Confirmé", description: "Maître dans l’art de la connexion.", condition_description: "Atteindre le niveau 20 dans l’application", photo_name: "badge_rekonecteur_confirme.png" }
 ]
