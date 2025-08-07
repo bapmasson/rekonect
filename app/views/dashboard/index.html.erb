@@ -11,40 +11,11 @@
     </div>
   </div>
 
- <%# A la limite mettre les badges ici ( suggestion) %>
- <%# --- Badges et feedback XP --- %>
-<h2 class="badge-header mb-2">Mes badges :</h2>
-<div class="badges-list mb-2">
-  <% @badges.each_with_index do |badge, index| %>
-    <div class="card-mobile mb-2 d-flex align-items-center">
-      <% if badge.image.attached? %>
-        <%= image_tag badge.image, class: "badge-icon me-3", alt: badge.title %>
-      <% else %>
-        <%= image_tag "badge.png", class: "badge-icon me-3", alt: badge.title %>
-      <% end %>
-
-      <div class="badge-content">
-        <div class="fw-bold"><%= badge.title %></div>
-        <div class="text-muted small">
-          <em>
-            Condition :
-            <% if index == 1 %>
-              Atteindre le niveau 35
-            <% else %>
-              Atteindre le niveau 30
-            <% end %>
-          </em>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
 <% main_msg = @main_message || Message.where("(sender_id = :id OR receiver_id = :id) AND status = :status AND (dismissed = false OR dismissed IS NULL)", id: current_user.id, status: Message.statuses[:received]).last %>
 <% if main_msg %>
   <div class="main-message-card">
     <div class="main-message-title d-flex justify-content-between align-items-center" onclick="toggleBlock('last-message-bubble', 'icon-last')">
-      <p class="priority-msg">Hey! N'hésites pas à répondre à <%= main_msg.contact.name %></p>
+      <p class="priority-msg">Hey! N'hésite pas à répondre à <%= main_msg.contact.name %></p>
       <span id="icon-last" style="cursor:pointer;">🔻</span>
     </div>
 

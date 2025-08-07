@@ -608,76 +608,41 @@ end
 
 puts "#{Message.count} messages créés avec succès."
 
-
-# Seed Messages
-# On crée des messages pour chaque contact, en leur créant un message qui a eu une réponse, et un message en attente de réponse. On ajoute éventuellement un message avec une suggestion IA mais on l'enlèvera quand on aura implanté l'IA dans le projet
-# THIRD_MESSAGE_PROBABILITY = 0.5
-
-# contacts = Contact.all
-# puts "Création des conversations avec chaque contact..."
-# contacts.each do |contact|
-#   # Message complet : message du contact + suggestion IA + réponse utilisateur
-#   message1 = Message.create!(
-#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :sent,
-#     user: contact.user,
-#     contact: contact
-#   )
-#   message1.update!(
-#     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :draft_by_ai
-#   )
-#   message1.update!(
-#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :sent,
-#     sent_at: Faker::Date.backward(days: 3)
-#   )
-
-#   # Message sans réponse utilisateur
-#   message2 = Message.create!(
-#       content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#       status: :sent,
-#       user: contact.user,
-#       contact: contact
-#     )
-
-#   # Occasionnellement, message avec suggestion IA mais pas de réponse utilisateur
-
-#   if rand < THIRD_MESSAGE_PROBABILITY
-#   message3 = Message.create!(
-#     content: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :received,
-#     user: contact.user,
-#     contact: contact
-#   )
-#   message3.update!(
-#     ai_draft: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 6),
-#     status: :draft_by_ai
-#   )
-#   end
-#   puts "Conversation entre #{contact.user.username} et #{contact.name} créée avec succès."
-# end
-
-
-# puts "#{Message.count} messages créés avec succès."
-
 # Seed Badges
 # On crée des badges pour les utilisateurs, avec des titres et descriptions aléatoires. On va en créer 5 pour commencer.
 puts "Création des badges..."
-5.times.map do
-  Badge.create!(
-    title: Faker::Superhero.name,
-    description: Faker::Marketing.buzzwords,
-    condition_description: "Complete X tasks or reach level Y"
-  )
-end
-puts "#{Badge.count} badges créés avec succès."
 
+badges_infos = [
+  { title: "Répondeur Express", description: "Toujours prêt à dégainer une réponse en moins de 5 minutes.", condition_description: "Répondre à 50 messages en moins de 5 minutes", photo_name: "badge_repondeur.png" },
+  { title: "Relanceur Pro", description: "Relancer les conversations comme un vrai stratège.", condition_description: "Relancer 30 conversations restées sans réponse pendant plus de 24h", photo_name: "badge_relanceur.png" },
+  { title: "Rekonecteur Débutant", description: "Constante et réactivité sont les clés de la connexion.", condition_description: "Atteindre le niveau 10 dans l’application", photo_name: "badge_rekonecteur_debutant.png" },
+  { title: "Rekonecteur Confirmé", description: "Maître dans l’art de la connexion.", condition_description: "Atteindre le niveau 20 dans l’application", photo_name: "badge_rekonecteur_confirme.png" }
+]
+
+badges_infos.each do |info|
+  badge = Badge.create!(
+    title: info[:title],
+    description: info[:description],
+    condition_description: info[:condition_description]
+  )
+
+  if info[:photo_name].present?
+    badge.image.attach(io: File.open(Rails.root.join("app/assets/images/#{info[:photo_name]}")), filename: info[:photo_name], content_type: 'image/png')
+    puts "Image attachée pour #{badge.title} : #{info[:photo_name]}"
+  else
+    # Si aucune photo spécifique n'est définie, tu peux choisir d'attacher une image par défaut ici
+    badge.image.attach(io: File.open(Rails.root.join("app/assets/images/badge.png")), filename: 'badge.png', content_type: 'image/png')
+    puts "Image par défaut attachée pour #{badge.title}."
+  end
+  puts "Badge #{badge.title} créé avec succès."
+end
+
+puts "#{Badge.count} badges créés avec succès."
 # On va attribuer aléatoirement des badges à chaque utilisateur
 badges = Badge.all
 
-# On attribue 2 badges aléatoires à l'utilisateur principal pour la démo
-badges.sample(2).each do |badge|
+# On attribue les badges à l'utilisateur principal pour la démo
+badges.each do |badge|
   UserBadge.create!(
     user: user,
     badge: badge,
@@ -685,17 +650,6 @@ badges.sample(2).each do |badge|
   )
   puts "Badge '#{badge.title}' attribué à #{user.username}."
 end
-
-# users.each do |user|
-#   badges.sample(2).each do |badge|
-#     UserBadge.create!(
-#       user: user,
-#       badge: badge,
-#       obtained_at: Faker::Date.backward(days: 100)
-#     )
-#     puts "Badge '#{badge.title}' attribué à #{user.username}."
-#   end
-# end
 
 puts "#{UserBadge.count} badges attribués avec succès."
 

@@ -1,7 +1,7 @@
 <% if current_user %>
   <div class="xp-bar-container sticky-xp"
-       data-controller="xp-bar level-up"
-       data-level-up-level-up-value="<%= flash[:level_up] == true %>">
+      data-controller="xp-bar level-up"
+      data-level-up-level-up-value="<%= flash[:level_up] == true %>">
 
     <div class="xp-bar-logo">
       <%= image_tag "xp.png", class: "xp-bar-icon" %>
@@ -12,18 +12,36 @@
         </span>
       </div>
     </div>
+    <div class="xp-bar-content">
+      <div class="xp-bar mt-3">
+        <div class="xp-bar-fill"
+            data-xp-bar-target="fill"
+            data-xp-percent="<%= current_user.xp_percent %>"
+            data-xp-current="<%= current_user.xp_progress %>"
+            data-xp-total="<%= current_user.xp_for_next_level %>">
+        </div>
 
-    <div class="xp-bar mt-3">
-      <div class="xp-bar-fill"
-           data-xp-bar-target="fill"
-           data-xp-percent="<%= current_user.xp_percent %>"
-           data-xp-current="<%= current_user.xp_progress %>"
-           data-xp-total="<%= current_user.xp_for_next_level %>">
+        <span class="xp-bar-progress" data-xp-bar-target="progress">
+          <%= current_user.xp_progress %>/<%= current_user.xp_for_next_level %> XP
+        </span>
       </div>
 
-      <span class="xp-bar-progress" data-xp-bar-target="progress">
-        <%= current_user.xp_progress %>/<%= current_user.xp_for_next_level %> XP
-      </span>
+      <%# div pour afficher les badges %>
+      <div class="xp-badges mt-2 d-flex flex-wrap gap-2">
+        <% current_user.badges.each do |badge| %>
+          <div class="badge-icon-wrapper" data-controller="infobulle"
+              data-infobulle-title-value="<%= badge.title %>"
+              data-infobulle-description-value="<%= badge.description %>"
+              data-infobulle-condition-value="<%= badge.condition_description %>">
+            <% if badge.image.attached? %>
+              <%= image_tag badge.image, class: "badge-icon", alt: badge.title %>
+            <% else %>
+              <%= image_tag "badge.png", class: "badge-icon", alt: badge.title %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
     </div>
   </div>
 
