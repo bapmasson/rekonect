@@ -3,7 +3,7 @@
     <div class="msg-edit mb-0">
       <%= simple_form_for Message.new do |f| %>
         <%= f.input :conversation_id, as: :hidden, input_html: { value: @conversation.id } %>
-        <%= f.input :content, label: false, as: :text, input_html: { value: @message.ai_draft, rows: 5, class: "card-mobile msg-inner-bubble message-content edit-form-content"  } %>
+        <%= f.input :content, label: false, as: :text, input_html: { value: @message.ai_draft, rows: 5, class: "card-mobile msg-inner-bubble message-content edit-form-content" } %>
         <%= f.submit "Envoyer", class: "btn btn-pink reply-btn edit-form-btn", data: { turbo: false } %>
       <% end %>
     </div>
