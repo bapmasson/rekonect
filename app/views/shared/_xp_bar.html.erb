@@ -34,7 +34,7 @@
               data-infobulle-description-value="<%= badge.description %>"
               data-infobulle-condition-value="<%= badge.condition_description %>">
             <% if badge.image.attached? %>
-              <%= image_tag badge.image, class: "badge-icon", alt: badge.title %>
+              <%= cl_image_tag badge.image.key, class: "badge-icon", alt: badge.title %>
             <% else %>
               <%= image_tag "badge.png", class: "badge-icon", alt: badge.title %>
             <% end %>

@@ -49,7 +49,7 @@
             <div class="quick-contact">
               <div class="contact-content">
                 <% if msg.contact.photo.attached? %>
-                  <%= image_tag msg.contact.photo, class: "avatar-mobile mb-1", alt: msg.contact.name %>
+                  <%= cl_image_tag msg.contact.photo.key, class: "avatar-mobile mb-1", alt: msg.contact.name %>
                 <% else %>
                   <%= image_tag "default-avatar.png", class: "avatar-mobile mb-1", alt: msg.contact.name %>
                 <% end %>

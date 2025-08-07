@@ -37,7 +37,7 @@
       <%= link_to conversation_path(conversation), class: "contact-card" do %>
         <div class="contact-avatar">
           <% if conversation.contact.photo.attached? %>
-            <%= image_tag conversation.contact.photo, class: "avatar-img" %>
+            <%= cl_image_tag conversation.contact.photo.key, class: "avatar-img" %>
           <% else %>
             <%= image_tag "default-avatar.png", class: "avatar-img" %>
           <% end %>

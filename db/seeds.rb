@@ -98,6 +98,7 @@ contact_infos.each_with_index do |info, idx|
     contact.photo.attach(io: File.open(Rails.root.join("app/assets/images/default-avatar.png")), filename: 'default-avatar.png', content_type: 'image/png')
     puts "Image par défaut attachée pour #{contact.name}"
   end
+  contact.save!
   puts "Contact créé : #{contact.name}, Image associée : #{contact.photo.attached? ? contact.photo.filename.to_s : 'Aucune'}"
 
   # création des conversations avec chaque contact
@@ -634,6 +635,7 @@ badges_infos.each do |info|
     badge.image.attach(io: File.open(Rails.root.join("app/assets/images/badge.png")), filename: 'badge.png', content_type: 'image/png')
     puts "Image par défaut attachée pour #{badge.title}."
   end
+  badge.save!
   puts "Badge #{badge.title} créé avec succès."
 end
 
