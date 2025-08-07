@@ -1,12 +1,19 @@
 body {
   padding-bottom: 80px;
-  background: #EEAECA;
   background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
 }
 
+.conversations-show {
+    padding: 0 4px 66px 4px;
+    overflow: hidden;
+    height: 100vh;
+  }
+
+
 .chat-container {
-  max-width: 600px;
-  margin: 0px 0px;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto 66px auto; // 66px pour la navbar
   background: rgba(245, 220, 229, 0.6); // Couleur #F5DCE5 avec 30% d’opacité
   backdrop-filter: blur(20px); // Floutage de l’arrière-plan
   -webkit-backdrop-filter: blur(20px); // Support Safari
@@ -15,6 +22,8 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
   padding: 32px 28px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .conversation-header{
@@ -160,7 +169,6 @@ body {
 /* 🔽 Responsive Media Queries */
 @media (max-width: 600px) {
   .chat-container {
-    margin: 20px 8px;
     padding: 24px 18px;
     border-radius: 18px;
   }
@@ -179,7 +187,6 @@ body {
 
 @media (max-width: 400px) {
   .chat-container {
-    margin: 16px 8px;
     padding: 20px 14px;
   }
 
