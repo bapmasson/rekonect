@@ -1,0 +1,24 @@
+<% if current_user %>
+  <div class="xp-bar-popup-line" data-controller="xp-bar">
+    <div class="xp-bar">
+      <div
+        class="xp-bar-fill"
+        data-xp-bar-target="fill"
+        data-xp-percent="<%= current_user.xp_percent %>"
+        data-xp-current="<%= current_user.xp_progress %>"
+        data-xp-total="<%= current_user.xp_for_next_level %>"
+        style="width: <%= current_user.xp_percent %>%; position: relative;"
+      >
+        <span class="xp-progress-badge">🌟</span>
+      </div>
+    </div>
+    <div class="xp-bar-popup-text">
+      <span class="xp-bar-progress" data-xp-bar-target="progress">
+        <%= current_user.xp_progress %>/<%= current_user.xp_for_next_level %> XP
+      </span>
+      <span class="xp-level-number">
+        LVL <%= current_user.level %>
+      </span>
+    </div>
+  </div>
+<% end %>

@@ -15,7 +15,7 @@ export default class extends Controller {
       <div class="badge-title">🏅 ${title}</div>
     `
     document.querySelector("#notifications-container").appendChild(popup)
-    
-    setTimeout(() => popup.remove(), 4000)
+
+    setTimeout(() => popup.remove(), 20000)
   }
 }
