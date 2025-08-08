@@ -1,4 +1,14 @@
 <div class="chat-container">
+  <% if @pending_levelup %>
+  <div id="pending-levelup" data-level="<%= @pending_levelup %>"></div>
+  <% end %>
+  <% if @pending_xp_popup %>
+  <div id="pending-xp-popup"
+       data-xp-percent="<%= @pending_xp_popup['xp_percent'] %>"
+       data-xp-progress="<%= @pending_xp_popup['xp_progress'] %>"
+       data-xp-total="<%= @pending_xp_popup['xp_total'] %>"
+       data-level="<%= @pending_xp_popup['level'] %>"></div>
+  <% end %>
   <h2 class="conversation-header">Conversation avec <strong><%= @conversation.contact.name %></strong></h2>
   <hr>
   <%= turbo_stream_from "conversation_#{@conversation.id}_messages" %>

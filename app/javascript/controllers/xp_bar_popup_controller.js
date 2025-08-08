@@ -4,7 +4,18 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   connect() {
     window.addEventListener("xp-gain", this.show.bind(this))
+    // si jamais on arrive d'un redirect et qu'il y a un gain XP à afficher, on le pop direct
+    const pending = document.getElementById("pending-xp-popup");
+    if (pending) {
+      const xpPercent = pending.dataset.xpPercent;
+      const xpCurrent = pending.dataset.xpProgress;
+      const xpTotal = pending.dataset.xpTotal;
+      const level = pending.dataset.level;
+      this.show({ detail: { xpPercent, xpCurrent, xpTotal, level } });
+      setTimeout(() => pending.remove(), 100); // clean le DOM après affichage
   }
+ }
+
 
   disconnect() {
     window.removeEventListener("xp-gain", this.show.bind(this))

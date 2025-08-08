@@ -50,6 +50,13 @@ class MessagesController < ApplicationController
       @level_up = current_user.leveled_up?
       session[:level_up] = current_user.level if @level_up
 
+      session[:xp_popup] = {
+      xp_percent: current_user.xp_percent,
+      xp_progress: current_user.xp_progress,
+      xp_total: current_user.xp_for_next_level,
+      level: current_user.level
+      }
+
       respond_to do |format|
         format.turbo_stream do
           render turbo_stream: turbo_stream.append(:messages, partial: "messages/message", locals: { message: @message })
@@ -94,6 +101,14 @@ class MessagesController < ApplicationController
 
   def update
     if @message.update(user_answer: params[:message][:user_answer], status: :sent, sent_at: Time.current)
+      current_user.add_contextual_xp(:reply)
+       session[:xp_popup] = {
+         xp_percent: current_user.xp_percent,
+         xp_progress: current_user.xp_progress,
+         xp_total: current_user.xp_for_next_level,
+         level: current_user.level
+       }
+       session[:level_up] = current_user.level if current_user.leveled_up?
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       render :edit, status: :unprocessable_entity
@@ -104,6 +119,12 @@ class MessagesController < ApplicationController
     if @message.update(user_answer: @message.ai_draft, status: :sent, sent_at: Date.current)
       current_user.add_contextual_xp(:ai_reply)
       session[:level_up] = current_user.level if current_user.leveled_up?
+      session[:xp_popup] = {
+      xp_percent: current_user.xp_percent,
+      xp_progress: current_user.xp_progress,
+      xp_total: current_user.xp_for_next_level,
+      level: current_user.level
+    }
       redirect_to success_messages_path, notice: "Bravo, tu t’es Rekonect avec succès ! 🚀"
     else
       redirect_to reply_message_path(@message), alert: "Erreur lors de l’envoi de la réponse."
