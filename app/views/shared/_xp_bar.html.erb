@@ -28,7 +28,7 @@
 
       <%# div pour afficher les badges %>
       <div class="xp-badges mt-2 d-flex flex-wrap gap-2">
-        <% current_user.badges.each do |badge| %>
+        <% current_user.badges.order(created_at: :asc).each do |badge| %>
           <div class="badge-icon-wrapper" data-controller="infobulle"
               data-infobulle-title-value="<%= badge.title %>"
               data-infobulle-description-value="<%= badge.description %>"
