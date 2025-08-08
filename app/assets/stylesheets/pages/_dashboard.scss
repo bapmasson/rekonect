@@ -71,15 +71,6 @@ body {
 
 // section barre xp
 
-.sticky-xp {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #f5fbe8;
-  padding-top: 10px;
-  padding-bottom: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
-}
 .xp-bar-container {
   border: 2px solid white;
   border-radius: 35px;
@@ -91,6 +82,7 @@ body {
   width: 90%;
   max-width: 98vw;
   margin: 0px auto 20px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
 }
 
 .xp-bar-logo {
