@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Rekonect - Le lieu pour se rekonecter avec ses proches</title>
+    <title>Rekonect - L'app pour se rekonecter avec ses proches</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -30,7 +30,7 @@
 
 
     <!-- app/views/layouts/application.html.erb -->
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <%= favicon_link_tag(source = "favicon.ico", options = {}) %>
   </head>
 
   <%# ajout d'une classe personnalisée dans le body pour ne pas casser le body général quand on veut toucher à celui d'une page %>
