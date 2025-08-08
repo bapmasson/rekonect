@@ -44,15 +44,6 @@
 
   <div data-controller="badge-popup level-up"></div>
 
-  <% if session[:level_up] && current_user&.level == session[:level_up] %>
-  <div id="pending-levelup"
-       data-level="<%= session[:level_up] %>"
-       style="display: none;"></div>
-  <% session.delete(:level_up) %>
-<% end %>
-
-<%# <div data-controller="badge-popup level-up"></div> %>
-
   <%= render "shared/navbar_bottom" %>
   <%= yield %>
 </body>

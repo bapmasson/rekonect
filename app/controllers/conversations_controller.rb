@@ -36,6 +36,9 @@ class ConversationsController < ApplicationController
     authorize @conversation
     @messages = @conversation.messages.order(created_at: :asc)
     @conversations = policy_scope(Conversation)
+
+    @pending_levelup = session.delete(:level_up)
+    @pending_xp_popup = session.delete(:xp_popup)
   end
 
 end
